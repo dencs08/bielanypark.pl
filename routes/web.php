@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('email', function () {
+    return view('email/email');
 });
+
+Route::get('/', [App\Http\Controllers\AppController::class, 'start']);
+Route::get('start', [App\Http\Controllers\AppController::class, 'start']);
