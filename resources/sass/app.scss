@@ -1,0 +1,93 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,500;0,700;1,500&family=Poppins:wght@300;500;700&display=swap");
+
+// Variables
+@import "variables";
+
+//Bootstrap
+// required bootstrap components
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+//additional bootstrap components
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/utilities/api";
+
+//other imports
+// @import "~locomotive-scroll/dist/locomotive-scroll";
+
+//imports
+// @import "components/navbar";
+// @import "components/footer";
+// @import "utilities";
+// @import "buttons";
+// @import "animations";
+
+//main rules
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+::selection {
+    background-color: $primary-color-dark;
+    color: $font-color-secondary;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    color: $font-color-primary;
+    font-family: $font-family-primary !important;
+    background-color: $body-bg !important;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: clamp(1.75rem, 4.15vw, 4.5rem);
+}
+
+h2 {
+    font-weight: 500;
+    font-size: clamp(1rem, 1.8vw, 3rem);
+    font-family: $font-family-primary;
+    // color: $font-color-tertiary;
+}
+
+h3 {
+    font-size: clamp(1.3rem, 2.5vw, 2.25rem);
+    font-weight: 600;
+
+    line-height: 1.25em;
+}
+
+h4 {
+    font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+    font-weight: 500;
+
+    color: $font-color-fourth;
+}
+
+p {
+    font-size: clamp(0.75rem, 1.75vw, 1rem);
+}
+
+hr {
+    display: block;
+    border: 1px solid $font-color-primary;
+    overflow: hidden;
+    width: clamp(3em, 5vw, 7em);
+    float: left;
+}
+
+a {
+    color: $font-color-secondary;
+}
