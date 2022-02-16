@@ -75,7 +75,7 @@
             <div class="card">
                 <div class="email-header">
                     <img
-                        src="images/logos/Logo_grey.svg"
+                        src="https://bielanypark.pl/images/logos/Logo_grey.svg"
                         alt=""
                         class="img-fluid"
                         width="250px"
@@ -86,7 +86,7 @@
                 <div class="email-body">
                     <h1>Poznaj nową ikonę Legnicy</h1>
                     <img
-                        src="images/building/back.png"
+                        src="https://bielanypark.pl/images/building/back.jpg"
                         alt=""
                         class="img-building"
                         width="900px"
@@ -114,7 +114,7 @@
                         </div>
                         <div class="col-md-3">
                             <img
-                                src="images/building/side_close.png"
+                                src="https://bielanypark.pl/images/building/side_close.jpg"
                                 alt=""
                                 class="img-building2"
                                 width="280px"
