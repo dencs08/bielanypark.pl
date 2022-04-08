@@ -19,10 +19,10 @@
 // @import "~locomotive-scroll/dist/locomotive-scroll";
 
 //imports
-// @import "components/navbar";
-// @import "components/footer";
-// @import "utilities";
-// @import "buttons";
+@import "components/navbar";
+@import "components/footer";
+@import "utilities";
+@import "buttons";
 // @import "animations";
 
 //main rules
@@ -48,16 +48,19 @@ body {
     color: $font-color-primary;
     font-family: $font-family-primary !important;
     background-color: $body-bg !important;
+
+    overflow-x: hidden;
 }
 
 h1 {
     font-weight: 600;
-    font-size: clamp(1.75rem, 4.15vw, 4.5rem);
+    font-size: clamp(3rem, 7vw, 8rem);
+    margin: 0;
 }
 
 h2 {
     font-weight: 500;
-    font-size: clamp(1rem, 1.8vw, 3rem);
+    font-size: clamp(2rem, 7vw, 7.5rem);
     font-family: $font-family-primary;
     // color: $font-color-tertiary;
 }
@@ -73,7 +76,7 @@ h4 {
     font-size: clamp(0.75rem, 1.8vw, 0.85rem);
     font-weight: 500;
 
-    color: $font-color-fourth;
+    color: $font-color-fifth;
 }
 
 p {
@@ -89,5 +92,6 @@ hr {
 }
 
 a {
-    color: $font-color-secondary;
+    color: $font-color-primary;
+    text-decoration: none;
 }

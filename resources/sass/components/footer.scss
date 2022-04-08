@@ -1,0 +1,55 @@
+#footer {
+    padding-top: 100px;
+    padding-bottom: 25px;
+    background-color: $font-color-primary;
+
+    img {
+        width: clamp(200px, 50vw, 1080px);
+        height: auto;
+
+        margin-bottom: 100px;
+    }
+
+    h4 {
+        font-size: clamp(1.2rem, 1.75vw, 1.8rem);
+    }
+
+    a {
+        color: $font-color-secondary !important;
+        font-size: clamp(1.3rem, 2vw, 2rem);
+    }
+
+    .footer_info {
+        font-size: clamp(0.8rem, 0.6vw, 1.2rem);
+    }
+
+    .footer_copy {
+        font-size: clamp(0.7rem, 0.5vw, 1rem);
+        p {
+            font-size: clamp(0.7rem, 0.5vw, 1rem);
+        }
+
+        a {
+            color: $font-color-fourth !important;
+            font-size: clamp(0.7rem, 0.5vw, 1rem);
+            text-decoration: underline;
+        }
+    }
+}
+
+#footer_light {
+    .footer_info {
+        font-size: clamp(0.8rem, 0.6vw, 1.2rem);
+    }
+
+    .footer_copy {
+        font-size: clamp(0.7rem, 0.5vw, 1rem);
+        p {
+            font-size: clamp(0.7rem, 0.5vw, 1rem);
+        }
+        a {
+            font-size: clamp(0.7rem, 0.5vw, 1rem);
+            text-decoration: underline;
+        }
+    }
+}

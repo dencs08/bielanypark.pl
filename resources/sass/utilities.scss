@@ -1,0 +1,247 @@
+.container {
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container-md {
+    width: 85%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container-sm {
+    width: 65%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.section-header {
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
+}
+
+.fluid-margin {
+    padding-left: clamp(1.5em, 7.5vw, 18em) !important;
+}
+
+.card {
+    background-color: $body-bg-color-lighter;
+    width: clamp(5em, 25vw, 35em);
+    border-radius: 1em;
+    padding: 1.5em 3.5em;
+    box-shadow: 5px 10px #0e0e0ea9;
+}
+
+.card-header {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+.text-highlight {
+    color: $primary-color;
+}
+
+.border-primary {
+    border-bottom: 1px solid $primary-color !important;
+}
+
+.mr-5 {
+    margin-right: 40px;
+}
+
+.font-color-primary {
+    color: $font-color-primary !important;
+}
+
+.font-color-secondary {
+    color: $font-color-secondary !important;
+}
+
+.font-color-tertiary {
+    color: $font-color-tertiary !important;
+}
+
+.font-color-fourth {
+    color: $font-color-fourth !important;
+}
+
+.font-color-fifth {
+    color: $font-color-fifth !important;
+}
+
+.font-color-sixth {
+    color: $font-color-sixth !important;
+}
+
+.font-family-primary {
+    font-family: $font-family-primary !important;
+}
+
+.font-family-secondary {
+    font-family: $font-family-secondary !important;
+}
+
+.font-size-s {
+    font-size: clamp(0.8rem, 0.75vw, 1.15rem);
+}
+
+.font-size-m {
+    font-size: clamp(1rem, 1vw, 1.45rem);
+}
+
+.font-size-l {
+    font-size: clamp(1.2rem, 1.2vw, 1.65rem);
+}
+
+.font-size-xl {
+    font-size: clamp(0.7rem, 0.65vw, 1rem);
+}
+
+.section-divider {
+    display: block;
+
+    width: 90%;
+
+    float: none;
+
+    margin-top: 150px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 100px;
+
+    border: 0.5px solid rgba(126, 126, 126, 0.25);
+    overflow: hidden;
+}
+
+.underline {
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    color: $font-color-tertiary;
+
+    transition: all 0.5s;
+}
+
+.underline:hover {
+    color: $primary-color;
+}
+
+.underline:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: -3px;
+    content: "";
+    display: block;
+    height: 1px;
+    left: 0%;
+    position: absolute;
+    background: $primary-color;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 100%;
+}
+
+.underline:hover:after {
+    width: 90%;
+    left: 0;
+}
+
+.headerline::before {
+    display: block;
+
+    content: "";
+
+    width: 25px;
+
+    border-top: 3px solid $primary-color;
+
+    padding-top: 0.5rem;
+}
+
+.display-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.display-grid-center {
+    display: grid;
+    place-items: center;
+}
+
+.d-block {
+    display: block;
+}
+
+.vh-50 {
+    height: 50vh;
+}
+
+.vh-100 {
+    height: 100vh;
+}
+
+.scroll-blocker {
+    height: 30px;
+}
+
+.arrow-right-icon {
+    fill: $primary-color;
+    pointer-events: none;
+}
+
+.text-alert {
+    color: #912d2d;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.img-fluid {
+    width: 100%;
+    height: auto;
+}
+
+.section-mb {
+    margin-bottom: 300px;
+}
+
+.mb-10 {
+    margin-bottom: 100px;
+}
+
+.mt-10 {
+    margin-top: 100px;
+}
+
+.mt-150 {
+    margin-top: 150px;
+}
+
+.p-75 {
+    padding: 75px;
+}
+
+.bg-darker {
+    background-color: $body-bg-color-darker;
+}
+
+.bg_text {
+    font-family: Cormorant;
+    font-size: clamp(2rem, 10vw, 12rem);
+
+    color: $font-color-tertiary;
+
+    pointer-events: none;
+}
+
+@media (max-width: $md-screen-size) {
+    .section-divider {
+        margin-top: 75px;
+        margin-bottom: 50px;
+    }
+}
+
+@media (max-width: $sm-screen-size) {
+    .container-text-sm-center {
+        text-align: center;
+    }
+}

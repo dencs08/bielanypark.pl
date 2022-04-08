@@ -1,0 +1,35 @@
+@import "variables";
+
+.btn {
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    padding: 10px 25px;
+
+    font-family: $font-family-secondary;
+
+    background-color: $font-color-primary;
+
+    color: $font-color-secondary;
+}
+
+.btn-submit {
+    padding: 20px 25px;
+
+    font-family: $font-family-secondary;
+
+    background-color: $font-color-primary;
+
+    color: $font-color-secondary;
+}
+
+.btn-next {
+    font-family: $font-family-secondary;
+
+    padding: 20px 25px;
+
+    border-radius: 100px;
+}

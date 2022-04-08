@@ -1,0 +1,17 @@
+@import "variables";
+
+#mieszkania {
+    h1 {
+        margin-top: clamp(20px, 6vh, 90px);
+        font-size: clamp(2rem, 6vw, 8rem);
+    }
+
+    .app {
+        background-color: $font-color-tertiary !important;
+
+        img {
+            width: clamp(300px, 70%, 3200px);
+            height: auto;
+        }
+    }
+}
