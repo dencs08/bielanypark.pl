@@ -19,3 +19,10 @@ Route::get('email', function () {
 
 Route::get('/', [App\Http\Controllers\AppController::class, 'start']);
 Route::get('start', [App\Http\Controllers\AppController::class, 'start']);
+// Route::get('kontakt', [App\Http\Controllers\AppController::class, 'kontakt']);
+Route::get('mieszkania', [App\Http\Controllers\AppController::class, 'mieszkania']);
+Route::get('wybor3d', [App\Http\Controllers\AppController::class, 'wybor3d']);
+Route::get('polityka', [App\Http\Controllers\AppController::class, 'polityka']);
+
+Route::get('/kontakt', [App\Http\Controllers\EmailController::class, 'create']);
+Route::post('/kontaktsent', [App\Http\Controllers\EmailController::class, 'sendEmail'])->name('send.email');
