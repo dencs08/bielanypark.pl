@@ -1,1 +1,92 @@
+#landing_page {
+  margin-top: 10vh;
+}
+#landing_page .image-landing {
+  margin-top: -8vh;
+  width: clamp(550px, 60vw, 1250px);
+  height: clamp(350px, 70vh, 950px);
+  background-image: url("/images/building/back.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+#landing_page h2 {
+  margin-top: -7.5vh;
+  margin-right: 10vw;
+  float: right;
+}
 
+#about_us {
+  position: relative;
+}
+#about_us .bg_text:nth-of-type(1) {
+  position: absolute;
+  transform: translate(-50% -50%);
+  top: -3%;
+  left: -5%;
+  z-index: -1;
+}
+#about_us .bg_text:nth-of-type(2) {
+  position: absolute;
+  transform: translate(-50% -50%);
+  top: 35%;
+  left: 10%;
+  z-index: -1;
+}
+#about_us ul {
+  margin-left: -20px;
+}
+
+#build_end h3 {
+  font-size: clamp(2.5rem, 3.35vw, 8rem);
+  margin-bottom: 2vh;
+}
+#build_end a {
+  color: #2c8cb3 !important;
+  font-size: 3rem;
+}
+
+#about_us2 {
+  position: relative;
+}
+#about_us2 .bg_text:nth-of-type(1) {
+  position: absolute;
+  transform: translate(-50% -50%);
+  top: -100%;
+  left: -5%;
+  z-index: -1;
+}
+#about_us2 .bg_text:nth-of-type(2) {
+  position: absolute;
+  transform: translate(-50% -50%);
+  top: 70%;
+  left: 70%;
+  z-index: -1;
+}
+#about_us2 h3 {
+  font-size: clamp(2.5rem, 3.35vw, 8rem);
+  margin-bottom: 2vh;
+}
+
+#about_us3 {
+  position: relative;
+}
+#about_us3 .bg_text:nth-of-type(1) {
+  position: absolute;
+  transform: translate(-50% -50%);
+  top: 75%;
+  left: -10%;
+  z-index: -1;
+}
+#about_us3 .bg_text:nth-of-type(2) {
+  position: absolute;
+  transform: translate(-50% -50%);
+  top: 90%;
+  left: 50%;
+  z-index: -1;
+}
+
+#sell h3 {
+  font-size: clamp(3rem, 6vw, 10rem);
+}
