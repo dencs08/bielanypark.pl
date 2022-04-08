@@ -12,9 +12,19 @@ const mix = require('laravel-mix');
  */
 
 mix.js([
-    'resources/js/app.js',
+    'resources/js/components/navbar.js',
+    'resources/js/gsapAnims.js',
+    'resources/js/app.js'
 ], 'public/js/app.js').version()
+    .js([
+        'resources/js/contact.js'
+    ], 'public/js/contact.js').version()
+    .js([
+        'resources/js/mieszkania.js'
+    ], 'public/js/mieszkania.js').version()
     .sass('resources/sass/app.scss', 'public/css')
-    .sass('resources/sass/start.scss', 'public/css');
+    .sass('resources/sass/start.scss', 'public/css')
+    .sass('resources/sass/mieszkania.scss', 'public/css')
+    .sass('resources/sass/contact.scss', 'public/css');
 
 mix.browserSync('127.0.0.1:8000');
