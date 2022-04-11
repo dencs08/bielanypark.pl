@@ -33,7 +33,13 @@
                 ;">
         <!-- BORDER -->
         <tr>
-          <td height="8" style="padding:0;background-color: #36393b;"></td>
+          <td height="22" class="wrong-email" style="padding:0;text-align:center;background-color: #36393b;">
+            <table style="border-spacing:0;">
+              <span style="font-size:12px;text-decoration:none;color:#f8f3f1;">Jeśli mail wyświetla się niepoprawnie</span>
+              <a href="https://bielanypark.pl/email" style="font-size:12px;text-decoration:underline;color:cornflowerblue;">
+                kliknij tutaj</a>
+            </table>
+          </td>
         </tr>
         <!-- LOGO -->
         <tr>
@@ -70,12 +76,25 @@
         </tr>
         <!-- TWO COLUMN SECTION -->
         <tr>
-          <td class="two-columns-hero" style="padding:0;text-align:center;">
-            <table width="100%" role="presentation" style="border-spacing:0;">
+          <td class="two-columns-hero" style="padding:0;text-align:center;padding: 0; text-align: center;">
+            <table width="100%" role="presentation" style="border-spacing:0;border-spacing: 0;">
               <tr>
-                <td style="padding:0;">
-                  <h3 style='font-family:"Cormorant", serif;font-size:14px;font-weight:600;margin:0;'>KAMERALNY I LUKSUSOWY</h3>
-                  <h2 style='font-family:"Cormorant", serif;font-size:32px;font-weight:600;line-height:32px;margin:8px;'>
+                <td style="padding:0;padding: 0;">
+                  <h3 style="font-family:&quot;Cormorant&quot;, serif;font-size:14px;font-weight:600;margin:0;
+                                            font-family: 'Cormorant', serif;
+                                            font-size: 14px;
+                                            font-weight: 600;
+                                            margin: 0;
+                                        ;">
+                    KAMERALNY I LUKSUSOWY
+                                    </h3>
+                  <h2 style="font-family:&quot;Cormorant&quot;, serif;font-size:32px;font-weight:600;line-height:32px;margin:8px;
+                                            font-family: 'Cormorant', serif;
+                                            font-size: 32px;
+                                            font-weight: 600;
+                                            line-height: 32px;
+                                            margin: 8px;
+                                        ;">
                     Zapoznaj się z premierową inwestycją.
                                     </h2>
                 </td>

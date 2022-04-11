@@ -99,6 +99,19 @@
             h4 {
                 font-size: 24px;
             }
+            .wrong-email {
+                text-align: center;
+            }
+            .wrong-email span {
+                font-size: 12px;
+                text-decoration: none;
+                color: #f8f3f1;
+            }
+            .wrong-email a {
+                font-size: 12px;
+                text-decoration: underline;
+                color: cornflowerblue;
+            }
         </style>
     </head>
     <body style="margin: 0; padding: 0; min-width: 100%">
@@ -133,7 +146,18 @@
             >
                 <!-- BORDER -->
                 <tr>
-                    <td height="8" style="background-color: #36393b"></td>
+                    <td
+                        height="22"
+                        class="wrong-email"
+                        style="background-color: #36393b"
+                    >
+                        <table>
+                            <span>Jeśli mail wyświetla się niepoprawnie</span>
+                            <a href="https://bielanypark.pl/email">
+                                kliknij tutaj</a
+                            >
+                        </table>
+                    </td>
                 </tr>
                 <!-- LOGO -->
                 <tr>
@@ -182,12 +206,36 @@
                 </tr>
                 <!-- TWO COLUMN SECTION -->
                 <tr>
-                    <td class="two-columns-hero">
-                        <table width="100%" role="presentation">
+                    <td
+                        class="two-columns-hero"
+                        style="padding: 0; text-align: center"
+                    >
+                        <table
+                            width="100%"
+                            role="presentation"
+                            style="border-spacing: 0"
+                        >
                             <tr>
-                                <td>
-                                    <h3>KAMERALNY I LUKSUSOWY</h3>
-                                    <h2>
+                                <td style="padding: 0">
+                                    <h3
+                                        style="
+                                            font-family: 'Cormorant', serif;
+                                            font-size: 14px;
+                                            font-weight: 600;
+                                            margin: 0;
+                                        "
+                                    >
+                                        KAMERALNY I LUKSUSOWY
+                                    </h3>
+                                    <h2
+                                        style="
+                                            font-family: 'Cormorant', serif;
+                                            font-size: 32px;
+                                            font-weight: 600;
+                                            line-height: 32px;
+                                            margin: 8px;
+                                        "
+                                    >
                                         Zapoznaj się z premierową inwestycją.
                                     </h2>
                                 </td>
