@@ -18,7 +18,7 @@
                     <h1>
                         Wybierz ineresujące Cię piętra
                     </h1>
-                    <img src="images/building/chalk_side.png" class="img-fluid mt-5" alt="">
+                    <img src="{{ asset('images/building/png/chalk_side.png') }}" class="img-fluid mt-5" alt="">
                 </div>
 
                 <div id="metric_picker" class="d-none">

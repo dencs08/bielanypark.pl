@@ -15,7 +15,7 @@
     <div class="row">
         <div class="bg-darker col-md-6 p-0 display-grid-center">
             <div class="w-75 mx-auto">
-                <h3>Został Ci już ostatni krok...</h3>
+                <h3>Odezwij się do nas, odpowiemy tak szybko jak to możliwe!</h3>
                 <form id="contact-form" name="myForm" name="contact-form" action="{{ route('send.email') }}" class="contact-form validate-form" method="post">
                     @csrf
                     @if(session()->has('message'))
@@ -116,7 +116,7 @@
         </div>
 
         <div class="footer_copy font-family-secondary font-color-fourth fw-light">
-            <p>© 2022 bielanypark wszelkie prawa zastrzeżone. Zrealizował: <a href="https://www.bisonstudio.pl/" rel="noreferrer" target="_blank">bisonstudio.pl</a></p>
+            <p>© 2022 bielanypark wszelkie prawa zastrzeżone. Zrealizował: <a href="{{ env('APP_CREATOR') }}" rel="noreferrer" target="_blank">bisonstudio.pl</a></p>
         </div>
     </div>
 </div>

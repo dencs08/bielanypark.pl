@@ -5,16 +5,24 @@
   margin-top: -8vh;
   width: clamp(550px, 60vw, 1250px);
   height: clamp(350px, 70vh, 950px);
-  background-image: url("/images/building/back.png");
+  background-image: url("/images/building/jpg/back.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   z-index: -1;
 }
-#landing_page h2 {
-  margin-top: -7.5vh;
-  margin-right: 10vw;
-  float: right;
+#landing_page .container {
+  position: relative;
+}
+#landing_page h2:nth-child(1) {
+  position: absolute;
+  top: -300px;
+  left: 250px;
+}
+#landing_page h2:nth-child(2) {
+  position: absolute;
+  top: -200px;
+  right: 250px;
 }
 
 #about_us {

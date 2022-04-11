@@ -14,6 +14,7 @@
         </div>
     </div>
     <div class="container">
+        <h2 class="font-color-secondary">Myrka 9</h2>
         <h2 class="font-color-secondary">Legnica</h2>
     </div>
 </section>
@@ -38,7 +39,7 @@
                 <p class="fw-light w-75">W inwestycji “bielanypark” łączymy nasze dotychczasz najlepsze rozwiązania, specjalnie dla najbardziej wymagających. Tym razem przygotowaliśmy piękny mall gotowy na wszelkiego rodzaju usługę, zlokalizowny przy ulicy Myrka 9.</p>
             </div>
             <div class="col-md-7">
-                <img src="images/building/side_close.png" class="img-fluid" alt="">
+                <img src="{{ asset('images/building/jpg/side_close.jpg') }}" class="img-fluid" alt="">
             </div>
         </div>
     </div>
@@ -58,7 +59,7 @@
 
 <section id="app" class="section-mb">
     <div class="container">
-        <img src="images/building/chalk_top_myrka.png" class="img-fluid" alt="">
+        <img src="{{ asset('images/building/jpg/chalk_top_myrka.jpg') }}" class="img-fluid" alt="">
     </div>
 </section>
 
@@ -74,7 +75,7 @@
 
 <section id="about_us3" class="section-mb">
     <div class="container">
-        <img src="images/building/front_close.png" class="img-fluid mb-5" alt="">
+        <img src="{{ asset('images/building/jpg/front_close.jpg') }}" class="img-fluid mb-5" alt="">
 
         <div class="row">
             <div class="col-md-3">
@@ -105,7 +106,7 @@
 
 <section id="footer">
     <div class="container text-center">
-        <img src="images/logos/Logo_white_94.svg" class="img-fluid" alt="">
+        <img src="{{ asset('images/logos/Logo_white.svg') }}" class="img-fluid" alt="">
 
         <div>
             <h4 class="mb-5 font-color-fourth">GDZIE TERAZ?</h4>
@@ -130,7 +131,7 @@
         </div>
 
         <div class="footer_copy font-family-secondary font-color-sixth fw-light">
-            <p>© 2022 bielanypark wszelkie prawa zastrzeżone. Zrealizował: <a href="https://www.bisonstudio.pl/" rel="noreferrer" target="_blank">bisonstudio.pl</a></p>
+            <p>© 2022 bielanypark wszelkie prawa zastrzeżone. Zrealizował: <a href="{{ env('APP_CREATOR') }}" rel="noreferrer" target="_blank">bisonstudio.pl</a></p>
         </div>
     </div>
 </section>
