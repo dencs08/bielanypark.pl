@@ -1,6 +1,252 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@swup/head-plugin/lib/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@swup/head-plugin/lib/index.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+	value: true
+}));
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _plugin = __webpack_require__(/*! @swup/plugin */ "./node_modules/@swup/plugin/lib/index.js");
+
+var _plugin2 = _interopRequireDefault(_plugin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HeadPlugin = function (_Plugin) {
+	_inherits(HeadPlugin, _Plugin);
+
+	function HeadPlugin(options) {
+		_classCallCheck(this, HeadPlugin);
+
+		var _this = _possibleConstructorReturn(this, (HeadPlugin.__proto__ || Object.getPrototypeOf(HeadPlugin)).call(this));
+
+		_this.name = 'HeadPlugin';
+		_this.defaultOptions = {
+			persistTags: false,
+			persistAssets: false
+		};
+
+		_this.getHeadAndReplace = function () {
+			var headChildren = _this.getHeadChildren();
+			var nextHeadChildren = _this.getNextHeadChildren();
+
+			_this.replaceTags(headChildren, nextHeadChildren);
+		};
+
+		_this.getHeadChildren = function () {
+			return document.head.children;
+		};
+
+		_this.getNextHeadChildren = function () {
+			var pageContent = _this.swup.cache.getCurrentPage().originalContent.replace('<head', '<div id="swupHead"').replace('</head>', '</div>');
+			var element = document.createElement('div');
+			element.innerHTML = pageContent;
+			var children = element.querySelector('#swupHead').children;
+
+			// cleanup
+			element.innerHTML = '';
+			element = null;
+
+			return children;
+		};
+
+		_this.replaceTags = function (oldTags, newTags) {
+			var head = document.head;
+			var themeActive = Boolean(document.querySelector('[data-swup-theme]'));
+			var addTags = _this.getTagsToAdd(oldTags, newTags, themeActive);
+			var removeTags = _this.getTagsToRemove(oldTags, newTags, themeActive);
+
+			removeTags.reverse().forEach(function (item) {
+				head.removeChild(item.tag);
+			});
+
+			addTags.forEach(function (item) {
+				head.insertBefore(item.tag, head.children[item.index]);
+			});
+
+			_this.swup.log('Removed ' + removeTags.length + ' / added ' + addTags.length + ' tags in head');
+		};
+
+		_this.compareTags = function (oldTag, newTag) {
+			var oldTagContent = oldTag.outerHTML;
+			var newTagContent = newTag.outerHTML;
+
+			return oldTagContent === newTagContent;
+		};
+
+		_this.getTagsToRemove = function (oldTags, newTags) {
+			var removeTags = [];
+
+			for (var i = 0; i < oldTags.length; i++) {
+				var foundAt = null;
+
+				for (var j = 0; j < newTags.length; j++) {
+					if (_this.compareTags(oldTags[i], newTags[j])) {
+						foundAt = j;
+						break;
+					}
+				}
+
+				if (foundAt == null && oldTags[i].getAttribute('data-swup-theme') === null && !_this.isPersistentTag(oldTags[i])) {
+					removeTags.push({ tag: oldTags[i] });
+				}
+			}
+
+			return removeTags;
+		};
+
+		_this.getTagsToAdd = function (oldTags, newTags, themeActive) {
+			var addTags = [];
+
+			for (var i = 0; i < newTags.length; i++) {
+				var foundAt = null;
+
+				for (var j = 0; j < oldTags.length; j++) {
+					if (_this.compareTags(oldTags[j], newTags[i])) {
+						foundAt = j;
+						break;
+					}
+				}
+
+				if (foundAt == null) {
+					addTags.push({ index: themeActive ? i + 1 : i, tag: newTags[i] });
+				}
+			}
+
+			return addTags;
+		};
+
+		_this.isPersistentTag = function (item) {
+			var persistTags = _this.options.persistTags;
+
+			if (typeof persistTags === 'function') {
+				return persistTags(item);
+			}
+			if (typeof persistTags === 'string') {
+				return item.matches(persistTags);
+			}
+			return Boolean(persistTags);
+		};
+
+		_this.updateHtmlLangAttribute = function () {
+			var html = document.documentElement;
+
+			var newPage = new DOMParser().parseFromString(_this.swup.cache.getCurrentPage().originalContent, 'text/html');
+			var newLang = newPage.documentElement.lang;
+
+			if (html.lang !== newLang) {
+				_this.swup.log('Updated lang attribute: ' + html.lang + ' > ' + newLang);
+				html.lang = newLang;
+			}
+		};
+
+		_this.options = _extends({}, _this.defaultOptions, options);
+
+		// options.persistAssets is a shortcut to:
+		// options.persistTags with a default asset selector for scripts & styles
+		if (_this.options.persistAssets && !_this.options.persistTags) {
+			_this.options.persistTags = 'link[rel=stylesheet], script[src], style';
+		}
+		return _this;
+	}
+
+	_createClass(HeadPlugin, [{
+		key: 'mount',
+		value: function mount() {
+			this.swup.on('contentReplaced', this.getHeadAndReplace);
+			this.swup.on('contentReplaced', this.updateHtmlLangAttribute);
+		}
+	}, {
+		key: 'unmount',
+		value: function unmount() {
+			this.swup.off('contentReplaced', this.getHeadAndReplace);
+			this.swup.off('contentReplaced', this.updateHtmlLangAttribute);
+		}
+	}]);
+
+	return HeadPlugin;
+}(_plugin2.default);
+
+exports["default"] = HeadPlugin;
+
+/***/ }),
+
+/***/ "./node_modules/@swup/plugin/lib/index.js":
+/*!************************************************!*\
+  !*** ./node_modules/@swup/plugin/lib/index.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Plugin = function () {
+    function Plugin() {
+        _classCallCheck(this, Plugin);
+
+        this.isSwupPlugin = true;
+    }
+
+    _createClass(Plugin, [{
+        key: "mount",
+        value: function mount() {
+            // this is mount method rewritten by class extending
+            // and is executed when swup is enabled with plugin
+        }
+    }, {
+        key: "unmount",
+        value: function unmount() {
+            // this is unmount method rewritten by class extending
+            // and is executed when swup with plugin is disabled
+        }
+    }, {
+        key: "_beforeMount",
+        value: function _beforeMount() {
+            // here for any future hidden auto init
+        }
+    }, {
+        key: "_afterUnmount",
+        value: function _afterUnmount() {}
+        // here for any future hidden auto-cleanup
+
+
+        // this is here so we can tell if plugin was created by extending this class
+
+    }]);
+
+    return Plugin;
+}();
+
+exports["default"] = Plugin;
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -2160,9 +2406,21 @@ module.exports = {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_swup_dist_swup_min__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/swup/dist/swup.min */ "./node_modules/swup/dist/swup.min.js");
+/* harmony import */ var _node_modules_swup_dist_swup_min__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_swup_dist_swup_min__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _swup_head_plugin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @swup/head-plugin */ "./node_modules/@swup/head-plugin/lib/index.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // import { Swup } from "swup";
+
+
+
+
+var swup = new _node_modules_swup_dist_swup_min__WEBPACK_IMPORTED_MODULE_0__({
+  plugins: [new _swup_head_plugin__WEBPACK_IMPORTED_MODULE_1__["default"]()]
+});
 
 /***/ }),
 
@@ -2335,17 +2593,17 @@ function zIndexNavBar() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "CSSPlugin": () => (/* binding */ CSSPlugin),
-/* harmony export */   "default": () => (/* binding */ CSSPlugin),
-/* harmony export */   "_getBBox": () => (/* binding */ _getBBox),
 /* harmony export */   "_createElement": () => (/* binding */ _createElement),
-/* harmony export */   "checkPrefix": () => (/* binding */ _checkPropPrefix)
+/* harmony export */   "_getBBox": () => (/* binding */ _getBBox),
+/* harmony export */   "checkPrefix": () => (/* binding */ _checkPropPrefix),
+/* harmony export */   "default": () => (/* binding */ CSSPlugin)
 /* harmony export */ });
 /* harmony import */ var _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gsap-core.js */ "./node_modules/gsap/gsap-core.js");
 /*!
- * CSSPlugin 3.9.1
+ * CSSPlugin 3.10.3
  * https://greensock.com
  *
- * Copyright 2008-2021, GreenSock. All rights reserved.
+ * Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -2370,7 +2628,7 @@ var _win,
     _atan2 = Math.atan2,
     _bigNum = 1e8,
     _capsExp = /([A-Z])/g,
-    _horizontalExp = /(?:left|right|width|margin|padding|x)/i,
+    _horizontalExp = /(left|right|width|margin|padding|x)/i,
     _complexExp = /[\s,\(]\S/,
     _propertyAliases = {
   autoAlpha: "opacity,visibility",
@@ -2656,7 +2914,7 @@ _convertToUnit = function _convertToUnit(target, property, value, unit) {
   return unit && !~(value + "").trim().indexOf(" ") ? _convertToUnit(target, property, value, unit) + unit : value;
 },
     _tweenComplexCSSString = function _tweenComplexCSSString(target, prop, start, end) {
-  //note: we call _tweenComplexCSSString.call(pluginInstance...) to ensure that it's scoped properly. We may call it from within a plugin too, thus "this" would refer to the plugin.
+  // note: we call _tweenComplexCSSString.call(pluginInstance...) to ensure that it's scoped properly. We may call it from within a plugin too, thus "this" would refer to the plugin.
   if (!start || start === "none") {
     // some browsers like Safari actually PREFER the prefixed property and mis-report the unprefixed value like clipPath (BUG). In other words, even though clipPath exists in the style ("clipPath" in target.style) and it's set in the CSS properly (along with -webkit-clip-path), Safari reports clipPath as "none" whereas WebkitClipPath reports accurately like "ellipse(100% 0% at 50% 0%)", so in this case we must SWITCH to using the prefixed property instead. See https://greensock.com/forums/topic/18310-clippath-doesnt-work-on-ios/
     var p = _checkPropPrefix(prop, target, 1),
@@ -2684,11 +2942,10 @@ _convertToUnit = function _convertToUnit(target, property, value, unit) {
       chunk,
       endUnit,
       startUnit,
-      relative,
       endValues;
   pt.b = start;
   pt.e = end;
-  start += ""; //ensure values are strings
+  start += ""; // ensure values are strings
 
   end += "";
 
@@ -2700,7 +2957,7 @@ _convertToUnit = function _convertToUnit(target, property, value, unit) {
 
   a = [start, end];
 
-  (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._colorStringFilter)(a); //pass an array with the starting and ending values and let the filter do whatever it needs to the values. If colors are found, it returns true and then we must match where the color shows up order-wise because for things like boxShadow, sometimes the browser provides the computed values with the color FIRST, but the user provides it with the color LAST, so flip them if necessary. Same for drop-shadow().
+  (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._colorStringFilter)(a); // pass an array with the starting and ending values and let the filter do whatever it needs to the values. If colors are found, it returns true and then we must match where the color shows up order-wise because for things like boxShadow, sometimes the browser provides the computed values with the color FIRST, but the user provides it with the color LAST, so flip them if necessary. Same for drop-shadow().
 
 
   start = a[0];
@@ -2722,12 +2979,7 @@ _convertToUnit = function _convertToUnit(target, property, value, unit) {
       if (endValue !== (startValue = startValues[matchIndex++] || "")) {
         startNum = parseFloat(startValue) || 0;
         startUnit = startValue.substr((startNum + "").length);
-        relative = endValue.charAt(1) === "=" ? +(endValue.charAt(0) + "1") : 0;
-
-        if (relative) {
-          endValue = endValue.substr(2);
-        }
-
+        endValue.charAt(1) === "=" && (endValue = (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._parseRelative)(startNum, endValue) + startUnit);
         endNum = parseFloat(endValue);
         endUnit = endValue.substr((endNum + "").length);
         index = _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._numWithUnitExp.lastIndex - endUnit.length;
@@ -2744,7 +2996,7 @@ _convertToUnit = function _convertToUnit(target, property, value, unit) {
 
         if (startUnit !== endUnit) {
           startNum = _convertToUnit(target, prop, startValue, endUnit) || 0;
-        } //these nested PropTweens are handled in a special way - we'll never actually call a render or setter method on them. We'll just loop through them in the parent complex string PropTween's render method.
+        } // these nested PropTweens are handled in a special way - we'll never actually call a render or setter method on them. We'll just loop through them in the parent complex string PropTween's render method.
 
 
         pt._pt = {
@@ -2752,7 +3004,7 @@ _convertToUnit = function _convertToUnit(target, property, value, unit) {
           p: chunk || matchIndex === 1 ? chunk : ",",
           //note: SVG spec allows omission of comma/space when a negative sign is wedged between two numbers, like 2.5-5.3 instead of 2.5,-5.3 but when tweening, the negative value may switch to positive, so we insert the comma just in case.
           s: startNum,
-          c: relative ? relative * endNum : endNum - startNum,
+          c: endNum - startNum,
           m: color && color < 4 || prop === "zIndex" ? Math.round : 0
         };
       }
@@ -3206,8 +3458,9 @@ _identity2DMatrix = [1, 0, 0, 1, 0, 0],
     }
   }
 
-  cache.x = x - ((cache.xPercent = x && (cache.xPercent || (Math.round(target.offsetWidth / 2) === Math.round(-x) ? -50 : 0))) ? target.offsetWidth * cache.xPercent / 100 : 0) + px;
-  cache.y = y - ((cache.yPercent = y && (cache.yPercent || (Math.round(target.offsetHeight / 2) === Math.round(-y) ? -50 : 0))) ? target.offsetHeight * cache.yPercent / 100 : 0) + px;
+  uncache = uncache || cache.uncache;
+  cache.x = x - ((cache.xPercent = x && (!uncache && cache.xPercent || (Math.round(target.offsetWidth / 2) === Math.round(-x) ? -50 : 0))) ? target.offsetWidth * cache.xPercent / 100 : 0) + px;
+  cache.y = y - ((cache.yPercent = y && (!uncache && cache.yPercent || (Math.round(target.offsetHeight / 2) === Math.round(-y) ? -50 : 0))) ? target.offsetHeight * cache.yPercent / 100 : 0) + px;
   cache.z = z + px;
   cache.scaleX = (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._round)(scaleX);
   cache.scaleY = (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._round)(scaleY);
@@ -3405,11 +3658,11 @@ _addPxTranslate = function _addPxTranslate(target, start, value) {
   target.setAttribute("transform", temp);
   forceCSS && (target.style[_transformProp] = temp); //some browsers prioritize CSS transforms over the transform attribute. When we sense that the user has CSS transforms applied, we must overwrite them this way (otherwise some browser simply won't render the  transform attribute changes!)
 },
-    _addRotationalPropTween = function _addRotationalPropTween(plugin, target, property, startNum, endValue, relative) {
+    _addRotationalPropTween = function _addRotationalPropTween(plugin, target, property, startNum, endValue) {
   var cap = 360,
       isString = (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._isString)(endValue),
       endNum = parseFloat(endValue) * (isString && ~endValue.indexOf("rad") ? _RAD2DEG : 1),
-      change = relative ? endNum * relative : endNum - startNum,
+      change = endNum - startNum,
       finalValue = startNum + change + "deg",
       direction,
       pt;
@@ -3610,7 +3863,7 @@ var CSSPlugin = {
         }
 
         startNum = parseFloat(startValue);
-        relative = type === "string" && endValue.charAt(1) === "=" ? +(endValue.charAt(0) + "1") : 0;
+        relative = type === "string" && endValue.charAt(1) === "=" && endValue.substr(0, 2);
         relative && (endValue = endValue.substr(2));
         endNum = parseFloat(endValue);
 
@@ -3645,7 +3898,7 @@ var CSSPlugin = {
           }
 
           if (p === "scale") {
-            this._pt = new _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.PropTween(this._pt, cache, "scaleY", cache.scaleY, (relative ? relative * endNum : endNum - cache.scaleY) || 0);
+            this._pt = new _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.PropTween(this._pt, cache, "scaleY", cache.scaleY, (relative ? (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._parseRelative)(cache.scaleY, relative + endNum) : endNum) - cache.scaleY || 0);
             props.push("scaleY", p);
             p += "X";
           } else if (p === "transformOrigin") {
@@ -3667,7 +3920,7 @@ var CSSPlugin = {
 
             continue;
           } else if (p in _rotationalProperties) {
-            _addRotationalPropTween(this, cache, p, startNum, endValue, relative);
+            _addRotationalPropTween(this, cache, p, startNum, relative ? (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._parseRelative)(startNum, relative + endValue) : endValue);
 
             continue;
           } else if (p === "smoothOrigin") {
@@ -3692,7 +3945,7 @@ var CSSPlugin = {
 
           endUnit = (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.getUnit)(endValue) || (p in _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._config.units ? _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._config.units[p] : startUnit);
           startUnit !== endUnit && (startNum = _convertToUnit(target, p, startValue, endUnit));
-          this._pt = new _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.PropTween(this._pt, isTransformRelated ? cache : style, p, startNum, relative ? relative * endNum : endNum - startNum, !isTransformRelated && (endUnit === "px" || p === "zIndex") && vars.autoRound !== false ? _renderRoundedCSSProp : _renderCSSProp);
+          this._pt = new _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.PropTween(this._pt, isTransformRelated ? cache : style, p, startNum, (relative ? (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._parseRelative)(startNum, relative + endNum) : endNum) - startNum, !isTransformRelated && (endUnit === "px" || p === "zIndex") && vars.autoRound !== false ? _renderRoundedCSSProp : _renderCSSProp);
           this._pt.u = endUnit || 0;
 
           if (startUnit !== endUnit && endUnit !== "%") {
@@ -3703,14 +3956,14 @@ var CSSPlugin = {
         } else if (!(p in style)) {
           if (p in target) {
             //maybe it's not a style - it could be a property added directly to an element in which case we'll try to animate that.
-            this.add(target, p, startValue || target[p], endValue, index, targets);
+            this.add(target, p, startValue || target[p], relative ? relative + endValue : endValue, index, targets);
           } else {
             (0,_gsap_core_js__WEBPACK_IMPORTED_MODULE_0__._missingPlugin)(p, endValue);
 
             continue;
           }
         } else {
-          _tweenComplexCSSString.call(this, target, p, startValue, endValue);
+          _tweenComplexCSSString.call(this, target, p, startValue, relative ? relative + endValue : endValue);
         }
 
         props.push(p);
@@ -3770,84 +4023,85 @@ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.gsap.registerPlugin(CSSPlugin);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "GSCache": () => (/* binding */ GSCache),
 /* harmony export */   "Animation": () => (/* binding */ Animation),
-/* harmony export */   "Timeline": () => (/* binding */ Timeline),
-/* harmony export */   "Tween": () => (/* binding */ Tween),
-/* harmony export */   "PropTween": () => (/* binding */ PropTween),
-/* harmony export */   "gsap": () => (/* binding */ gsap),
+/* harmony export */   "Back": () => (/* binding */ Back),
+/* harmony export */   "Bounce": () => (/* binding */ Bounce),
+/* harmony export */   "Circ": () => (/* binding */ Circ),
+/* harmony export */   "Cubic": () => (/* binding */ Cubic),
+/* harmony export */   "Elastic": () => (/* binding */ Elastic),
+/* harmony export */   "Expo": () => (/* binding */ Expo),
+/* harmony export */   "GSCache": () => (/* binding */ GSCache),
+/* harmony export */   "Linear": () => (/* binding */ Linear),
 /* harmony export */   "Power0": () => (/* binding */ Power0),
 /* harmony export */   "Power1": () => (/* binding */ Power1),
 /* harmony export */   "Power2": () => (/* binding */ Power2),
 /* harmony export */   "Power3": () => (/* binding */ Power3),
 /* harmony export */   "Power4": () => (/* binding */ Power4),
-/* harmony export */   "Linear": () => (/* binding */ Linear),
+/* harmony export */   "PropTween": () => (/* binding */ PropTween),
 /* harmony export */   "Quad": () => (/* binding */ Quad),
-/* harmony export */   "Cubic": () => (/* binding */ Cubic),
 /* harmony export */   "Quart": () => (/* binding */ Quart),
 /* harmony export */   "Quint": () => (/* binding */ Quint),
-/* harmony export */   "Strong": () => (/* binding */ Strong),
-/* harmony export */   "Elastic": () => (/* binding */ Elastic),
-/* harmony export */   "Back": () => (/* binding */ Back),
-/* harmony export */   "SteppedEase": () => (/* binding */ SteppedEase),
-/* harmony export */   "Bounce": () => (/* binding */ Bounce),
 /* harmony export */   "Sine": () => (/* binding */ Sine),
-/* harmony export */   "Expo": () => (/* binding */ Expo),
-/* harmony export */   "Circ": () => (/* binding */ Circ),
-/* harmony export */   "TweenMax": () => (/* binding */ Tween),
-/* harmony export */   "TweenLite": () => (/* binding */ Tween),
-/* harmony export */   "TimelineMax": () => (/* binding */ Timeline),
+/* harmony export */   "SteppedEase": () => (/* binding */ SteppedEase),
+/* harmony export */   "Strong": () => (/* binding */ Strong),
+/* harmony export */   "Timeline": () => (/* binding */ Timeline),
 /* harmony export */   "TimelineLite": () => (/* binding */ Timeline),
-/* harmony export */   "default": () => (/* binding */ gsap),
-/* harmony export */   "wrap": () => (/* binding */ wrap),
-/* harmony export */   "wrapYoyo": () => (/* binding */ wrapYoyo),
-/* harmony export */   "distribute": () => (/* binding */ distribute),
-/* harmony export */   "random": () => (/* binding */ random),
-/* harmony export */   "snap": () => (/* binding */ snap),
-/* harmony export */   "normalize": () => (/* binding */ normalize),
-/* harmony export */   "getUnit": () => (/* binding */ getUnit),
-/* harmony export */   "clamp": () => (/* binding */ clamp),
-/* harmony export */   "splitColor": () => (/* binding */ splitColor),
-/* harmony export */   "toArray": () => (/* binding */ toArray),
-/* harmony export */   "selector": () => (/* binding */ selector),
-/* harmony export */   "mapRange": () => (/* binding */ mapRange),
-/* harmony export */   "pipe": () => (/* binding */ pipe),
-/* harmony export */   "unitize": () => (/* binding */ unitize),
-/* harmony export */   "interpolate": () => (/* binding */ interpolate),
-/* harmony export */   "shuffle": () => (/* binding */ shuffle),
+/* harmony export */   "TimelineMax": () => (/* binding */ Timeline),
+/* harmony export */   "Tween": () => (/* binding */ Tween),
+/* harmony export */   "TweenLite": () => (/* binding */ Tween),
+/* harmony export */   "TweenMax": () => (/* binding */ Tween),
+/* harmony export */   "_checkPlugin": () => (/* binding */ _checkPlugin),
+/* harmony export */   "_colorExp": () => (/* binding */ _colorExp),
+/* harmony export */   "_colorStringFilter": () => (/* binding */ _colorStringFilter),
+/* harmony export */   "_config": () => (/* binding */ _config),
+/* harmony export */   "_forEachName": () => (/* binding */ _forEachName),
+/* harmony export */   "_getCache": () => (/* binding */ _getCache),
 /* harmony export */   "_getProperty": () => (/* binding */ _getProperty),
-/* harmony export */   "_numExp": () => (/* binding */ _numExp),
-/* harmony export */   "_numWithUnitExp": () => (/* binding */ _numWithUnitExp),
+/* harmony export */   "_getSetter": () => (/* binding */ _getSetter),
 /* harmony export */   "_isString": () => (/* binding */ _isString),
 /* harmony export */   "_isUndefined": () => (/* binding */ _isUndefined),
-/* harmony export */   "_renderComplexString": () => (/* binding */ _renderComplexString),
-/* harmony export */   "_relExp": () => (/* binding */ _relExp),
-/* harmony export */   "_setDefaults": () => (/* binding */ _setDefaults),
-/* harmony export */   "_removeLinkedListItem": () => (/* binding */ _removeLinkedListItem),
-/* harmony export */   "_forEachName": () => (/* binding */ _forEachName),
-/* harmony export */   "_sortPropTweensByPriority": () => (/* binding */ _sortPropTweensByPriority),
-/* harmony export */   "_colorStringFilter": () => (/* binding */ _colorStringFilter),
-/* harmony export */   "_replaceRandom": () => (/* binding */ _replaceRandom),
-/* harmony export */   "_checkPlugin": () => (/* binding */ _checkPlugin),
-/* harmony export */   "_plugins": () => (/* binding */ _plugins),
-/* harmony export */   "_ticker": () => (/* binding */ _ticker),
-/* harmony export */   "_config": () => (/* binding */ _config),
-/* harmony export */   "_roundModifier": () => (/* binding */ _roundModifier),
-/* harmony export */   "_round": () => (/* binding */ _round),
 /* harmony export */   "_missingPlugin": () => (/* binding */ _missingPlugin),
-/* harmony export */   "_getSetter": () => (/* binding */ _getSetter),
-/* harmony export */   "_getCache": () => (/* binding */ _getCache),
-/* harmony export */   "_colorExp": () => (/* binding */ _colorExp)
+/* harmony export */   "_numExp": () => (/* binding */ _numExp),
+/* harmony export */   "_numWithUnitExp": () => (/* binding */ _numWithUnitExp),
+/* harmony export */   "_parseRelative": () => (/* binding */ _parseRelative),
+/* harmony export */   "_plugins": () => (/* binding */ _plugins),
+/* harmony export */   "_relExp": () => (/* binding */ _relExp),
+/* harmony export */   "_removeLinkedListItem": () => (/* binding */ _removeLinkedListItem),
+/* harmony export */   "_renderComplexString": () => (/* binding */ _renderComplexString),
+/* harmony export */   "_replaceRandom": () => (/* binding */ _replaceRandom),
+/* harmony export */   "_round": () => (/* binding */ _round),
+/* harmony export */   "_roundModifier": () => (/* binding */ _roundModifier),
+/* harmony export */   "_setDefaults": () => (/* binding */ _setDefaults),
+/* harmony export */   "_sortPropTweensByPriority": () => (/* binding */ _sortPropTweensByPriority),
+/* harmony export */   "_ticker": () => (/* binding */ _ticker),
+/* harmony export */   "clamp": () => (/* binding */ clamp),
+/* harmony export */   "default": () => (/* binding */ gsap),
+/* harmony export */   "distribute": () => (/* binding */ distribute),
+/* harmony export */   "getUnit": () => (/* binding */ getUnit),
+/* harmony export */   "gsap": () => (/* binding */ gsap),
+/* harmony export */   "interpolate": () => (/* binding */ interpolate),
+/* harmony export */   "mapRange": () => (/* binding */ mapRange),
+/* harmony export */   "normalize": () => (/* binding */ normalize),
+/* harmony export */   "pipe": () => (/* binding */ pipe),
+/* harmony export */   "random": () => (/* binding */ random),
+/* harmony export */   "selector": () => (/* binding */ selector),
+/* harmony export */   "shuffle": () => (/* binding */ shuffle),
+/* harmony export */   "snap": () => (/* binding */ snap),
+/* harmony export */   "splitColor": () => (/* binding */ splitColor),
+/* harmony export */   "toArray": () => (/* binding */ toArray),
+/* harmony export */   "unitize": () => (/* binding */ unitize),
+/* harmony export */   "wrap": () => (/* binding */ wrap),
+/* harmony export */   "wrapYoyo": () => (/* binding */ wrapYoyo)
 /* harmony export */ });
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 /*!
- * GSAP 3.9.1
+ * GSAP 3.10.3
  * https://greensock.com
  *
- * @license Copyright 2008-2021, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -3913,7 +4167,7 @@ _numWithUnitExp = /[-+=.]*\d+[.e-]*\d*[a-z%]*/g,
 _relExp = /[+-]=-?[.\d]+/,
     _delimitedValueExp = /[^,'"\[\]\s]+/gi,
     // previously /[#\-+.]*\b[a-z\d\-=+%.]+/gi but didn't catch special characters.
-_unitExp = /[\d.+\-=]+(?:e[-+]\d*)*/i,
+_unitExp = /^[+\-=e\s\d]*\d+[.\d]*([a-z]*|%)\s*$/i,
     _globalTimeline,
     _win,
     _coreInitted,
@@ -3985,7 +4239,13 @@ _round = function _round(value) {
   return Math.round(value * 10000000) / 10000000 || 0;
 },
     // increased precision mostly for timing values.
-_arrayContainsAny = function _arrayContainsAny(toSearch, toFind) {
+_parseRelative = function _parseRelative(start, value) {
+  var operator = value.charAt(0),
+      end = parseFloat(value.substr(2));
+  start = parseFloat(start);
+  return operator === "+" ? start + end : operator === "-" ? start - end : operator === "*" ? start * end : start / end;
+},
+    _arrayContainsAny = function _arrayContainsAny(toSearch, toFind) {
   //searches one array to find matches for any of the items in the toFind array. As soon as one is found, it returns true. It does NOT return all the matches; it's simply a boolean search.
   var l = toFind.length,
       i = 0;
@@ -4454,7 +4714,7 @@ _isFromOrFromStart = function _isFromOrFromStart(_ref2) {
   return value < min ? min : value > max ? max : value;
 },
     getUnit = function getUnit(value, v) {
-  return !_isString(value) || !(v = _unitExp.exec(value)) ? "" : value.substr(v.index + v[0].length);
+  return !_isString(value) || !(v = _unitExp.exec(value)) ? "" : v[1];
 },
     // note: protect against padded numbers as strings, like "100.100". That shouldn't return "00" as the unit. If it's numeric, return no unit.
 clamp = function clamp(min, max, value) {
@@ -5166,10 +5426,20 @@ _tickerActive,
       _gap = 1000 / (_fps || 240);
       _nextTime = _self.time * 1000 + _gap;
     },
-    add: function add(callback) {
-      _listeners.indexOf(callback) < 0 && _listeners.push(callback);
+    add: function add(callback, once, prioritize) {
+      var func = once ? function (t, d, f, v) {
+        callback(t, d, f, v);
+
+        _self.remove(func);
+      } : callback;
+
+      _self.remove(callback);
+
+      _listeners[prioritize ? "unshift" : "push"](func);
 
       _wake();
+
+      return func;
     },
     remove: function remove(callback, i) {
       ~(i = _listeners.indexOf(callback)) && _listeners.splice(i, 1) && _i >= i && _i--;
@@ -5560,12 +5830,12 @@ var Animation = /*#__PURE__*/function () {
     this._rts = +value || 0;
     this._ts = this._ps || value === -_tinyNum ? 0 : this._rts; // _ts is the functional timeScale which would be 0 if the animation is paused.
 
-    _recacheAncestors(this.totalTime(_clamp(-this._delay, this._tDur, tTime), true));
+    this.totalTime(_clamp(-this._delay, this._tDur, tTime), true);
 
     _setEnd(this); // if parent.smoothChildTiming was false, the end time didn't get updated in the _alignPlayhead() method, so do it here.
 
 
-    return this;
+    return _recacheAncestors(this);
   };
 
   _proto.paused = function paused(value) {
@@ -6074,7 +6344,8 @@ var Timeline = /*#__PURE__*/function (_Animation) {
       }
 
       this._onUpdate && !suppressEvents && _callback(this, "onUpdate", true);
-      if (tTime === tDur && tDur >= this.totalDuration() || !tTime && prevTime) if (prevStart === this._start || Math.abs(timeScale) !== Math.abs(this._ts)) if (!this._lock) {
+      if (tTime === tDur && this._tTime >= this.totalDuration() || !tTime && prevTime) if (prevStart === this._start || Math.abs(timeScale) !== Math.abs(this._ts)) if (!this._lock) {
+        // remember, a child's callback may alter this timeline's playhead or timeScale which is why we need to add some of these checks.
         (totalTime || !dur) && (tTime === tDur && this._ts > 0 || !tTime && this._ts < 0) && _removeFromParent(this, 1); // don't remove if the timeline is reversed and the playhead isn't at 0, otherwise tl.progress(1).reverse() won't work. Only remove if the playhead is at the end and timeScale is positive, or if the playhead is at 0 and the timeScale is negative.
 
         if (!suppressEvents && !(totalTime < 0 && !prevTime) && (tTime || prevTime || !tDur)) {
@@ -6533,7 +6804,7 @@ var _addComplexStringPropTween = function _addComplexStringPropTween(target, pro
         p: chunk || matchIndex === 1 ? chunk : ",",
         //note: SVG spec allows omission of comma/space when a negative sign is wedged between two numbers, like 2.5-5.3 instead of 2.5,-5.3 but when tweening, the negative value may switch to positive, so we insert the comma just in case.
         s: startNum,
-        c: endNum.charAt(1) === "=" ? parseFloat(endNum.substr(2)) * (endNum.charAt(0) === "-" ? -1 : 1) : parseFloat(endNum) - startNum,
+        c: endNum.charAt(1) === "=" ? _parseRelative(startNum, endNum) - startNum : parseFloat(endNum) - startNum,
         m: color && color < 4 ? Math.round : 0
       };
       index = _complexStringNumExp.lastIndex;
@@ -6565,7 +6836,7 @@ var _addComplexStringPropTween = function _addComplexStringPropTween(target, pro
     }
 
     if (end.charAt(1) === "=") {
-      pt = parseFloat(parsedStart) + parseFloat(end.substr(2)) * (end.charAt(0) === "-" ? -1 : 1) + (getUnit(parsedStart) || 0);
+      pt = _parseRelative(parsedStart, end) + (getUnit(parsedStart) || 0);
 
       if (pt || pt === 0) {
         // to avoid isNaN, like if someone passes in a value like "!= whatever"
@@ -6574,7 +6845,7 @@ var _addComplexStringPropTween = function _addComplexStringPropTween(target, pro
     }
   }
 
-  if (parsedStart !== end) {
+  if (parsedStart !== end || _forceAllPropTweens) {
     if (!isNaN(parsedStart * end) && end !== "") {
       // fun fact: any number multiplied by "" is evaluated as the number 0!
       pt = new PropTween(this._pt, target, prop, +parsedStart || 0, end - (parsedStart || 0), typeof currentValue === "boolean" ? _renderBoolean : _renderPlain, 0, setter);
@@ -6625,7 +6896,8 @@ _processVars = function _processVars(vars, index, target, targets, tween) {
 },
     _overwritingTween,
     //store a reference temporarily so we can avoid overwriting itself.
-_initTween = function _initTween(tween, time) {
+_forceAllPropTweens,
+    _initTween = function _initTween(tween, time) {
   var vars = tween.vars,
       ease = vars.ease,
       startAt = vars.startAt,
@@ -6677,7 +6949,12 @@ _initTween = function _initTween(tween, time) {
     harnessVars = harness && vars[harness.prop]; //someone may need to specify CSS-specific values AND non-CSS values, like if the element has an "x" property plus it's a standard DOM element. We allow people to distinguish by wrapping plugin-specific stuff in a css:{} object for example.
 
     cleanVars = _copyExcluding(vars, _reservedProps);
-    prevStartAt && _removeFromParent(prevStartAt.render(-1, true));
+
+    if (prevStartAt) {
+      _removeFromParent(prevStartAt.render(-1, true));
+
+      prevStartAt._lazy = 0;
+    }
 
     if (startAt) {
       _removeFromParent(tween._startAt = Tween.set(targets, _setDefaults({
@@ -6748,7 +7025,7 @@ _initTween = function _initTween(tween, time) {
       }
     }
 
-    tween._pt = 0;
+    tween._pt = tween._ptCache = 0;
     lazy = dur && _isNotFalse(lazy) || lazy && !dur;
 
     for (i = 0; i < targets.length; i++) {
@@ -6802,6 +7079,57 @@ _initTween = function _initTween(tween, time) {
   tween._initted = (!tween._op || tween._pt) && !overwritten; // if overwrittenProps resulted in the entire tween being killed, do NOT flag it as initted or else it may render for one tick.
 
   keyframes && time <= 0 && tl.render(_bigNum, true, true); // if there's a 0% keyframe, it'll render in the "before" state for any staggered/delayed animations thus when the following tween initializes, it'll use the "before" state instead of the "after" state as the initial values.
+},
+    _updatePropTweens = function _updatePropTweens(tween, property, value, start, startIsRelative, ratio, time) {
+  var ptCache = (tween._pt && tween._ptCache || (tween._ptCache = {}))[property],
+      pt,
+      lookup,
+      i;
+
+  if (!ptCache) {
+    ptCache = tween._ptCache[property] = [];
+    lookup = tween._ptLookup;
+    i = tween._targets.length;
+
+    while (i--) {
+      pt = lookup[i][property];
+
+      if (pt && pt.d && pt.d._pt) {
+        // it's a plugin, so find the nested PropTween
+        pt = pt.d._pt;
+
+        while (pt && pt.p !== property) {
+          pt = pt._next;
+        }
+      }
+
+      if (!pt) {
+        // there is no PropTween associated with that property, so we must FORCE one to be created and ditch out of this
+        // if the tween has other properties that already rendered at new positions, we'd normally have to rewind to put them back like tween.render(0, true) before forcing an _initTween(), but that can create another edge case like tweening a timeline's progress would trigger onUpdates to fire which could move other things around. It's better to just inform users that .resetTo() should ONLY be used for tweens that already have that property. For example, you can't gsap.to(...{ y: 0 }) and then tween.restTo("x", 200) for example.
+        _forceAllPropTweens = 1; // otherwise, when we _addPropTween() and it finds no change between the start and end values, it skips creating a PropTween (for efficiency...why tween when there's no difference?) but in this case we NEED that PropTween created so we can edit it.
+
+        tween.vars[property] = "+=0";
+
+        _initTween(tween, time);
+
+        _forceAllPropTweens = 0;
+        return 1;
+      }
+
+      ptCache.push(pt);
+    }
+  }
+
+  i = ptCache.length;
+
+  while (i--) {
+    pt = ptCache[i];
+    pt.s = (start || start === 0) && !startIsRelative ? start : pt.s + (start || 0) + ratio * pt.c;
+    pt.c = value - pt.s;
+    pt.e && (pt.e = _round(value) + getUnit(pt.e)); // mainly for CSSPlugin (end value)
+
+    pt.b && (pt.b = pt.s + getUnit(pt.b)); // (beginning value)
+  }
 },
     _addAliasesToVars = function _addAliasesToVars(targets, vars) {
   var harness = targets[0] ? _getCache(targets[0]).harness : 0,
@@ -6860,7 +7188,7 @@ _parseKeyframe = function _parseKeyframe(prop, obj, allProps, easeEach) {
     _parseFuncOrString = function _parseFuncOrString(value, tween, i, target, targets) {
   return _isFunction(value) ? value.call(tween, i, target, targets) : _isString(value) && ~value.indexOf("random(") ? _replaceRandom(value) : value;
 },
-    _staggerTweenProps = _callbackNames + "repeat,repeatDelay,yoyo,repeatRefresh,yoyoEase",
+    _staggerTweenProps = _callbackNames + "repeat,repeatDelay,yoyo,repeatRefresh,yoyoEase,autoRevert",
     _staggerPropsToSkip = {};
 
 _forEachName(_staggerTweenProps + ",id,stagger,delay,duration,paused,scrollTrigger", function (name) {
@@ -7092,6 +7420,7 @@ var Tween = /*#__PURE__*/function (_Animation2) {
 
         if (time === prevTime && !force && this._initted) {
           //could be during the repeatDelay part. No need to render and fire callbacks.
+          this._tTime = tTime;
           return this;
         }
 
@@ -7110,6 +7439,11 @@ var Tween = /*#__PURE__*/function (_Animation2) {
         if (_attemptInitTween(this, totalTime < 0 ? totalTime : time, force, suppressEvents)) {
           this._tTime = 0; // in constructor if immediateRender is true, we set _tTime to -_tinyNum to have the playhead cross the starting point but we can't leave _tTime as a negative number.
 
+          return this;
+        }
+
+        if (prevTime !== this._time) {
+          // rare edge case - during initialization, an onUpdate in the _startAt (.fromTo()) might force this tween to render at a different spot in which case we should ditch this render() call so that it doesn't revert the values.
           return this;
         }
 
@@ -7185,6 +7519,33 @@ var Tween = /*#__PURE__*/function (_Animation2) {
     this._ptLookup = [];
     this.timeline && this.timeline.invalidate();
     return _Animation2.prototype.invalidate.call(this);
+  };
+
+  _proto3.resetTo = function resetTo(property, value, start, startIsRelative) {
+    _tickerActive || _ticker.wake();
+    this._ts || this.play();
+    var time = Math.min(this._dur, (this._dp._time - this._start) * this._ts),
+        ratio;
+    this._initted || _initTween(this, time);
+    ratio = this._ease(time / this._dur); // don't just get tween.ratio because it may not have rendered yet.
+    // possible future addition to allow an object with multiple values to update, like tween.resetTo({x: 100, y: 200}); At this point, it doesn't seem worth the added kb given the fact that most users will likely opt for the convenient gsap.quickTo() way of interacting with this method.
+    // if (_isObject(property)) { // performance optimization
+    // 	for (p in property) {
+    // 		if (_updatePropTweens(this, p, property[p], value ? value[p] : null, start, ratio, time)) {
+    // 			return this.resetTo(property, value, start, startIsRelative); // if a PropTween wasn't found for the property, it'll get forced with a re-initialization so we need to jump out and start over again.
+    // 		}
+    // 	}
+    // } else {
+
+    if (_updatePropTweens(this, property, value, start, startIsRelative, ratio, time)) {
+      return this.resetTo(property, value, start, startIsRelative); // if a PropTween wasn't found for the property, it'll get forced with a re-initialization so we need to jump out and start over again.
+    } //}
+
+
+    _alignPlayhead(this, 0);
+
+    this.parent || _addLinkedListItem(this._dp, this, "_first", "_last", this._dp._sort ? "_start" : 0);
+    return this.render(0);
   };
 
   _proto3.kill = function kill(targets, vars) {
@@ -7580,6 +7941,17 @@ var _gsap = {
       return setter(target, p, unit ? value + unit : value, cache, 1);
     };
   },
+  quickTo: function quickTo(target, property, vars) {
+    var _merge2;
+
+    var tween = gsap.to(target, _merge((_merge2 = {}, _merge2[property] = "+=0.1", _merge2.paused = true, _merge2), vars || {})),
+        func = function func(value, start, startIsRelative) {
+      return tween.resetTo(property, value, start, startIsRelative);
+    };
+
+    func.tween = tween;
+    return func;
+  },
   isTweening: function isTweening(targets) {
     return _globalTimeline.getTweensOf(targets, true).length > 0;
   },
@@ -7790,7 +8162,7 @@ var gsap = _gsap.registerPlugin({
   }
 }, _buildModifierPlugin("roundProps", _roundModifier), _buildModifierPlugin("modifiers"), _buildModifierPlugin("snap", snap)) || _gsap; //to prevent the core plugins from being dropped via aggressive tree shaking, we must include them in the variable declaration in this way.
 
-Tween.version = Timeline.version = gsap.version = "3.9.1";
+Tween.version = Timeline.version = gsap.version = "3.10.3";
 _coreReady = 1;
 _windowExists() && _wake();
 var Power0 = _easeMap.Power0,
@@ -7827,31 +8199,31 @@ var Power0 = _easeMap.Power0,
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "gsap": () => (/* binding */ gsapWithCSS),
-/* harmony export */   "default": () => (/* binding */ gsapWithCSS),
+/* harmony export */   "Back": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Back),
+/* harmony export */   "Bounce": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Bounce),
 /* harmony export */   "CSSPlugin": () => (/* reexport safe */ _CSSPlugin_js__WEBPACK_IMPORTED_MODULE_1__.CSSPlugin),
-/* harmony export */   "TweenMax": () => (/* binding */ TweenMaxWithCSS),
-/* harmony export */   "TweenLite": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.TweenLite),
-/* harmony export */   "TimelineMax": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.TimelineMax),
-/* harmony export */   "TimelineLite": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.TimelineLite),
+/* harmony export */   "Circ": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Circ),
+/* harmony export */   "Cubic": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Cubic),
+/* harmony export */   "Elastic": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Elastic),
+/* harmony export */   "Expo": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Expo),
+/* harmony export */   "Linear": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Linear),
 /* harmony export */   "Power0": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Power0),
 /* harmony export */   "Power1": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Power1),
 /* harmony export */   "Power2": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Power2),
 /* harmony export */   "Power3": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Power3),
 /* harmony export */   "Power4": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Power4),
-/* harmony export */   "Linear": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Linear),
 /* harmony export */   "Quad": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Quad),
-/* harmony export */   "Cubic": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Cubic),
 /* harmony export */   "Quart": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Quart),
 /* harmony export */   "Quint": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Quint),
-/* harmony export */   "Strong": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Strong),
-/* harmony export */   "Elastic": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Elastic),
-/* harmony export */   "Back": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Back),
-/* harmony export */   "SteppedEase": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.SteppedEase),
-/* harmony export */   "Bounce": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Bounce),
 /* harmony export */   "Sine": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Sine),
-/* harmony export */   "Expo": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Expo),
-/* harmony export */   "Circ": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Circ)
+/* harmony export */   "SteppedEase": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.SteppedEase),
+/* harmony export */   "Strong": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Strong),
+/* harmony export */   "TimelineLite": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.TimelineLite),
+/* harmony export */   "TimelineMax": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.TimelineMax),
+/* harmony export */   "TweenLite": () => (/* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.TweenLite),
+/* harmony export */   "TweenMax": () => (/* binding */ TweenMaxWithCSS),
+/* harmony export */   "default": () => (/* binding */ gsapWithCSS),
+/* harmony export */   "gsap": () => (/* binding */ gsapWithCSS)
 /* harmony export */ });
 /* harmony import */ var _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gsap-core.js */ "./node_modules/gsap/gsap-core.js");
 /* harmony import */ var _CSSPlugin_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CSSPlugin.js */ "./node_modules/gsap/CSSPlugin.js");
@@ -36211,6 +36583,16 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
+
+/***/ }),
+
+/***/ "./node_modules/swup/dist/swup.min.js":
+/*!********************************************!*\
+  !*** ./node_modules/swup/dist/swup.min.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+(function e(t,n){if(true)module.exports=n();else {}})(window,function(){return function(e){var t={};function n(r){if(t[r]){return t[r].exports}var i=t[r]={i:r,l:false,exports:{}};e[r].call(i.exports,i,i.exports,n);i.l=true;return i.exports}n.m=e;n.c=t;n.d=function(e,t,r){if(!n.o(e,t)){Object.defineProperty(e,t,{enumerable:true,get:r})}};n.r=function(e){if(typeof Symbol!=="undefined"&&Symbol.toStringTag){Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})}Object.defineProperty(e,"__esModule",{value:true})};n.t=function(e,t){if(t&1)e=n(e);if(t&8)return e;if(t&4&&typeof e==="object"&&e&&e.__esModule)return e;var r=Object.create(null);n.r(r);Object.defineProperty(r,"default",{enumerable:true,value:e});if(t&2&&typeof e!="string")for(var i in e)n.d(r,i,function(t){return e[t]}.bind(null,i));return r};n.n=function(e){var t=e&&e.__esModule?function t(){return e["default"]}:function t(){return e};n.d(t,"a",t);return t};n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)};n.p="";return n(n.s=2)}([function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});t.Link=t.markSwupElements=t.getCurrentUrl=t.transitionEnd=t.fetch=t.getDataFromHtml=t.createHistoryRecord=t.classify=undefined;var r=n(8);var i=w(r);var a=n(9);var o=w(a);var s=n(10);var u=w(s);var l=n(11);var c=w(l);var f=n(12);var d=w(f);var h=n(13);var p=w(h);var v=n(14);var g=w(v);var m=n(15);var y=w(m);function w(e){return e&&e.__esModule?e:{default:e}}var b=t.classify=i.default;var E=t.createHistoryRecord=o.default;var P=t.getDataFromHtml=u.default;var _=t.fetch=c.default;var k=t.transitionEnd=d.default;var S=t.getCurrentUrl=p.default;var O=t.markSwupElements=g.default;var j=t.Link=y.default},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=t.query=function e(t){var n=arguments.length>1&&arguments[1]!==undefined?arguments[1]:document;if(typeof t!=="string"){return t}return n.querySelector(t)};var i=t.queryAll=function e(t){var n=arguments.length>1&&arguments[1]!==undefined?arguments[1]:document;if(typeof t!=="string"){return t}return Array.prototype.slice.call(n.querySelectorAll(t))}},function(e,t,n){"use strict";var r=n(3);var i=a(r);function a(e){return e&&e.__esModule?e:{default:e}}e.exports=i.default},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n){if(Object.prototype.hasOwnProperty.call(n,r)){e[r]=n[r]}}}return e};var i=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||false;r.configurable=true;if("value"in r)r.writable=true;Object.defineProperty(e,r.key,r)}}return function(t,n,r){if(n)e(t.prototype,n);if(r)e(t,r);return t}}();var a=n(4);var o=M(a);var s=n(6);var u=M(s);var l=n(7);var c=M(l);var f=n(16);var d=M(f);var h=n(17);var p=M(h);var v=n(18);var g=M(v);var m=n(19);var y=M(m);var w=n(20);var b=M(w);var E=n(21);var P=M(E);var _=n(22);var k=M(_);var S=n(23);var O=n(1);var j=n(0);function M(e){return e&&e.__esModule?e:{default:e}}function H(e,t){if(!(e instanceof t)){throw new TypeError("Cannot call a class as a function")}}var L=function(){function e(t){H(this,e);var n={animateHistoryBrowsing:false,animationSelector:'[class*="transition-"]',linkSelector:'a[href^="'+window.location.origin+'"]:not([data-no-swup]), a[href^="/"]:not([data-no-swup]), a[href^="#"]:not([data-no-swup])',cache:true,containers:["#swup"],requestHeaders:{"X-Requested-With":"swup",Accept:"text/html, application/xhtml+xml"},plugins:[],skipPopStateHandling:function e(t){return!(t.state&&t.state.source==="swup")}};var i=r({},n,t);this._handlers={animationInDone:[],animationInStart:[],animationOutDone:[],animationOutStart:[],animationSkipped:[],clickLink:[],contentReplaced:[],disabled:[],enabled:[],openPageInNewTab:[],pageLoaded:[],pageRetrievedFromCache:[],pageView:[],popState:[],samePage:[],samePageWithHash:[],serverError:[],transitionStart:[],transitionEnd:[],willReplaceContent:[]};this.scrollToElement=null;this.preloadPromise=null;this.options=i;this.plugins=[];this.transition={};this.delegatedListeners={};this.boundPopStateHandler=this.popStateHandler.bind(this);this.cache=new u.default;this.cache.swup=this;this.loadPage=c.default;this.renderPage=d.default;this.triggerEvent=p.default;this.on=g.default;this.off=y.default;this.updateTransition=b.default;this.getAnimationPromises=P.default;this.getPageData=k.default;this.log=function(){};this.use=S.use;this.unuse=S.unuse;this.findPlugin=S.findPlugin;this.enable()}i(e,[{key:"enable",value:function e(){var t=this;if(typeof Promise==="undefined"){console.warn("Promise is not supported");return}this.delegatedListeners.click=(0,o.default)(document,this.options.linkSelector,"click",this.linkClickHandler.bind(this));window.addEventListener("popstate",this.boundPopStateHandler);var n=(0,j.getDataFromHtml)(document.documentElement.outerHTML,this.options.containers);n.url=n.responseURL=(0,j.getCurrentUrl)();if(this.options.cache){this.cache.cacheUrl(n)}(0,j.markSwupElements)(document.documentElement,this.options.containers);this.options.plugins.forEach(function(e){t.use(e)});window.history.replaceState(Object.assign({},window.history.state,{url:window.location.href,random:Math.random(),source:"swup"}),document.title,window.location.href);this.triggerEvent("enabled");document.documentElement.classList.add("swup-enabled");this.triggerEvent("pageView")}},{key:"destroy",value:function e(){var t=this;this.delegatedListeners.click.destroy();window.removeEventListener("popstate",this.boundPopStateHandler);this.cache.empty();this.options.plugins.forEach(function(e){t.unuse(e)});(0,O.queryAll)("[data-swup]").forEach(function(e){e.removeAttribute("data-swup")});this.off();this.triggerEvent("disabled");document.documentElement.classList.remove("swup-enabled")}},{key:"linkClickHandler",value:function e(t){if(!t.metaKey&&!t.ctrlKey&&!t.shiftKey&&!t.altKey){if(t.button===0){this.triggerEvent("clickLink",t);t.preventDefault();var n=new j.Link(t.delegateTarget);if(n.getAddress()==(0,j.getCurrentUrl)()||n.getAddress()==""){if(n.getHash()!=""){this.triggerEvent("samePageWithHash",t);var r=document.querySelector(n.getHash());if(r!=null){history.replaceState({url:n.getAddress()+n.getHash(),random:Math.random(),source:"swup"},document.title,n.getAddress()+n.getHash())}else{console.warn("Element for offset not found ("+n.getHash()+")")}}else{this.triggerEvent("samePage",t)}}else{if(n.getHash()!=""){this.scrollToElement=n.getHash()}var i=t.delegateTarget.getAttribute("data-swup-transition");this.loadPage({url:n.getAddress(),customTransition:i},false)}}}else{this.triggerEvent("openPageInNewTab",t)}}},{key:"popStateHandler",value:function e(t){if(this.options.skipPopStateHandling(t))return;var n=new j.Link(t.state?t.state.url:window.location.pathname);if(n.getHash()!==""){this.scrollToElement=n.getHash()}else{t.preventDefault()}this.triggerEvent("popState",t);this.loadPage({url:n.getAddress()},t)}}]);return e}();t.default=L},function(e,t,n){var r=n(5);function i(e,t,n,r,i){var o=a.apply(this,arguments);e.addEventListener(n,o,i);return{destroy:function(){e.removeEventListener(n,o,i)}}}function a(e,t,n,i){return function(n){n.delegateTarget=r(n.target,t);if(n.delegateTarget){i.call(e,n)}}}e.exports=i},function(e,t){var n=9;if(typeof Element!=="undefined"&&!Element.prototype.matches){var r=Element.prototype;r.matches=r.matchesSelector||r.mozMatchesSelector||r.msMatchesSelector||r.oMatchesSelector||r.webkitMatchesSelector}function i(e,t){while(e&&e.nodeType!==n){if(typeof e.matches==="function"&&e.matches(t)){return e}e=e.parentNode}}e.exports=i},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||false;r.configurable=true;if("value"in r)r.writable=true;Object.defineProperty(e,r.key,r)}}return function(t,n,r){if(n)e(t.prototype,n);if(r)e(t,r);return t}}();function i(e,t){if(!(e instanceof t)){throw new TypeError("Cannot call a class as a function")}}var a=t.Cache=function(){function e(){i(this,e);this.pages={};this.last=null}r(e,[{key:"cacheUrl",value:function e(t){if(t.url in this.pages===false){this.pages[t.url]=t}this.last=this.pages[t.url];this.swup.log("Cache ("+Object.keys(this.pages).length+")",this.pages)}},{key:"getPage",value:function e(t){return this.pages[t]}},{key:"getCurrentPage",value:function e(){return this.getPage(window.location.pathname+window.location.search)}},{key:"exists",value:function e(t){return t in this.pages}},{key:"empty",value:function e(){this.pages={};this.last=null;this.swup.log("Cache cleared")}},{key:"remove",value:function e(t){delete this.pages[t]}}]);return e}();t.default=a},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n){if(Object.prototype.hasOwnProperty.call(n,r)){e[r]=n[r]}}}return e};var i=n(0);var a=function e(t,n){var a=this;var o=[],s=void 0;var u=function e(){a.triggerEvent("animationOutStart");document.documentElement.classList.add("is-changing");document.documentElement.classList.add("is-leaving");document.documentElement.classList.add("is-animating");if(n){document.documentElement.classList.add("is-popstate")}document.documentElement.classList.add("to-"+(0,i.classify)(t.url));o=a.getAnimationPromises("out");Promise.all(o).then(function(){a.triggerEvent("animationOutDone")});if(!n){var r=void 0;if(a.scrollToElement!=null){r=t.url+a.scrollToElement}else{r=t.url}(0,i.createHistoryRecord)(r)}};this.triggerEvent("transitionStart",n);if(t.customTransition!=null){this.updateTransition(window.location.pathname,t.url,t.customTransition);document.documentElement.classList.add("to-"+(0,i.classify)(t.customTransition))}else{this.updateTransition(window.location.pathname,t.url)}if(!n||this.options.animateHistoryBrowsing){u()}else{this.triggerEvent("animationSkipped")}if(this.cache.exists(t.url)){s=new Promise(function(e){e()});this.triggerEvent("pageRetrievedFromCache")}else{if(!this.preloadPromise||this.preloadPromise.route!=t.url){s=new Promise(function(e,n){(0,i.fetch)(r({},t,{headers:a.options.requestHeaders}),function(r){if(r.status===500){a.triggerEvent("serverError");n(t.url);return}else{var i=a.getPageData(r);if(i!=null){i.url=t.url}else{n(t.url);return}a.cache.cacheUrl(i);a.triggerEvent("pageLoaded")}e()})})}else{s=this.preloadPromise}}Promise.all(o.concat([s])).then(function(){a.renderPage(a.cache.getPage(t.url),n);a.preloadPromise=null}).catch(function(e){a.options.skipPopStateHandling=function(){window.location=e;return true};window.history.go(-1)})};t.default=a},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=function e(t){var n=t.toString().toLowerCase().replace(/\s+/g,"-").replace(/\//g,"-").replace(/[^\w\-]+/g,"").replace(/\-\-+/g,"-").replace(/^-+/,"").replace(/-+$/,"");if(n[0]==="/")n=n.splice(1);if(n==="")n="homepage";return n};t.default=r},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=function e(t){window.history.pushState({url:t||window.location.href.split(window.location.hostname)[1],random:Math.random(),source:"swup"},document.getElementsByTagName("title")[0].innerText,t||window.location.href.split(window.location.hostname)[1])};t.default=r},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(e){return typeof e}:function(e){return e&&typeof Symbol==="function"&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};var i=n(1);var a=function e(t,n){var a=document.createElement("html");a.innerHTML=t;var o=[];var s=function e(t){if(a.querySelector(n[t])==null){return{v:null}}else{(0,i.queryAll)(n[t]).forEach(function(e,r){(0,i.queryAll)(n[t],a)[r].setAttribute("data-swup",o.length);o.push((0,i.queryAll)(n[t],a)[r].outerHTML)})}};for(var u=0;u<n.length;u++){var l=s(u);if((typeof l==="undefined"?"undefined":r(l))==="object")return l.v}var c={title:a.querySelector("title").innerText,pageClass:a.querySelector("body").className,originalContent:t,blocks:o};a.innerHTML="";a=null;return c};t.default=a},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n){if(Object.prototype.hasOwnProperty.call(n,r)){e[r]=n[r]}}}return e};var i=function e(t){var n=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var i={url:window.location.pathname+window.location.search,method:"GET",data:null,headers:{}};var a=r({},i,t);var o=new XMLHttpRequest;o.onreadystatechange=function(){if(o.readyState===4){if(o.status!==500){n(o)}else{n(o)}}};o.open(a.method,a.url,true);Object.keys(a.headers).forEach(function(e){o.setRequestHeader(e,a.headers[e])});o.send(a.data);return o};t.default=i},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=function e(){var t=document.createElement("div");var n={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(var r in n){if(t.style[r]!==undefined){return n[r]}}return false};t.default=r},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=function e(){return window.location.pathname+window.location.search};t.default=r},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=n(1);var i=function e(t,n){var i=0;var a=function e(a){if(t.querySelector(n[a])==null){console.warn("Element "+n[a]+" is not in current page.")}else{(0,r.queryAll)(n[a]).forEach(function(e,o){(0,r.queryAll)(n[a],t)[o].setAttribute("data-swup",i);i++})}};for(var o=0;o<n.length;o++){a(o)}};t.default=i},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||false;r.configurable=true;if("value"in r)r.writable=true;Object.defineProperty(e,r.key,r)}}return function(t,n,r){if(n)e(t.prototype,n);if(r)e(t,r);return t}}();function i(e,t){if(!(e instanceof t)){throw new TypeError("Cannot call a class as a function")}}var a=function(){function e(t){i(this,e);if(t instanceof Element||t instanceof SVGElement){this.link=t}else{this.link=document.createElement("a");this.link.href=t}}r(e,[{key:"getPath",value:function e(){var t=this.link.pathname;if(t[0]!=="/"){t="/"+t}return t}},{key:"getAddress",value:function e(){var t=this.link.pathname+this.link.search;if(this.link.getAttribute("xlink:href")){t=this.link.getAttribute("xlink:href")}if(t[0]!=="/"){t="/"+t}return t}},{key:"getHash",value:function e(){return this.link.hash}}]);return e}();t.default=a},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n){if(Object.prototype.hasOwnProperty.call(n,r)){e[r]=n[r]}}}return e};var i=n(1);var a=n(0);var o=function e(t,n){var i=this;document.documentElement.classList.remove("is-leaving");var o=new a.Link(t.responseURL);if(window.location.pathname!==o.getPath()){window.history.replaceState({url:o.getPath(),random:Math.random(),source:"swup"},document.title,o.getPath());this.cache.cacheUrl(r({},t,{url:o.getPath()}))}if(!n||this.options.animateHistoryBrowsing){document.documentElement.classList.add("is-rendering")}this.triggerEvent("willReplaceContent",n);for(var s=0;s<t.blocks.length;s++){document.body.querySelector('[data-swup="'+s+'"]').outerHTML=t.blocks[s]}document.title=t.title;this.triggerEvent("contentReplaced",n);this.triggerEvent("pageView",n);if(!this.options.cache){this.cache.empty()}setTimeout(function(){if(!n||i.options.animateHistoryBrowsing){i.triggerEvent("animationInStart");document.documentElement.classList.remove("is-animating")}},10);if(!n||this.options.animateHistoryBrowsing){var u=this.getAnimationPromises("in");Promise.all(u).then(function(){i.triggerEvent("animationInDone");i.triggerEvent("transitionEnd",n);document.documentElement.className.split(" ").forEach(function(e){if(new RegExp("^to-").test(e)||e==="is-changing"||e==="is-rendering"||e==="is-popstate"){document.documentElement.classList.remove(e)}})})}else{this.triggerEvent("transitionEnd",n)}this.scrollToElement=null};t.default=o},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=function e(t,n){this._handlers[t].forEach(function(e){try{e(n)}catch(e){console.error(e)}});var r=new CustomEvent("swup:"+t,{detail:t});document.dispatchEvent(r)};t.default=r},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=function e(t,n){if(this._handlers[t]){this._handlers[t].push(n)}else{console.warn("Unsupported event "+t+".")}};t.default=r},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=function e(t,n){var r=this;if(t!=null){if(n!=null){if(this._handlers[t]&&this._handlers[t].filter(function(e){return e===n}).length){var i=this._handlers[t].filter(function(e){return e===n})[0];var a=this._handlers[t].indexOf(i);if(a>-1){this._handlers[t].splice(a,1)}}else{console.warn("Handler for event '"+t+"' no found.")}}else{this._handlers[t]=[]}}else{Object.keys(this._handlers).forEach(function(e){r._handlers[e]=[]})}};t.default=r},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=function e(t,n,r){this.transition={from:t,to:n,custom:r}};t.default=r},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=n(1);var i=n(0);var a=function e(){var t=[];var n=(0,r.queryAll)(this.options.animationSelector);n.forEach(function(e){var n=new Promise(function(t){e.addEventListener((0,i.transitionEnd)(),function(n){if(e==n.target){t()}})});t.push(n)});return t};t.default=a},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=n(0);var i=function e(t){var n=t.responseText;var i=(0,r.getDataFromHtml)(n,this.options.containers);if(i){i.responseURL=t.responseURL?t.responseURL:window.location.href}else{console.warn("Received page is invalid.");return null}return i};t.default=i},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:true});var r=t.use=function e(t){if(!t.isSwupPlugin){console.warn("Not swup plugin instance "+t+".");return}this.plugins.push(t);t.swup=this;if(typeof t._beforeMount==="function"){t._beforeMount()}t.mount();return this.plugins};var i=t.unuse=function e(t){var n=void 0;if(typeof t==="string"){n=this.plugins.find(function(e){return t===e.name})}else{n=t}if(!n){console.warn("No such plugin.");return}n.unmount();if(typeof n._afterUnmount==="function"){n._afterUnmount()}var r=this.plugins.indexOf(n);this.plugins.splice(r,1);return this.plugins};var a=t.findPlugin=function e(t){return this.plugins.find(function(e){return t===e.name})}}])});
 
 /***/ })
 

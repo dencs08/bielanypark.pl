@@ -23,7 +23,7 @@
 .contact-form .input-text {
   display: block;
   width: 100%;
-  border: 0.5px solid #d8d8d880 !important;
+  border: 0.5px solid rgba(216, 216, 216, 0.5019607843) !important;
   padding: 2.1em 2.5em;
   background-color: #f8f3f1 !important;
   color: #36393b !important;

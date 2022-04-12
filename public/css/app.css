@@ -6180,6 +6180,14 @@
   color: #777777 !important;
 }
 
+.font-color-primaryColor {
+  color: #84aba4;
+}
+
+.font-color-secondaryColor {
+  color: #2c8cb3;
+}
+
 .font-family-primary {
   font-family: "Cormorant" !important;
 }
@@ -6202,6 +6210,13 @@
 
 .font-size-xl {
   font-size: clamp(0.7rem, 0.65vw, 1rem);
+}
+
+.bg_text {
+  font-family: Cormorant;
+  font-size: clamp(2rem, 10vw, 12rem);
+  color: #e8e8e8;
+  pointer-events: none;
 }
 
 .container {
@@ -6235,7 +6250,7 @@
   width: clamp(5em, 25vw, 35em);
   border-radius: 1em;
   padding: 1.5em 3.5em;
-  box-shadow: 5px 10px #0e0e0ea9;
+  box-shadow: 5px 10px rgba(14, 14, 14, 0.662745098);
 }
 
 .card-header {
@@ -6280,13 +6295,13 @@
 
 .underline:after {
   background: none repeat scroll 0 0 transparent;
-  bottom: -10%;
+  bottom: -0.1em;
   content: "";
   display: block;
   height: 2px;
   left: 0%;
   position: absolute;
-  background: #84aba4;
+  background: #36393b;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 100%;
 }
@@ -6294,6 +6309,33 @@
 .underline:hover:after {
   width: 90%;
   left: 0;
+}
+
+.underline_light {
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.underline_light:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: -0.05em;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 0%;
+  position: absolute;
+  background: #ebebeb;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s, background 0.15s ease 0s;
+  width: 100%;
+}
+
+.underline_light:hover:after {
+  width: 90%;
+  left: 0;
+  background: #2c8cb3 !important;
 }
 
 .headerline::before {
@@ -6321,6 +6363,14 @@
 
 .vh-50 {
   height: 50vh;
+}
+
+.vh-75 {
+  height: 75vh;
+}
+
+.vh-85 {
+  height: 85vh;
 }
 
 .vh-100 {
@@ -6371,13 +6421,6 @@
 
 .bg-darker {
   background-color: #e7e1de;
-}
-
-.bg_text {
-  font-family: Cormorant;
-  font-size: clamp(2rem, 10vw, 12rem);
-  color: #e8e8e8;
-  pointer-events: none;
 }
 
 @media (max-width: 768px) {
@@ -6485,4 +6528,30 @@ hr {
 a {
   color: #36393b;
   text-decoration: none;
+}
+
+.transition-fade {
+  opacity: 1;
+  transition: 500ms;
+  transform: translateX(0);
+  transform-origin: left;
+}
+
+html.is-animating .transition-fade {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+html.is-leaving .transition-fade {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.transition-swipe {
+  transition: 500ms;
+  transform: translateX(0);
+}
+
+html.is-animating .transition-swipe {
+  transform: translateX(100px);
 }
