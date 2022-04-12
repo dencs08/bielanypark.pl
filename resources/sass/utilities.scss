@@ -82,13 +82,13 @@
 
 .underline:after {
     background: none repeat scroll 0 0 transparent;
-    bottom: -10%;
+    bottom: -0.1em;
     content: "";
     display: block;
     height: 2px;
     left: 0%;
     position: absolute;
-    background: $primary-color;
+    background: $font-color-primary;
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
     width: 100%;
 }
@@ -96,6 +96,40 @@
 .underline:hover:after {
     width: 90%;
     left: 0;
+}
+
+.underline_light {
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    // color: $font-color-tertiary;
+
+    transition: all 0.5s;
+
+    cursor: pointer;
+}
+
+.underline_light:hover {
+    // color: $font-color-secondary;
+}
+
+.underline_light:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: -0.05em;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 0%;
+    position: absolute;
+    background: $font-color-secondary;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s, background 0.15s ease 0s;
+    width: 100%;
+}
+
+.underline_light:hover:after {
+    width: 90%;
+    left: 0;
+    background: $secondary-color !important;
 }
 
 .headerline::before {
@@ -127,6 +161,14 @@
 
 .vh-50 {
     height: 50vh;
+}
+
+.vh-75 {
+    height: 75vh;
+}
+
+.vh-85 {
+    height: 85vh;
 }
 
 .vh-100 {
@@ -177,15 +219,6 @@
 
 .bg-darker {
     background-color: $body-bg-color-darker;
-}
-
-.bg_text {
-    font-family: Cormorant;
-    font-size: clamp(2rem, 10vw, 12rem);
-
-    color: $font-color-tertiary;
-
-    pointer-events: none;
 }
 
 @media (max-width: $md-screen-size) {

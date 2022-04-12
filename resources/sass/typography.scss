@@ -22,6 +22,14 @@
     color: $font-color-sixth !important;
 }
 
+.font-color-primaryColor {
+    color: $primary-color;
+}
+
+.font-color-secondaryColor {
+    color: $secondary-color;
+}
+
 .font-family-primary {
     font-family: $font-family-primary !important;
 }
@@ -44,4 +52,13 @@
 
 .font-size-xl {
     font-size: clamp(0.7rem, 0.65vw, 1rem);
+}
+
+.bg_text {
+    font-family: Cormorant;
+    font-size: clamp(2rem, 10vw, 12rem);
+
+    color: $font-color-tertiary;
+
+    pointer-events: none;
 }
