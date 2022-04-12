@@ -14,8 +14,8 @@
         </div>
     </div>
     <div class="container">
-        <h2 class="font-color-secondary">Myrka 9</h2>
-        <h2 class="font-color-secondary">Legnica</h2>
+        <h2 class="font-color-tertiary">Myrka 9</h2>
+        <h2 class="font-color-tertiary">Legnica</h2>
     </div>
 </section>
 

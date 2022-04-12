@@ -6,10 +6,10 @@
             <h4 class="mb-5 font-color-fourth">GDZIE TERAZ?</h4>
 
             <div class="font-family-secondary font-color-secondary mb-10">
-                <a href="/start" class="mx-5">Start</a>
-                <a href="/wybor3d" class="mx-5">Wybór 3D</a>
-                <a href="/mieszkania" class="mx-5">Mieszkania</a>
-                <a href="/kontakt" class="mx-5">Kontakt</a>
+                <a href="/start" class="mx-5"><span class="underline_light">Start</span></a>
+                <a href="/wybor3d" class="mx-5"><span class="underline_light">Wybór 3D</span></a>
+                <a href="/mieszkania" class="mx-5"><span class="underline_light">Mieszkania</span></a>
+                <a href="/kontakt" class="mx-5"><span class="underline_light">Kontakt</span></a>
             </div>
         </div>
 

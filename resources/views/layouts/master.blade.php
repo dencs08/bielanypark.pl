@@ -13,10 +13,10 @@
     </head>
     <body class="antialiased">
         <x-navbar/>
-        <div id="web-content">
+        <div id="swup" class="transition-fade">
             @yield('content')
         </div>
+        @yield('js')
     </body>
     <script src="js/app.js"></script>
-    @yield('js')
 </html>

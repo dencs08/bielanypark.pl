@@ -2,8 +2,7 @@
 @section('title', 'Start')
 @section('content')
 
-<div class="container">
-    <h1>@yield('title')</h1>
-</div>
+    <x-WebStillInDev/>
+    <x-MainFooterDark/>
 
 @endsection
