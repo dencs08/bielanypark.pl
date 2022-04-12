@@ -10,7 +10,10 @@
     <script src="{{ asset('js/mieszkania.js') }}"></script>
 @endsection
 
-<section id="mieszkania">
+<x-WebStillInDev/>
+<x-MainFooterDark/>
+
+<!-- <section id="mieszkania">
     <div class="container text-center vh-100 display-grid-center">
         <div>
             <div id="app" class="app mb-5 p-75 mt-4">
@@ -41,6 +44,6 @@
         </div>
 
     </div>
-</section>
+</section> -->
 
 @endsection
