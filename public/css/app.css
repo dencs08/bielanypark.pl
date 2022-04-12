@@ -6156,6 +6156,54 @@
   text-decoration: underline;
 }
 
+.font-color-primary {
+  color: #36393b !important;
+}
+
+.font-color-secondary {
+  color: #ebebeb !important;
+}
+
+.font-color-tertiary {
+  color: #e8e8e8 !important;
+}
+
+.font-color-fourth {
+  color: #bbbbbb !important;
+}
+
+.font-color-fifth {
+  color: #535353 !important;
+}
+
+.font-color-sixth {
+  color: #777777 !important;
+}
+
+.font-family-primary {
+  font-family: "Cormorant" !important;
+}
+
+.font-family-secondary {
+  font-family: "Poppins" !important;
+}
+
+.font-size-s {
+  font-size: clamp(0.8rem, 0.75vw, 1.15rem);
+}
+
+.font-size-m {
+  font-size: clamp(1rem, 1vw, 1.45rem);
+}
+
+.font-size-l {
+  font-size: clamp(1.2rem, 1.2vw, 1.65rem);
+}
+
+.font-size-xl {
+  font-size: clamp(0.7rem, 0.65vw, 1rem);
+}
+
 .container {
   width: 95%;
   margin-right: auto;
@@ -6206,54 +6254,6 @@
   margin-right: 40px;
 }
 
-.font-color-primary {
-  color: #36393b !important;
-}
-
-.font-color-secondary {
-  color: #ebebeb !important;
-}
-
-.font-color-tertiary {
-  color: #e8e8e8 !important;
-}
-
-.font-color-fourth {
-  color: #bbbbbb !important;
-}
-
-.font-color-fifth {
-  color: #535353 !important;
-}
-
-.font-color-sixth {
-  color: #777777 !important;
-}
-
-.font-family-primary {
-  font-family: "Cormorant" !important;
-}
-
-.font-family-secondary {
-  font-family: "Poppins" !important;
-}
-
-.font-size-s {
-  font-size: clamp(0.8rem, 0.75vw, 1.15rem);
-}
-
-.font-size-m {
-  font-size: clamp(1rem, 1vw, 1.45rem);
-}
-
-.font-size-l {
-  font-size: clamp(1.2rem, 1.2vw, 1.65rem);
-}
-
-.font-size-xl {
-  font-size: clamp(0.7rem, 0.65vw, 1rem);
-}
-
 .section-divider {
   display: block;
   width: 90%;
@@ -6270,8 +6270,8 @@
   text-decoration: none;
   display: inline-block;
   position: relative;
-  color: #e8e8e8;
   transition: all 0.5s;
+  cursor: pointer;
 }
 
 .underline:hover {
@@ -6280,10 +6280,10 @@
 
 .underline:after {
   background: none repeat scroll 0 0 transparent;
-  bottom: -3px;
+  bottom: -10%;
   content: "";
   display: block;
-  height: 1px;
+  height: 2px;
   left: 0%;
   position: absolute;
   background: #84aba4;

@@ -1,0 +1,47 @@
+.font-color-primary {
+    color: $font-color-primary !important;
+}
+
+.font-color-secondary {
+    color: $font-color-secondary !important;
+}
+
+.font-color-tertiary {
+    color: $font-color-tertiary !important;
+}
+
+.font-color-fourth {
+    color: $font-color-fourth !important;
+}
+
+.font-color-fifth {
+    color: $font-color-fifth !important;
+}
+
+.font-color-sixth {
+    color: $font-color-sixth !important;
+}
+
+.font-family-primary {
+    font-family: $font-family-primary !important;
+}
+
+.font-family-secondary {
+    font-family: $font-family-secondary !important;
+}
+
+.font-size-s {
+    font-size: clamp(0.8rem, 0.75vw, 1.15rem);
+}
+
+.font-size-m {
+    font-size: clamp(1rem, 1vw, 1.45rem);
+}
+
+.font-size-l {
+    font-size: clamp(1.2rem, 1.2vw, 1.65rem);
+}
+
+.font-size-xl {
+    font-size: clamp(0.7rem, 0.65vw, 1rem);
+}
