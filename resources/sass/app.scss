@@ -95,3 +95,29 @@ a {
     color: $font-color-primary;
     text-decoration: none;
 }
+
+.transition-fade {
+    opacity: 1;
+    transition: 500ms;
+    transform: translateX(0);
+    transform-origin: left;
+}
+
+html.is-animating .transition-fade {
+    opacity: 1;
+    transform: translateX(100%);
+}
+
+html.is-leaving .transition-fade {
+    opacity: 0;
+    transform: translateX(-100%);
+}
+
+.transition-swipe {
+    transition: 500ms;
+    transform: translateX(0);
+}
+
+html.is-animating .transition-swipe {
+    transform: translateX(100px);
+}
