@@ -14,14 +14,18 @@ const mix = require('laravel-mix');
 mix.js([
     'resources/js/components/navbar.js',
     'resources/js/gsapAnims.js',
-    'resources/js/app.js'
+    'resources/js/app.js',
+    'resources/js/locomotive-scroll.js'
 ], 'public/js/app.js').version()
     .js([
-        'resources/js/contact.js'
+        'resources/js/contact.js',
     ], 'public/js/contact.js').version()
     .js([
-        'resources/js/mieszkania.js'
+        'resources/js/mieszkania.js',
     ], 'public/js/mieszkania.js').version()
+    .js([
+        'resources/js/start.js',
+    ], 'public/js/start.js').version()
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/start.scss', 'public/css')
     .sass('resources/sass/mieszkania.scss', 'public/css')
