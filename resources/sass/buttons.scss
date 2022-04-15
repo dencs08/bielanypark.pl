@@ -33,3 +33,53 @@
 
     border-radius: 100px;
 }
+
+.magnetic {
+    margin: -100px;
+    padding: 100px;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.my-button {
+    background-color: #fff;
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    border: 1px solid $font-color-fourth;
+    cursor: pointer;
+    transition: 0.5s background-color, 0.5s box-shadow;
+
+    .arrow-magnet {
+        fill: $font-color-primary !important;
+        transition: 0.25s;
+    }
+}
+
+.my-button:hover {
+    color: $font-color-primary;
+    background-color: $font-color-fifth;
+    transition: 0.5s background-color, 0.5s box-shadow;
+    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.5);
+
+    .arrow-magnet {
+        fill: #fff !important;
+        transition: 0.25s;
+    }
+}
+
+.magnetic-menu {
+    margin: -100px;
+    padding: 100px;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.my-button-menu {
+    transition: 0.5s background-color, 0.5s box-shadow, scale 0.5;
+}
+
+.my-button-menu:hover {
+    transition: 0.5s background-color, 0.5s box-shadow, scale 0.5;
+    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
+}

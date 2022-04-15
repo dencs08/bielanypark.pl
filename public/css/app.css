@@ -5940,6 +5940,135 @@
     display: none !important;
   }
 }
+/*! locomotive-scroll v4.1.3 | MIT License | https://github.com/locomotivemtl/locomotive-scroll */
+html.has-scroll-smooth {
+  overflow: hidden;
+}
+
+html.has-scroll-dragging {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.has-scroll-smooth body {
+  overflow: hidden;
+}
+
+.has-scroll-smooth [data-scroll-container] {
+  min-height: 100vh;
+}
+
+[data-scroll-direction=horizontal] [data-scroll-container] {
+  height: 100vh;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+[data-scroll-direction=horizontal] [data-scroll-section] {
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  height: 100%;
+}
+
+.c-scrollbar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 11px;
+  height: 100%;
+  transform-origin: center right;
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0;
+}
+
+.c-scrollbar:hover {
+  transform: scaleX(1.45);
+}
+
+.c-scrollbar:hover, .has-scroll-scrolling .c-scrollbar, .has-scroll-dragging .c-scrollbar {
+  opacity: 1;
+}
+
+[data-scroll-direction=horizontal] .c-scrollbar {
+  width: 100%;
+  height: 10px;
+  top: auto;
+  bottom: 0;
+  transform: scaleY(1);
+}
+
+[data-scroll-direction=horizontal] .c-scrollbar:hover {
+  transform: scaleY(1.3);
+}
+
+.c-scrollbar_thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.5;
+  width: 7px;
+  border-radius: 10px;
+  margin: 2px;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.has-scroll-dragging .c-scrollbar_thumb {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+[data-scroll-direction=horizontal] .c-scrollbar_thumb {
+  right: auto;
+  bottom: 0;
+}
+
+.cursor {
+  position: absolute;
+  background-color: #fff;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  transition: 0.3s transform, 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33) opacity;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  z-index: 10000;
+  transform: scale(1);
+  transform: translate(-20px, -20px);
+  display: grid;
+  place-items: center;
+}
+.cursor .arrow-wrapper {
+  display: grid;
+  place-items: center;
+}
+.cursor .arrow-wrapper svg {
+  height: 60%;
+  width: 60%;
+  opacity: 0;
+  transition: 0.4s;
+}
+.cursor.active {
+  opacity: 0.975;
+  transform: scale(2.5) translate(-10px, -10px);
+}
+.cursor.active svg {
+  height: 60%;
+  width: 60%;
+  opacity: 1;
+  transition: 0.4s;
+}
+.cursor.hovered {
+  opacity: 0.975;
+}
+
 .logo-top-a {
   width: clamp(5em, 25vw, 15em);
 }
@@ -5952,10 +6081,16 @@
   z-index: 9999;
 }
 
+.magnetic-menu {
+  position: fixed;
+  right: clamp(25px, 10vw, 125px);
+  top: clamp(10px, 2vh, 20px);
+  transform: translate(-50% -50%);
+  z-index: 99;
+}
+
 .menu-btn {
   position: fixed;
-  right: clamp(10px, 2vw, 30px);
-  top: clamp(10px, 2vh, 20px);
   height: 90px;
   width: 90px;
   text-align: center;
@@ -5965,12 +6100,11 @@
   cursor: pointer;
   color: #36393b !important;
   transition: all 0.3s ease-in-out;
-  z-index: 99;
   background: #fdf9f8;
 }
 
 .menu-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.5);
 }
 
 .menu-btn span,
@@ -6023,7 +6157,7 @@
   height: 100%;
   width: 100%;
   opacity: 0;
-  background: rgba(221, 221, 221, 0.63);
+  background: #e8e8e8;
 }
 
 .wrapper ul {
@@ -6156,6 +6290,76 @@
   text-decoration: underline;
 }
 
+.transition-fade {
+  transform: translateX(0);
+  transition: transform 0.5s ease 0s;
+}
+
+html.is-animating .transition-fade {
+  transform: translateX(100%);
+  transition: transform 0.5s ease 0s;
+}
+
+html.is-leaving .transition-fade {
+  transform: translateX(-100%);
+  transition: transform 0.5s ease 0s;
+}
+
+@-webkit-keyframes isLeaving {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes isLeaving {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes isAnimating {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes isAnimating {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@-webkit-keyframes isDone {
+  0%, 100% {
+    transform: translateX(0);
+  }
+}
+@keyframes isDone {
+  0%, 100% {
+    transform: translateX(0);
+  }
+}
 .font-color-primary {
   color: #36393b !important;
 }
@@ -6377,10 +6581,6 @@
   height: 100vh;
 }
 
-.scroll-blocker {
-  height: 30px;
-}
-
 .arrow-right-icon {
   fill: #84aba4;
   pointer-events: none;
@@ -6460,6 +6660,54 @@
   border-radius: 100px;
 }
 
+.magnetic {
+  margin: -100px;
+  padding: 100px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.my-button {
+  background-color: #fff;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  border: 1px solid #bbbbbb;
+  cursor: pointer;
+  transition: 0.5s background-color, 0.5s box-shadow;
+}
+.my-button .arrow-magnet {
+  fill: #36393b !important;
+  transition: 0.25s;
+}
+
+.my-button:hover {
+  color: #36393b;
+  background-color: #535353;
+  transition: 0.5s background-color, 0.5s box-shadow;
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.5);
+}
+.my-button:hover .arrow-magnet {
+  fill: #fff !important;
+  transition: 0.25s;
+}
+
+.magnetic-menu {
+  margin: -100px;
+  padding: 100px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.my-button-menu {
+  transition: 0.5s background-color, 0.5s box-shadow, scale 0.5;
+}
+
+.my-button-menu:hover {
+  transition: 0.5s background-color, 0.5s box-shadow, scale 0.5;
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
+}
+
 *,
 *::before,
 *::after {
@@ -6530,28 +6778,9 @@ a {
   text-decoration: none;
 }
 
-.transition-fade {
-  opacity: 1;
-  transition: 500ms;
-  transform: translateX(0);
-  transform-origin: left;
-}
-
-html.is-animating .transition-fade {
-  opacity: 1;
-  transform: translateX(100%);
-}
-
-html.is-leaving .transition-fade {
-  opacity: 0;
-  transform: translateX(-100%);
-}
-
-.transition-swipe {
-  transition: 500ms;
-  transform: translateX(0);
-}
-
-html.is-animating .transition-swipe {
-  transform: translateX(100px);
+#page_top {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  transform: translate(-50% -50%);
 }

@@ -1,8 +1,8 @@
 @extends('layouts.master')
 @section('title', 'Polityka')
 @section('content')
-
-<div class="container mt-10">
+<section id="page_top" data-scroll-section></section>
+<div class="container mt-10" data-scroll-section>
     <h1>Polityka prywatności bielanypark</h1>
     <p>
         Ta polityka prywatności (“<strong>Polityka</strong>”) zawarta na tej Stronie zarządza prywatnością informacji naszych uzytkownikow i odwiedzających, które zbieramy, używamy, ujawniamy i zarządzamy poprzez używanie Strony bielanypark (“<strong>Strony</strong>”).<br />

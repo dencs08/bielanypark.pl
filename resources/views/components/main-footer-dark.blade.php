@@ -1,4 +1,4 @@
-<section id="footer">
+<section id="footer" data-scroll-section>
     <div class="container text-center">
         <img src="{{ asset('images/logos/Logo_white.svg') }}" class="img-fluid" alt="">
 
@@ -28,4 +28,5 @@
             <p>© 2022 bielanypark wszelkie prawa zastrzeżone. Zrealizował: <a href="{{ env('APP_CREATOR') }}" rel="noreferrer" target="_blank">bisonstudio.pl</a></p>
         </div>
     </div>
+    <div class="scroll-blocker"></div>
 </section>

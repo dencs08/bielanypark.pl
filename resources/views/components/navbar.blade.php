@@ -8,21 +8,13 @@
 </a>
 
 <nav id="navbar">
-    <input data-stick-cursor type="checkbox" id="active" />
-    <label data-stick-cursor id="nav-burger" for="active" class="menu-btn"
-        ><span id="nav-closer"></span
-    ></label>
-    <div id="nav-bg"></div>
+    <div class="magnetic-wrapper magnetic-menu">
+        <input data-stick-cursor type="checkbox" id="active" class="" />
+        <label data-stick-cursor id="nav-burger" for="active" class="menu-btn magnet-button-menu my-button-menu">
+            <span id="nav-closer"></span>
+        </label>
+    </div>
     <div id="nav-wrapper" class="wrapper">
-        <div class="nav-container container">
-            <a href="/start" class="logo-nav-a">
-                <img
-                    src="{{ asset('images/logos/Logo_grey.svg') }}"
-                    class="logo-nav"
-                    alt="branding (logotyp) bielanypark"
-                />
-            </a>
-        </div>
 
         <div class="vh-100 display-grid-center">
             <div class="text-center">
@@ -92,7 +84,7 @@
                     </div>
                 </a>
             </div>
-            <a class="font-color-fourth font-family-secondary" href="/polityka"
+            <a class="font-color-fourth font-family-secondary web_link web_link_active web_link_transitions" href="/polityka"
                 >Polityka Prywatności</a
             >
         </div>
