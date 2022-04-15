@@ -1,9 +1,14 @@
 import $ from 'jquery';
 
-$('.js-input').keyup(function () {
-    if ($(this).val()) {
-        $(this).addClass('not-empty');
-    } else {
-        $(this).removeClass('not-empty');
-    }
-});
+function contactInit() {
+    $('.js-input').keyup(function () {
+        console.log("KEY");
+        if ($(this).val()) {
+            $(this).addClass('not-empty');
+        } else {
+            $(this).removeClass('not-empty');
+        }
+    });
+}
+
+export { contactInit }

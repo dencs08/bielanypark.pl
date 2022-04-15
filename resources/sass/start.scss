@@ -1,35 +1,60 @@
 @import "variables";
 #landing_page {
-    margin-top: 10vh;
-
-    .image-landing {
-        margin-top: -8vh;
-
-        width: clamp(550px, 60vw, 1250px);
-        height: clamp(350px, 70vh, 950px);
-
-        background-image: url("/images/building/jpg/back.jpg");
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-
-        z-index: -1;
-    }
+    margin-top: 20vh;
 
     .container {
         position: relative;
     }
 
-    h2:nth-child(1) {
+    h1 {
+        position: absolute;
+        top: -500px;
+        left: 0%;
+        // transform: translate(-50%, -50%);
+        width: 100%;
+        z-index: -999;
+    }
+
+    .h2-1 {
         position: absolute;
         top: -300px;
         left: 250px;
     }
-    h2:nth-child(2) {
+    .h2-2 {
         position: absolute;
-        top: -220px;
+        top: -400px;
         right: 250px;
     }
+
+    .hero-wrapper {
+        display: flex;
+        height: 80vh;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero {
+        height: 50vh;
+        width: 100%;
+        position: relative;
+    }
+
+    .image-landing {
+        height: 100%;
+        width: 100%;
+
+        object-fit: cover;
+    }
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: $body-bg;
+    z-index: -10;
 }
 
 #about_us {
