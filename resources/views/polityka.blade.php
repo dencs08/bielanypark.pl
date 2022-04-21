@@ -1,5 +1,10 @@
 @extends('layouts.master')
 @section('title', 'Polityka')
+
+@section('meta')
+<meta name="description" content='Bielanypark - polityka prywatności. Aby uzyskać najlepszy możliwy User-Experience na naszej stronie zapoznaj się z naszą polityką prywatności.'>
+@endsection
+
 @section('content')
 <section id="page_top" data-scroll-section></section>
 <div class="container mt-10" data-scroll-section>

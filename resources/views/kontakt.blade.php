@@ -1,18 +1,24 @@
 @extends('layouts.master')
 @section('title', 'Kontakt')
 
+@section('meta')
+<meta name="description" content='Wykorzystaj stronę bielanypark.pl do skonaktowania się z nami mailowo lub telefonicznie, odezwiemy się tak szybko jak to możliwe!'>
+@endsection
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/contact.css') }}">
+    <!-- <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' /> -->
 @endsection
 
 @section('js')
+    <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js'></script> -->
     <script src="{{ asset('js/contact.js') }}"></script>
 @endsection
 
 @section('content')
 
 <div data-scroll-container>
-<div id="Contact" class="container-fluid mb-10 mt-150" data-scroll-section>
+<div id="Contact" class="container-fluid mb-10 mt-5" data-scroll-section>
     <div class="row">
         <div class="bg-darker col-md-6 p-0 display-grid-center">
             <div class="w-75 mx-auto">
@@ -94,7 +100,7 @@
                             </div>
                     </a>
 
-                    <div class="privacy-policy mt-4 font-family-secondary fw-light">
+                    <div class="privacy-policy mt-4 font-family-secondary fw-light mb-5">
                         <a href="/polityka">Polityka prywatności</a>
                     </div>
                 </div>
@@ -102,25 +108,26 @@
             </div>
         </div>
         <div class="col-md-6 p-0">
-            <div class="map-responsive">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32656.612378360478!2d16.12203381155269!3d51.23123078778963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470f128fb362d097%3A0x657bf6e8de4234c2!2sKOMB%20Biuro%20Sprzeda%C5%BCy%20Mieszka%C5%84!5e0!3m2!1spl!2spl!4v1645295210777!5m2!1spl!2spl" loading="lazy"></iframe>
+            <iframe height='100%' width="100%" src="https://api.mapbox.com/styles/v1/dencs08/cl210mbvs00c714mqvui4941i.html?title=false&access_token=pk.eyJ1IjoiZGVuY3MwOCIsImEiOiJjanYxaXgxN2YwYmlrNDRydHB6c3Q5eWNjIn0.Rs2kuHA93nRix-LXRVRDPA&zoomwheel=true#15/51.18974/16.17800/0/1" title="Monochrome" style="border:none;"></iframe>
+        </div> 
+        </div>
+    </div>
+    
+    <div id="footer_light" data-scroll-section>
+        <div class="container text-center">
+            <div>
+            <p class="footer_copy font-family-secondary font-color-fourth fw-light mb-5">Przedstawiona oferta cenowa ma charakter informacyjny, nie stanowi oferty handlowej w rozumieniu Art. 66 par. 1 Kodeksu Cywilnego oraz innych przepisów prawnych. Przedstawione na niniejszej stronie wizualizacje mają charakter wyłącznie poglądowy i stanowią wyłącznie materiał pomocniczy ułatwiający przyszłym nabywcą mieszkań zorientowanie się w ogólnym wyglądzie realizowanego przedsięwzięcia deweloperskiego. Przedstawione wizualizacje nie stanowią oferty w rozumieniu ustawy z dnia 23 kwietnia 1964 r. Kodeks cywilny (Dz. U. z 2014 r., poz. 121; ze zm.) i nie są wiążące dla Dewelopera.
+                </p>
+            </div>
+            
+            <div class="footer_copy font-family-secondary font-color-fourth fw-light">
+                <p>© 2022 bielanypark wszelkie prawa zastrzeżone. Zrealizował: <a href="{{ env('APP_CREATOR') }}" rel="noreferrer" target="_blank">bisonstudio.pl</a></p>
             </div>
         </div>
     </div>
 </div>
 
-<div id="footer_light" data-scroll-section>
-    <div class="container text-center">
-        <div>
-            <p class="footer_copy font-family-secondary font-color-fourth fw-light mb-5">Przedstawiona oferta cenowa ma charakter informacyjny, nie stanowi oferty handlowej w rozumieniu Art. 66 par. 1 Kodeksu Cywilnego oraz innych przepisów prawnych. Przedstawione na niniejszej stronie wizualizacje mają charakter wyłącznie poglądowy i stanowią wyłącznie materiał pomocniczy ułatwiający przyszłym nabywcą mieszkań zorientowanie się w ogólnym wyglądzie realizowanego przedsięwzięcia deweloperskiego. Przedstawione wizualizacje nie stanowią oferty w rozumieniu ustawy z dnia 23 kwietnia 1964 r. Kodeks cywilny (Dz. U. z 2014 r., poz. 121; ze zm.) i nie są wiążące dla Dewelopera.
-            </p>
-        </div>
-
-        <div class="footer_copy font-family-secondary font-color-fourth fw-light">
-            <p>© 2022 bielanypark wszelkie prawa zastrzeżone. Zrealizował: <a href="{{ env('APP_CREATOR') }}" rel="noreferrer" target="_blank">bisonstudio.pl</a></p>
-        </div>
-    </div>
-</div>
-</div>
-
+<!-- <div class="map-responsive">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32656.612378360478!2d16.12203381155269!3d51.23123078778963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470f128fb362d097%3A0x657bf6e8de4234c2!2sKOMB%20Biuro%20Sprzeda%C5%BCy%20Mieszka%C5%84!5e0!3m2!1spl!2spl!4v1645295210777!5m2!1spl!2spl" loading="lazy"></iframe>
+</div> -->
 @endsection

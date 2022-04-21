@@ -1,14 +1,19 @@
 @extends('layouts.master')
 @section('title', 'Mieszkania')
-@section('content')
+
+@section('meta')
+<meta name="description" content='Wyszukaj lokale usługowe "bielanypark" zlokalizowane przy ulicy Myrka 9 w Legnicy, najlepsze miejsce dla Twojej usługi!'>
+@endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/mieszkania.css') }}">
+<link rel="stylesheet" href="{{ asset('css/mieszkania.css') }}">
 @endsection
 
 @section('js')
     <script src="{{ asset('js/mieszkania.js') }}"></script>
 @endsection
+    
+@section('content')
 
 <x-WebStillInDev/>
 <x-MainFooterDark/>

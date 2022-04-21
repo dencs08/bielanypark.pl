@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="pl">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <!-- <link rel="canonical" href="https://www.bisonstudio.pl"/> -->
+        @yield('meta')
+        <link rel="canonical" href="https://www.bielanypark.pl"/>
         <link rel="apple-touch-icon" href="{{asset('images/logos/favicon.png')}}">
         <link rel="shortcut icon" href="{{asset('images/logos/favicon.png')}}" />
         <link rel="stylesheet" href="css/app.css" />
