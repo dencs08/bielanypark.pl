@@ -13,7 +13,7 @@ function startInit() {
     gsap.set(hero, { height: '0%' })
     gsap.set(hero, { width: '100%' })
     gsap.set(slider, { x: '-100%' })
-    gsap.set(h1, { y: "-300px" })
+    gsap.set(h1, { y: "-100%" })
     gsap.set(h21, { opacity: 0, x: "-100px" })
     gsap.set(h22, { opacity: 0, x: "100px" })
 
