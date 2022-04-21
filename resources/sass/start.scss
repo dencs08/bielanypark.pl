@@ -1,6 +1,7 @@
 @import "variables";
 #landing_page {
-    margin-top: 20vh;
+    margin-top: 10vh;
+    mix-blend-mode: multiply;
 
     .container {
         position: relative;
@@ -12,7 +13,7 @@
         left: 0%;
         // transform: translate(-50%, -50%);
         width: 100%;
-        z-index: -999;
+        z-index: 999;
     }
 
     .h2-1 {
@@ -87,12 +88,12 @@
 
 #build_end {
     h3 {
-        font-size: clamp(2.5rem, 3.35vw, 8rem);
+        font-size: clamp(1.5rem, 3.35vw, 8rem);
         margin-bottom: 2vh;
     }
     a {
         color: $secondary-color !important;
-        font-size: 3rem;
+        font-size: clamp(1.5rem, 3.35vw, 8rem);
     }
 }
 
@@ -122,7 +123,7 @@
         z-index: -1;
     }
     h3 {
-        font-size: clamp(2.5rem, 3.35vw, 8rem);
+        font-size: clamp(1.5rem, 3.35vw, 8rem);
         margin-bottom: 2vh;
     }
 }
@@ -153,6 +154,59 @@
 
 #sell {
     h3 {
-        font-size: clamp(3rem, 6vw, 10rem);
+        font-size: clamp(2rem, 6vw, 10rem);
+    }
+}
+
+@media screen and (max-width: $xxxl-screen-size) {
+    .h2-1 {
+        display: none;
+    }
+    .h2-2 {
+        display: none;
+    }
+}
+
+@media screen and (max-width: $lgx-screen-size) {
+    h1 {
+        margin-top: 600px;
+    }
+
+    .hero-wrapper {
+        height: 40vh !important;
+    }
+    .image-landing {
+        height: 40vh !important;
+    }
+}
+
+@media screen and (max-width: $md-screen-size) {
+    #landing_page {
+        margin-top: clamp(75px, 25vh, 150px) !important;
+    }
+
+    .hero-wrapper {
+        height: 37.5 !important;
+    }
+    .image-landing {
+        height: 37.5 !important;
+    }
+}
+
+@media screen and (max-width: $sm-screen-size) {
+    .hero-wrapper {
+        height: 35vh !important;
+    }
+    .image-landing {
+        height: 35vh !important;
+    }
+}
+
+@media screen and (max-width: $xs-screen-size) {
+    .hero .hero-wrapper {
+        height: 32.5vh !important;
+    }
+    .image-landing {
+        height: 32.5vh !important;
     }
 }

@@ -1,85 +1,116 @@
-.logo-top-a {
-    width: clamp(5em, 25vw, 15em);
-}
-
-.logo-top {
+nav {
     position: fixed;
-    top: 35px;
-    left: 30px;
-    width: clamp(5em, 25vw, 15em);
-    // pointer-events: none;
+    top: 0;
+    display: grid;
+    grid-template-columns: 1.5% 1fr 1fr 3%;
+    min-height: clamp(50px, 15vh, 100px);
+    align-items: center;
+    z-index: 99999 !important;
+    width: 100vw;
 
-    z-index: 9999;
-}
+    input[type="checkbox"] {
+        display: none;
+    }
 
-.magnetic-menu {
-    position: fixed;
-    right: clamp(25px, 10vw, 125px);
-    top: clamp(10px, 2vh, 20px);
-    transform: translate(-50% -50%);
-    z-index: 99;
-}
+    .logo-top {
+        width: clamp(5em, 25vw, 15em);
+        grid-column: 2/3;
+        img {
+            // position: fixed;
+            width: clamp(5em, 25vw, 15em);
+            z-index: 9999 !important;
+        }
+        z-index: 9999 !important;
+    }
 
-.menu-btn {
-    position: fixed;
-    height: 90px;
-    width: 90px;
-    text-align: center;
-    line-height: 50px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    color: $font-color-primary !important;
-    transition: all 0.3s ease-in-out;
+    #menuToggle {
+        display: block;
+        position: relative;
 
-    background: $body-bg-color-lighter;
-}
+        z-index: 1;
 
-.menu-btn:hover {
-    transform: scale(1.5);
-}
+        -webkit-user-select: none;
+        user-select: none;
 
-.menu-btn span,
-.menu-btn:before,
-.menu-btn:after {
-    content: "";
-    position: absolute;
-    top: calc(50% - 1px);
-    left: 27.5%;
-    width: 45%;
-    border-bottom: 1px solid $font-color-primary !important;
-    transition: transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
+        justify-self: end;
+        z-index: 9999 !important;
+        input {
+            display: block;
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            top: 65px;
+            right: 75px;
 
-.menu-btn:before {
-    transform: translateY(-8px);
-}
+            cursor: pointer !important;
 
-.menu-btn:after {
-    transform: translateY(8px);
-}
+            opacity: 0; /* hide this */
 
-.close {
-    z-index: 99;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    transition: background 0.6s;
-}
+            -webkit-touch-callout: none;
 
-/* closing animation */
-#active:checked + .menu-btn span {
-    transform: scaleX(0);
-}
+            z-index: 10000 !important;
+        }
+        span {
+            display: block;
+            width: 25px;
+            height: 1px;
+            margin-bottom: 4px;
+            position: relative;
 
-#active:checked + .menu-btn:before {
-    transform: rotate(45deg);
-    border-color: $font-color-primary !important;
-}
+            background: $font-color-primary;
+            border-radius: 3px;
 
-#active:checked + .menu-btn:after {
-    transform: rotate(-45deg);
-    border-color: $font-color-primary !important;
+            z-index: 1;
+
+            transform-origin: 4px 0px;
+
+            transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+                background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+                opacity 0.55s ease;
+            z-index: 9999 !important;
+
+            transform: translate(-50% -50%);
+        }
+
+        span:first-child {
+            transform-origin: 0% 0%;
+        }
+
+        span:nth-last-child(2) {
+            transform-origin: 0% 100%;
+        }
+
+        input:checked ~ span {
+            opacity: 1;
+            transform: rotate(45deg) translate(0px, -4px);
+            background: #232323;
+        }
+
+        input:checked ~ span:nth-last-child(3) {
+            opacity: 0;
+            transform: rotate(0deg) scale(0.2, 0.2);
+        }
+
+        input:checked ~ span:nth-last-child(2) {
+            transform: rotate(-45deg) translate(2px, 4px);
+        }
+
+        input:checked ~ ul {
+            transform: none;
+        }
+
+        .menu-circle {
+            position: absolute;
+            top: 34%;
+            left: 35.25%;
+            transform: translate(-50% -50%);
+            display: block;
+            background-color: #fff;
+            width: 65px;
+            height: 65px;
+            border-radius: 100px;
+        }
+    }
 }
 
 .wrapper {
@@ -92,106 +123,111 @@
 
     opacity: 0;
     background: $font-color-tertiary;
-}
 
-.wrapper ul {
-    list-style: none;
-    margin-top: 10vh;
-}
-
-.wrapper ul li a {
-    font-size: clamp(3rem, 10vw, 8rem);
-    font-weight: 700;
-
-    color: $font-color-primary !important;
-
-    text-decoration: none;
-    text-transform: uppercase;
-
-    line-height: clamp(3rem, 17vh, 10rem);
-
-    transition: 0.5s;
-}
-
-.wrapper ul li a:hover {
-    color: $primary-color !important;
-    transition: 0.5s;
-}
-
-.logo-nav-a {
-    width: clamp(5em, 25vw, 15em);
-}
-
-.logo-nav {
-    position: fixed;
-    top: 35px;
-    left: 30px;
-    width: clamp(5em, 25vw, 15em);
-    // pointer-events: none;
-}
-
-.nav-number {
-    font-size: 1.5rem;
-    margin-right: 15px;
-    margin-left: -1.5rem;
-}
-
-.nav-info {
-    .p1 {
-        font-size: clamp(0.75rem, 2vw, 1rem);
-        color: $font-color-tertiary !important;
+    ul {
+        list-style: none;
+        margin-top: clamp(50px, 10vh, 150px);
     }
 
-    .p2 {
-        font-size: clamp(1rem, 2.5vw, 1.25rem);
+    ul li a {
+        font-size: clamp(3rem, 10vw, 8rem);
+        font-weight: 700;
+
+        color: $font-color-primary !important;
+
+        text-decoration: none;
+        text-transform: uppercase;
+
+        line-height: clamp(3rem, 25vh, 16rem);
+
+        transition: 0.5s;
     }
-}
 
-.nav-icons-container {
-    // margin-top: clamp(50px, 15vh, 400px);
-    height: clamp(150px, 20vh, 300px);
-    width: clamp(75%, 50vw, 100%);
-}
-
-.nav-icon-div {
-    display: inline-block !important;
-
-    width: clamp(2.25rem, 3.5vw, 2.5rem) !important;
-    height: clamp(2.25rem, 3.5vw, 2.5rem) !important;
-
-    cursor: pointer;
-
-    .nav-icon {
-        fill: $font-color-fourth !important;
-        transition: 0.5s all;
+    ul li a:hover {
+        color: $primary-color !important;
+        transition: 0.5s;
     }
-}
 
-.nav-icon-div:hover {
-    .nav-icon {
-        fill: $primary-color !important;
+    .nav-number {
+        font-size: 1.5rem;
+        margin-right: 15px;
+        margin-left: -1.5rem;
+    }
+
+    .nav-li:nth-last-child(2) {
+        a {
+            line-height: clamp(3rem, 10vw, 6rem) !important;
+        }
+    }
+
+    .nav-info {
+        .p1 {
+            font-size: clamp(0.75rem, 2vw, 1rem);
+            color: $font-color-tertiary !important;
+        }
+
+        .p2 {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+        }
+    }
+
+    .nav-icons-container {
+        // margin-top: clamp(50px, 15vh, 400px);
+        height: clamp(150px, 10vh, 200px);
+        width: clamp(75%, 50vw, 100%);
+    }
+
+    .nav-icon-div {
+        display: inline-block !important;
+
+        width: clamp(2.25rem, 3.5vw, 2.5rem) !important;
+        height: clamp(2.25rem, 3.5vw, 2.5rem) !important;
+
+        cursor: pointer;
+
+        .nav-icon {
+            fill: $font-color-fourth !important;
+            transition: 0.5s all;
+        }
+    }
+
+    .nav-icon-div:hover {
+        .nav-icon {
+            fill: $primary-color !important;
+            color: $primary-color !important;
+        }
+    }
+
+    .nav-item.active {
         color: $primary-color !important;
     }
 }
 
-.nav-item.active {
-    color: $primary-color !important;
-}
-
-#navbar {
-    input[type="checkbox"] {
-        display: none;
+@media screen and (max-width: $lg-screen-size) {
+    .menu-circle {
+        display: none !important;
     }
 }
 
-#nav-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
+@media screen and (max-width: $sm-screen-size) {
+    .menu-circle {
+        top: 37%;
+        left: 38%;
+        width: 50px;
+        height: 50px;
+    }
 
-    height: 100%;
-    width: 100%;
+    ul li a {
+        font-size: clamp(2rem, 10vw, 8rem) !important;
+        line-height: clamp(2rem, 15vh, 16rem) !important;
+    }
+}
 
-    opacity: 0;
-    background: $body-bg;
+@media screen and (max-width: $xs-screen-size) {
+    .menu-circle {
+        top: 39%;
+        left: 40.5%;
+        width: 40px;
+        height: 40px;
+    }
 }
