@@ -150,11 +150,9 @@ function init() {
         ScrollTrigger.refresh();
     }
     if (document.querySelector("#Contact")) {
-        // console.log("Contact");
         contactInit();
     }
     if (document.querySelector('#landing_page')) {
-        // console.log("landing_page");
         startInit();
     }
 }
@@ -168,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startInit();
     }
     if (document.querySelector('#Contact')) {
-
+        contactInit();
     }
 });
 

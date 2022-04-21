@@ -3,8 +3,8 @@ import { gsap } from "gsap";
 function cursorInit() {
     //!Cursor
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        // cursor.style.display = "none";
-        // follower.style.display = "none";
+        cursor.style.display = "none";
+        follower.style.display = "none";
     } else {
         const cursor = document.getElementById("cursor")
 

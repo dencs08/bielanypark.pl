@@ -5,12 +5,15 @@ const navItems = document.querySelectorAll('.web_link');
 const navWebItems = document.querySelectorAll('.web_link_active');
 const start_web_link = document.querySelector('.web_link');
 
+const navBurger = document.getElementById("menuToggle")
+const navInput = document.getElementById("menu-input")
+
 navItems.forEach(element => {
     element.addEventListener('click', closeNavBar);
 });
 
 function closeNavBar() {
-    document.getElementById('nav-closer').click();
+    $('#menu-input').click();
 }
 
 $(function () {
@@ -30,16 +33,13 @@ $(function () {
     }
 })
 
-const navBurger = document.getElementById("nav-burger")
 const navWrapper = document.getElementById("nav-wrapper")
 // const navBg = document.getElementById("nav-bg")
 const li = document.querySelectorAll(".nav-li")
 
-const boxes = gsap.utils.toArray('.stagger');
-
 let i = 0;
 
-navBurger.addEventListener("click", navBarAnimation);
+navInput.addEventListener("click", navBarAnimation);
 
 navWrapper.style.zIndex = "-99";
 // navBg.style.zIndex = "-99";
