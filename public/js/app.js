@@ -2673,12 +2673,10 @@ function init() {
   }
 
   if (document.querySelector("#Contact")) {
-    // console.log("Contact");
     (0,_contact__WEBPACK_IMPORTED_MODULE_4__.contactInit)();
   }
 
   if (document.querySelector('#landing_page')) {
-    // console.log("landing_page");
     (0,_start__WEBPACK_IMPORTED_MODULE_5__.startInit)();
   }
 } //Initialize script here when entering the page for the first time
@@ -2694,7 +2692,9 @@ document.addEventListener("DOMContentLoaded", function () {
     (0,_start__WEBPACK_IMPORTED_MODULE_5__.startInit)();
   }
 
-  if (document.querySelector('#Contact')) {}
+  if (document.querySelector('#Contact')) {
+    (0,_contact__WEBPACK_IMPORTED_MODULE_4__.contactInit)();
+  }
 });
 
 /***/ }),
@@ -2746,8 +2746,9 @@ __webpack_require__.r(__webpack_exports__);
 
 function cursorInit() {
   //!Cursor
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {// cursor.style.display = "none";
-    // follower.style.display = "none";
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    cursor.style.display = "none";
+    follower.style.display = "none";
   } else {
     var posX, posY;
     var mouseX, mouseY;
@@ -2859,12 +2860,14 @@ __webpack_require__.r(__webpack_exports__);
 var navItems = document.querySelectorAll('.web_link');
 var navWebItems = document.querySelectorAll('.web_link_active');
 var start_web_link = document.querySelector('.web_link');
+var navBurger = document.getElementById("menuToggle");
+var navInput = document.getElementById("menu-input");
 navItems.forEach(function (element) {
   element.addEventListener('click', closeNavBar);
 });
 
 function closeNavBar() {
-  document.getElementById('nav-closer').click();
+  jquery__WEBPACK_IMPORTED_MODULE_0__('#menu-input').click();
 }
 
 jquery__WEBPACK_IMPORTED_MODULE_0__(function () {
@@ -2883,13 +2886,11 @@ jquery__WEBPACK_IMPORTED_MODULE_0__(function () {
     });
   }
 });
-var navBurger = document.getElementById("nav-burger");
 var navWrapper = document.getElementById("nav-wrapper"); // const navBg = document.getElementById("nav-bg")
 
 var li = document.querySelectorAll(".nav-li");
-var boxes = gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.utils.toArray('.stagger');
 var i = 0;
-navBurger.addEventListener("click", navBarAnimation);
+navInput.addEventListener("click", navBarAnimation);
 navWrapper.style.zIndex = "-99"; // navBg.style.zIndex = "-99";
 
 var random = function random(min, max) {
@@ -2973,7 +2974,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-
+ // import mapboxgl from 'mapbox-gl';
 
 function contactInit() {
   jquery__WEBPACK_IMPORTED_MODULE_0___default()('.js-input').keyup(function () {
@@ -2984,7 +2985,25 @@ function contactInit() {
     } else {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('not-empty');
     }
-  });
+  }); // mapboxgl.accessToken = 'pk.eyJ1IjoiZGVuY3MwOCIsImEiOiJjanYxaXgxN2YwYmlrNDRydHB6c3Q5eWNjIn0.Rs2kuHA93nRix-LXRVRDPA';
+  // navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
+  //     enableHighAccuracy: true
+  // })
+  // function successLocation(position) {
+  //     setMap([16.177654970029643, 51.19004853682276])
+  // }
+  // function errorLocation() {
+  // }
+  // function setMap(center) {
+  //     const map = new mapboxgl.Map({
+  //         container: 'map',
+  //         style: 'mapbox://styles/dencs08/cl210mbvs00c714mqvui4941i',
+  //         center: center,
+  //         zoom: 15
+  //     });
+  //     const nav = new mapboxgl.NavigationControl()
+  //     map.addControl(nav)
+  // }
 }
 
 
@@ -3043,7 +3062,7 @@ function startInit() {
     x: '-100%'
   });
   gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.set(h1, {
-    y: "-300px"
+    y: "-100%"
   });
   gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.set(h21, {
     opacity: 0,

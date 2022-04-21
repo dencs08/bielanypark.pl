@@ -10974,7 +10974,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-
+ // import mapboxgl from 'mapbox-gl';
 
 function contactInit() {
   jquery__WEBPACK_IMPORTED_MODULE_0___default()('.js-input').keyup(function () {
@@ -10985,7 +10985,25 @@ function contactInit() {
     } else {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('not-empty');
     }
-  });
+  }); // mapboxgl.accessToken = 'pk.eyJ1IjoiZGVuY3MwOCIsImEiOiJjanYxaXgxN2YwYmlrNDRydHB6c3Q5eWNjIn0.Rs2kuHA93nRix-LXRVRDPA';
+  // navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
+  //     enableHighAccuracy: true
+  // })
+  // function successLocation(position) {
+  //     setMap([16.177654970029643, 51.19004853682276])
+  // }
+  // function errorLocation() {
+  // }
+  // function setMap(center) {
+  //     const map = new mapboxgl.Map({
+  //         container: 'map',
+  //         style: 'mapbox://styles/dencs08/cl210mbvs00c714mqvui4941i',
+  //         center: center,
+  //         zoom: 15
+  //     });
+  //     const nav = new mapboxgl.NavigationControl()
+  //     map.addControl(nav)
+  // }
 }
 
 

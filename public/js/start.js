@@ -5739,7 +5739,7 @@ function startInit() {
     x: '-100%'
   });
   gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.set(h1, {
-    y: "-300px"
+    y: "-100%"
   });
   gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.set(h21, {
     opacity: 0,
