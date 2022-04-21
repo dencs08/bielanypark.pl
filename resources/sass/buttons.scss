@@ -43,8 +43,8 @@
 
 .my-button {
     background-color: #fff;
-    height: 250px;
-    width: 250px;
+    height: clamp(5rem, 25vw, 17rem);
+    width: clamp(5rem, 25vw, 17rem);
     border-radius: 50%;
     border: 1px solid $font-color-fourth;
     cursor: pointer;
