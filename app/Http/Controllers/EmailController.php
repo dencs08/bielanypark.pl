@@ -18,19 +18,16 @@ class EmailController extends Controller
           'email' => 'required|email',
           'name' => 'required',
           'content' => 'required',
-          'controlInfo' => ''
         ]);
 
         $data = [
           'name' => $request->name,
           'email' => $request->email,
           'content' => $request->content,
-          'controlInfo' => $request->controlInfo,
-          // 'logo' => asset('images/logos/logo_black.svg')
         ];
 
         Mail::send('email.email-template', $data, function($message) use ($data) {
-          $message->to(env('MAIL_USERNAME'))
+          $message->to(env('MAIL_RECEIVER'))
           ->subject("Nowa wiadomość ze strony bielanypark")
           ->from(env('MAIL_USERNAME'), "Bielanypark")
           ->sender(env('MAIL_USERNAME'), "Bielanypark");

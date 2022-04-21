@@ -18,8 +18,8 @@ class AppController extends Controller
         ]);
     }
 
-    public function mieszkania(){
-        return view('mieszkania', [
+    public function lokale(){
+        return view('lokale', [
             //parameters
         ]);
     }
