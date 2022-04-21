@@ -1,60 +1,50 @@
 <!-- Navbar -->
-<a href="/start" class="logo-top-a">
-    <img
-        src="{{ asset('images/logos/Logo_grey.svg') }}"
-        class="logo-top"
-        alt="branding (logotyp) bielanypark"
-    />
-</a>
-
 <nav id="navbar">
-    <div class="magnetic-wrapper magnetic-menu">
-        <input data-stick-cursor type="checkbox" id="active" class="" />
-        <label data-stick-cursor id="nav-burger" for="active" class="menu-btn magnet-button-menu my-button-menu">
-            <span id="nav-closer"></span>
-        </label>
+    <a href="/start" class="logo-top">
+        <img
+            src="{{ asset('images/logos/Logo_grey.svg') }}"
+            alt="Bielanypark Szary Logotyp"
+        />
+    </a>
+    <div id="menuToggle" class="magnetic-wrapper magnetic-menu">
+        <input id="menu-input" type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+        <div class="menu-circle"></div>
     </div>
-    <div id="nav-wrapper" class="wrapper">
+</nav>
 
-        <div class="vh-100 display-grid-center">
-            <div class="text-center">
-                <ul id="nav-ul">
-                    <li class="nav-li">
-                        <span class="nav-number">01</span
-                        ><a
-                            href="/start"
-                            class="nav-item web_link web_link_active web_link_transitions"
-                            >Start</a
-                        >
-                    </li>
-                    <li class="nav-li">
-                        <span class="nav-number">02</span
-                        ><a
-                            href="/wybor3d"
-                            class="nav-item web_link web_link_active web_link_transitions"
-                            >Wybór 3d</a
-                        >
-                    </li>
-                    <li class="nav-li">
-                        <span class="nav-number">03</span
-                        ><a
-                            href="/mieszkania"
-                            class="nav-item web_link web_link_transitions"
-                            >Mieszkania</a
-                        >
-                    </li>
-                    <li class="nav-li">
-                        <span class="nav-number">04</span
-                        ><a
-                            href="/kontakt"
-                            class="nav-item web_link web_link_active web_link_transitions"
-                            >Kontakt</a
-                        >
-                    </li>
-                </ul>
-            </div>
-
-            <div class="">
+<div id="nav-wrapper" class="wrapper">
+        <div class="vh-100 display-grid-center text-center">
+            <div>
+            <ul id="nav-ul" class="display-grid-center p-0 m-0">
+                <li class="nav-li">
+                    <span class="nav-number">01</span
+                    ><a
+                        href="/start"
+                        class="nav-item web_link web_link_active web_link_transitions"
+                        >Start</a
+                    >
+                </li>
+                <li class="nav-li">
+                    <span class="nav-number">02</span
+                    ><a
+                        href="/lokale"
+                        class="nav-item web_link web_link_transitions"
+                        >Wybór <br> lokali</a
+                    >
+                </li>
+                <li class="nav-li">
+                    <span class="nav-number">03</span
+                    ><a
+                        href="/kontakt"
+                        class="nav-item web_link web_link_active web_link_transitions"
+                        >Kontakt</a
+                    >
+                </li>
+            </ul>
+            <div class="mb-5">
                 <a
                     href="https://www.facebook.com/bielanyparkpl"
                     rel="noreferrer"
@@ -87,6 +77,6 @@
             <a class="font-color-fourth font-family-secondary web_link web_link_active web_link_transitions" href="/polityka"
                 >Polityka Prywatności</a
             >
-        </div>
+            </div>
     </div>
-</nav>
+</div>

@@ -1,15 +1,17 @@
 <section id="footer" data-scroll-section>
     <div class="container text-center">
-        <img src="{{ asset('images/logos/Logo_white.svg') }}" class="img-fluid" alt="">
+        <img src="{{ asset('images/logos/Logo_white.svg') }}" class="img-fluid" alt="Bielanypark Biały Logotyp">
 
         <div>
             <h4 class="mb-5 font-color-fourth">GDZIE TERAZ?</h4>
 
-            <div class="font-family-secondary font-color-secondary mb-10">
-                <a href="/start" class="mx-5"><span class="underline_light">Start</span></a>
-                <a href="/wybor3d" class="mx-5"><span class="underline_light">Wybór 3D</span></a>
-                <a href="/mieszkania" class="mx-5"><span class="underline_light">Mieszkania</span></a>
-                <a href="/kontakt" class="mx-5"><span class="underline_light">Kontakt</span></a>
+            <div class="font-family-secondary font-color-secondary mb-10 w-50 mx-auto">
+                <div class="row">
+                    <div class="col-md-4 mb-3"><a href="/start" class=""><span class="underline_light">Start</span></a></div>
+                    <div class="col-md-4 mb-3"><a href="/lokale" class=""><span class="underline_light">Lokale</span></a></div>
+                    <div class="col-md-4 mb-3"><a href="/kontakt" class=""><span class="underline_light">Kontakt</span></a></div>
+                </div>
+
             </div>
         </div>
 
