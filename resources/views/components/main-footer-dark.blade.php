@@ -7,9 +7,10 @@
 
             <div class="font-family-secondary font-color-secondary mb-10 w-50 mx-auto">
                 <div class="row">
-                    <div class="col-md-4 mb-3"><a href="/start" class=""><span class="underline_light">Start</span></a></div>
-                    <div class="col-md-4 mb-3"><a href="/lokale" class=""><span class="underline_light">Lokale</span></a></div>
-                    <div class="col-md-4 mb-3"><a href="/kontakt" class=""><span class="underline_light">Kontakt</span></a></div>
+                    <div class="col-md-3 mb-3"><a href="/start" class=""><span class="underline_light">Start</span></a></div>
+                    <div class="col-md-3 mb-3"><a href="/lokale" class=""><span class="underline_light">Lokale</span></a></div>
+                    <div class="col-md-3 mb-3"><a href="/kontakt" class=""><span class="underline_light">Kontakt</span></a></div>
+                    <div class="col-md-3 mb-3"><a href="http://komb.pl/" class=""><span class="underline_light">Inwestor</span></a></div>
                 </div>
 
             </div>

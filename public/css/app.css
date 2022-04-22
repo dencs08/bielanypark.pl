@@ -6193,8 +6193,8 @@ nav #menuToggle .menu-circle {
   margin-right: 15px;
   margin-left: -1.5rem;
 }
-.wrapper .nav-li:nth-last-child(2) a {
-  line-height: clamp(3rem, 10vw, 6rem) !important;
+.wrapper .nav-li {
+  max-height: 15vh;
 }
 .wrapper .nav-info .p1 {
   font-size: clamp(0.75rem, 2vw, 1rem);
@@ -6616,7 +6616,11 @@ html.is-leaving .transition-fade {
 }
 
 .section-mb {
-  padding-bottom: clamp(75px, 15vw, 300px);
+  padding-bottom: clamp(75px, 8.5vw, 150px);
+}
+
+.section-mt {
+  padding-top: clamp(75px, 8.5vw, 150px);
 }
 
 .mb-10 {

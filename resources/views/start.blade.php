@@ -70,7 +70,7 @@
     </div>
 </section>
 
-<section id="build_end" class="section-mb" data-scroll-section>
+<section id="build_end" class="section-mb section-mt display-grid-center" data-scroll-section>
     <div class="container text-center" data-scroll data-scroll-speed="0.25">
         <div class="w-75 mx-auto">
             <h3>Zakończenie inwestycji bielanypark przewidywane jest na początek 2023 r. Jesteś zainteresowany w osiągnięciu nowego poziomu razem z nami?</h3>
@@ -85,7 +85,7 @@
     </div>
 </section>
 
-<section id="about_us2" class="section-mb overflow-hidden" data-scroll-section>
+<section id="about_us2" class="section-mb section-mt display-grid-center overflow-hidden" data-scroll-section>
     <div class="container text-center" data-scroll data-scroll-speed="5">
         <div class="mx-auto">
         <h3>Ikoniczna architektura, nowoczesna prezencja z poszanowaniem otaczającej natury.</h3>

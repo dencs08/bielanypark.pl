@@ -31,8 +31,8 @@
                     <span class="nav-number">02</span
                     ><a
                         href="/lokale"
-                        class="nav-item web_link web_link_transitions"
-                        >Wybór <br> lokali</a
+                        class="nav-item web_link web_link_active web_link_transitions"
+                        >Wybór lokali</a
                     >
                 </li>
                 <li class="nav-li">
@@ -43,8 +43,16 @@
                         >Kontakt</a
                     >
                 </li>
+                <li class="nav-li">
+                    <span class="nav-number">04</span
+                    ><a
+                        href="http://komb.pl/"
+                        class="nav-item web_link web_link_active web_link_transitions"
+                        >Inwestor</a
+                    >
+                </li>
             </ul>
-            <div class="mb-5">
+            <div class="mb-5 mt-5">
                 <a
                     href="https://www.facebook.com/bielanyparkpl"
                     rel="noreferrer"

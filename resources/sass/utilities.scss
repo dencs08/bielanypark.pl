@@ -207,7 +207,11 @@
 }
 
 .section-mb {
-    padding-bottom: clamp(75px, 15vw, 300px);
+    padding-bottom: clamp(75px, 8.5vw, 150px);
+}
+
+.section-mt {
+    padding-top: clamp(75px, 8.5vw, 150px);
 }
 
 .mb-10 {

@@ -154,10 +154,8 @@ nav {
         margin-left: -1.5rem;
     }
 
-    .nav-li:nth-last-child(2) {
-        a {
-            line-height: clamp(3rem, 10vw, 6rem) !important;
-        }
+    .nav-li {
+        max-height: 15vh;
     }
 
     .nav-info {
