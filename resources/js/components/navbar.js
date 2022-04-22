@@ -86,9 +86,9 @@ function navBarAnimation() {
                 x: 0,
                 visibility: 'visible',
             }, {
-                x: "125%",
+                x: "1000%",
                 ease: "expo",
-                duration: 1.5,
+                duration: 5.5,
                 delay: delay
             });
             i++
