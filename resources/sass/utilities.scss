@@ -163,6 +163,10 @@
     display: inline-block;
 }
 
+.d-inline {
+    display: inline;
+}
+
 .mx-auto {
     margin-left: auto !important;
     margin-right: auto !important;
@@ -192,6 +196,10 @@
     fill: $primary-color;
     pointer-events: none;
 }
+
+// .arrow-wrapper {
+//     width: clamp(250px, 10vw, 350px) !important;
+// }
 
 .text-alert {
     color: #912d2d;
@@ -264,5 +272,13 @@
 @media (max-width: $sm-screen-size) {
     .container-text-sm-center {
         text-align: center;
+    }
+
+    .arrow-wrapper {
+        display: none !important;
+    }
+
+    .sm-d-none {
+        display: none !important;
     }
 }
