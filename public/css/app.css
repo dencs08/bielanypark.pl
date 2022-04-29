@@ -6039,7 +6039,7 @@ html.has-scroll-dragging {
       -ms-user-select: none;
           user-select: none;
   pointer-events: none;
-  z-index: 10000;
+  z-index: 900000;
   transform: scale(1);
   transform: translate(-20px, -20px);
   display: grid;
@@ -6576,6 +6576,10 @@ html.is-leaving .transition-fade {
   display: inline-block;
 }
 
+.d-inline {
+  display: inline;
+}
+
 .mx-auto {
   margin-left: auto !important;
   margin-right: auto !important;
@@ -6673,6 +6677,14 @@ html.is-leaving .transition-fade {
 @media (max-width: 576px) {
   .container-text-sm-center {
     text-align: center;
+  }
+
+  .arrow-wrapper {
+    display: none !important;
+  }
+
+  .sm-d-none {
+    display: none !important;
   }
 }
 .btn {
