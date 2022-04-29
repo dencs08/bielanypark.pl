@@ -17,6 +17,10 @@ Route::get('email', function () {
     return view('email/email');
 });
 
+Route::get('email_answer', function () {
+    return view('email/email_answer');
+});
+
 Route::get('/', [App\Http\Controllers\AppController::class, 'start']);
 Route::get('start', [App\Http\Controllers\AppController::class, 'start']);
 // Route::get('kontakt', [App\Http\Controllers\AppController::class, 'kontakt']);
