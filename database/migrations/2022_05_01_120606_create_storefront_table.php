@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('metric');
-            $table->int('floor');
+            $table->integer('floor');
             $table->string('sanitary');
             $table->boolean('available');
             $table->float('buyPrice');
