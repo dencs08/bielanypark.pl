@@ -30,3 +30,5 @@ Route::get('polityka', [App\Http\Controllers\AppController::class, 'polityka']);
 
 Route::get('/kontakt', [App\Http\Controllers\EmailController::class, 'create']);
 Route::post('/kontaktsent', [App\Http\Controllers\EmailController::class, 'sendEmail'])->name('send.email');
+
+Route::get('lokale/lokal', [App\Http\Controllers\StorefrontController::class, 'index']);

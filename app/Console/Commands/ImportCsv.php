@@ -41,7 +41,7 @@ class ImportCsv extends Command
         $arr = $data;
         for ($i = 0; $i < count($arr); $i ++)
         {
-            DB::table('storefront')->insert([
+            DB::table('storefronts')->insert([
                 $arr[$i]
             ]);
         }
