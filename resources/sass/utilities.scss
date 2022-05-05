@@ -26,15 +26,19 @@
 }
 
 .card {
-    background-color: $body-bg-color-lighter;
-    width: clamp(5em, 25vw, 35em);
-    border-radius: 1em;
-    padding: 1.5em 3.5em;
-    box-shadow: 5px 10px #0e0e0ea9;
+    background-color: $body-bg-color-darker;
+    width: clamp(5em, 30%, 35em);
+    margin: 15px;
+    // border-radius: 1em;
+    // box-shadow: #0e0e0e0a;
 }
 
 .card-header {
     font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+.card-body {
+    padding: 0px 2em 2em 2em;
 }
 
 .text-highlight {

@@ -15,3 +15,11 @@
         }
     }
 }
+
+.card-body {
+    p {
+        font-family: $font-family-secondary;
+        margin: 0;
+        padding: 0;
+    }
+}

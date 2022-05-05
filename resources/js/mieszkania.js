@@ -1,35 +1,37 @@
-let children = document.querySelector('#app').children;
-let i = 0;
+import $ from 'jquery';
 
-children[i].classList.add('selected');// Item default selection
+// let children = document.querySelector('#app').children;
+// let i = 0;
 
-document.getElementById("previous").addEventListener("click", previous);
-document.getElementById("next").addEventListener("click", next);
+// children[i].classList.add('selected');// Item default selection
 
-function resetClass() {
-    for (let j = 0; j < children.length; j++) {
-        children[j].classList.add('d-none');
-    }
-}
+// document.getElementById("previous").addEventListener("click", previous);
+// document.getElementById("next").addEventListener("click", next);
 
-function next() {
-    // console.log("next");
-    if (i >= children.length - 1) {
-        return false;
-    }
-    resetClass();
-    i++;
-    children[i].classList.add('d-block')
-    children[i].classList.remove('d-none')
-}
+// function resetClass() {
+//     for (let j = 0; j < children.length; j++) {
+//         children[j].classList.add('d-none');
+//     }
+// }
 
-function previous() {
-    // console.log("prev");
-    if (i <= 0) {
-        return false;
-    }
-    resetClass();
-    i--;
-    children[i].classList.add('d-block')
-    children[i].classList.remove('d-none')
-}
+// function next() {
+//     // console.log("next");
+//     if (i >= children.length - 1) {
+//         return false;
+//     }
+//     resetClass();
+//     i++;
+//     children[i].classList.add('d-block')
+//     children[i].classList.remove('d-none')
+// }
+
+// function previous() {
+//     // console.log("prev");
+//     if (i <= 0) {
+//         return false;
+//     }
+//     resetClass();
+//     i--;
+//     children[i].classList.add('d-block')
+//     children[i].classList.remove('d-none')
+// }

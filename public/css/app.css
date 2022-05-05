@@ -6457,15 +6457,17 @@ html.is-leaving .transition-fade {
 }
 
 .card {
-  background-color: #fdf9f8;
-  width: clamp(5em, 25vw, 35em);
-  border-radius: 1em;
-  padding: 1.5em 3.5em;
-  box-shadow: 5px 10px rgba(14, 14, 14, 0.662745098);
+  background-color: #e7e1de;
+  width: clamp(5em, 30%, 35em);
+  margin: 15px;
 }
 
 .card-header {
   font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+.card-body {
+  padding: 0px 2em 2em 2em;
 }
 
 .text-highlight {

@@ -9,3 +9,9 @@
   width: clamp(300px, 70%, 3200px);
   height: auto;
 }
+
+.card-body p {
+  font-family: "Poppins";
+  margin: 0;
+  padding: 0;
+}
