@@ -14,10 +14,7 @@
 @endsection
     
 @section('content')
-
-<div class="data-scroll-container" data-scroll-container>
     <!-- <x-WebStillInDev/> -->
-    
     <!-- <section id="mieszkania" data-scroll-section>
         <div class="container text-center display-grid-center">
             <div>
@@ -51,7 +48,52 @@
         </div>
     </section> -->
 
+    <div class="container mt-150 mb-10">
+        <section data-scroll-section>
+
+            <?php 
+            $counter=0;
+            ?>
+
+            @if(!empty($results))
+            @foreach($floorDis as $floor)
+            <div class="checkboxes">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" {{($counter == 0 ? 'checked' : '')}}
+                    attr-name="{{$floor->floor}}"
+                    class="custom-control-input floor-checkbox" id="{{$floor->id}}">
+                    <label class="custom-control-label" for="{{$floor->id}}">{{ucfirst($floor->floor)}}</label>
+                </div>
+            </div>
+            <?php $counter++;?>
+            @endforeach
+            @endif 
+        </section>
+        
+        <section data-scroll-section>
+            <div class="result">
+                <div class="w-100 container">
+                @foreach($results as $result)
+                    <div class="d-inline-block card">
+                        <div class="card-header">
+                            <a href="#"><img class="img-fluid w-100" src="{{ asset('images/cards/jpg/' . $result->name . '.jpg')}}" alt=""></a>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="mt-4 mb-2">Lokal {{ $result->name }}</h3>
+                            <p>Metraż: <span class="fw-light">{{ $result->metric }}</span></p>
+                            <p>Piętro: <span class="fw-light">{{ $result->floor }}</span></p>
+                            <p>Pokój sanitarny:<span class="fw-light"> {{ $result->sanitary }}</span></p>
+
+                            <p class="mt-4">Cena:<span class="fw-light"> {{ $result->buyPrice }}</span></p>
+                            <button type="button" class="btn btn-primary mt-2">Zapytaj</button>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    </div>
+
     <x-MainFooterDark/>
-</div>
 
 @endsection
