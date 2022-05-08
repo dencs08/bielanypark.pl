@@ -9,7 +9,16 @@ class EmailController extends Controller
 {
     public function create()
     {
-        return view('kontakt');
+      return view('kontakt', [
+        //parameters
+    ]);
+    }
+
+    public function createAsk($name)
+    {
+      return view('kontakt', [
+        'message' => 'Dzień dobry, jestem zainteresowany lokalem ' . $name . '.  Proszę o kontakt w celu przedstawienia szczegółowej oferty.'
+    ]);
     }
 
     public function sendEmail(Request $request)

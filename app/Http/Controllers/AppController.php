@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Storefront;
+use Illuminate\Support\Facades\DB;
 class AppController extends Controller
 {
     public function start(){
@@ -12,41 +13,29 @@ class AppController extends Controller
         ]);
     }
 
-    public function kontakt(){
-        return view('kontakt', [
-            //parameters
-        ]);
-    }
-
     public function lokale(){
-        function unique_multidim_array($array, $key) {
-            $temp_array = array();
-            $i = 0;
-            $key_array = array();
-        
-            foreach($array as $val) {
-                if (!in_array($val[$key], $key_array)) {
-                    $key_array[$i] = $val[$key];
-                    $temp_array[$i] = $val;
-                }
-                $i++;
-            }
-            return $temp_array;
-        }
-
         $request = new Request;
         $results = (new StorefrontController)->index($request);
-        $floorDis = unique_multidim_array($results,'floor');
+
+        $floors = DB::table('storefronts')->select('floor')->distinct()->get();
 
         return view('lokale', [
             'results' => $results,
-            'floorDis' => $floorDis
+            'floors' => $floors
         ]);
     }
 
-    public function wybor3d(){
-        return view('wybor3d', [
-            //parameters
+    public function lokalID($name){
+        $storeFronts = Storefront::all();
+        $storeFrontArr = json_decode($storeFronts, true);
+
+        $dataName = [];
+
+        $storeFronts = DB::select('select * from storefronts where name = ?', [$name]);
+
+        return view('lokalID', [
+            'storeFrontName' => $dataName[$name] ?? 'Lokal o nazwie ' . $name . ' nie istnieje',
+            'storeFront' => $storeFronts,
         ]);
     }
 
