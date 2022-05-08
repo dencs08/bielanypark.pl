@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('storefront', function (Blueprint $table) {
+        Schema::create('storefronts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->float('metric');
             $table->integer('floor');
             $table->string('sanitary');
             $table->boolean('available');
+            $table->boolean('visible');
             $table->float('buyPrice');
             $table->float('rentPrice');
         });
