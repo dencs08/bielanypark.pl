@@ -1,0 +1,63 @@
+@import "variables";
+
+#mieszkania {
+    h1 {
+        margin-top: clamp(20px, 6vh, 90px);
+        font-size: clamp(2rem, 6vw, 8rem);
+    }
+
+    .app {
+        background-color: $font-color-tertiary !important;
+
+        img {
+            width: clamp(300px, 70%, 3200px);
+            height: auto;
+        }
+    }
+}
+
+.card-body {
+    p {
+        font-family: $font-family-secondary;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+#storeFrontNav {
+    height: clamp(40px, 20vh, 150px);
+    width: clamp(200px, 90%, 95vw);
+
+    select.select-arrow {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: $body-bg-color-lighter;
+        width: 100%;
+        padding: 0.5em 5em 0.5em 3.5em;
+
+        font-family: $font-family-secondary;
+        font-size: clamp(1rem, 1vw, 1.75rem);
+
+        border: none;
+        outline: none;
+
+        border-right: 1px solid #b3b3b3;
+    }
+    .select:after {
+        content: "\01F893";
+        position: absolute;
+        top: -4px;
+        right: 25px;
+        bottom: 0;
+        font-size: 2rem;
+        // border: 1px solid #565656;
+        // background: #0e7b53;
+        padding: 11px 15px;
+        pointer-events: none;
+        color: #a5a5a5;
+    }
+    .select {
+        position: relative;
+    }
+}

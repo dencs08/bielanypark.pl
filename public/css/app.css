@@ -6420,7 +6420,7 @@ html.is-leaving .transition-fade {
 }
 
 .font-size-xl {
-  font-size: clamp(0.7rem, 0.65vw, 1rem);
+  font-size: clamp(1.5rem, 1.75vw, 2.25rem);
 }
 
 .bg_text {
@@ -6436,6 +6436,49 @@ html.is-leaving .transition-fade {
   margin-left: auto;
 }
 
+.arrow-right-icon {
+  fill: #84aba4;
+  pointer-events: none;
+}
+
+.bg-darker {
+  background-color: #e7e1de !important;
+}
+
+.bg-light {
+  background-color: #fdf9f8 !important;
+}
+
+.blend-screen {
+  mix-blend-mode: screen;
+}
+
+.blend-soft-light {
+  mix-blend-mode: soft-light;
+}
+
+.border-primary {
+  border-bottom: 1px solid #84aba4 !important;
+}
+
+.btn-padding-big {
+  padding: 2em 5em !important;
+}
+
+.card {
+  background-color: #ede7e5;
+  margin: 15px;
+  text-align: left !important;
+}
+
+.card-body {
+  padding: 0px 2em 2em 2em;
+}
+
+.card-header {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+
 .container-md {
   width: 85%;
   margin-right: auto;
@@ -6448,38 +6491,103 @@ html.is-leaving .transition-fade {
   margin-left: auto;
 }
 
-.section-header {
-  font-size: clamp(1.3rem, 2vw, 1.9rem);
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-inline {
+  display: inline;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.display-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.display-grid-center {
+  display: grid;
+  place-items: center;
 }
 
 .fluid-margin {
   padding-left: clamp(1.5em, 7.5vw, 18em) !important;
 }
 
-.card {
-  background-color: #e7e1de;
-  width: clamp(5em, 30%, 35em);
-  margin: 15px;
+.headerline::before {
+  display: block;
+  content: "";
+  width: 25px;
+  border-top: 3px solid #84aba4;
+  padding-top: 0.5rem;
 }
 
-.card-header {
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
+#vr-hr {
+  border-left: 1px solid #c7c7c7;
+  height: 10px;
 }
 
-.card-body {
-  padding: 0px 2em 2em 2em;
+.img-fluid {
+  width: 100%;
+  height: auto;
 }
 
-.text-highlight {
-  color: #84aba4;
+.mb-10 {
+  margin-bottom: 100px;
 }
 
-.border-primary {
-  border-bottom: 1px solid #84aba4 !important;
+.mr-2 {
+  margin-right: 10px;
 }
 
 .mr-5 {
   margin-right: 40px;
+}
+
+.mt-10 {
+  margin-top: 100px !important;
+}
+
+.mt-150 {
+  margin-top: 150px;
+}
+
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.p-75 {
+  padding: 75px;
+}
+
+.png-bg-color {
+  background: #e2e2e2 !important;
+}
+
+.png-bg-color-light {
+  background: #ebebeb !important;
+}
+
+.png-bg-color-superLight {
+  background: #f8f8f8 !important;
+}
+
+.row {
+  padding: 0px !important;
+  margin: 0px !important;
 }
 
 .section-divider {
@@ -6494,16 +6602,40 @@ html.is-leaving .transition-fade {
   overflow: hidden;
 }
 
+.section-header {
+  font-size: clamp(1.3rem, 2vw, 1.9rem);
+}
+
+.section-mb {
+  padding-bottom: clamp(30px, 10vw, 75px) !important;
+}
+
+.section-mb {
+  padding-bottom: clamp(75px, 8.5vw, 150px);
+}
+
+.section-mt {
+  padding-top: clamp(75px, 8.5vw, 150px);
+}
+
+.sm-d-none {
+  display: none !important;
+}
+
+.text-alert {
+  color: #912d2d;
+}
+
+.text-highlight {
+  color: #84aba4;
+}
+
 .underline {
   text-decoration: none;
   display: inline-block;
   position: relative;
   transition: all 0.5s;
   cursor: pointer;
-}
-
-.underline:hover {
-  color: #84aba4;
 }
 
 .underline:after {
@@ -6517,6 +6649,10 @@ html.is-leaving .transition-fade {
   background: #36393b;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 100%;
+}
+
+.underline:hover {
+  color: #84aba4;
 }
 
 .underline:hover:after {
@@ -6551,40 +6687,8 @@ html.is-leaving .transition-fade {
   background: #2c8cb3 !important;
 }
 
-.headerline::before {
-  display: block;
-  content: "";
-  width: 25px;
-  border-top: 3px solid #84aba4;
-  padding-top: 0.5rem;
-}
-
-.display-flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.display-grid-center {
-  display: grid;
-  place-items: center;
-}
-
-.d-block {
-  display: block;
-}
-
-.d-inline-block {
-  display: inline-block;
-}
-
-.d-inline {
-  display: inline;
-}
-
-.mx-auto {
-  margin-left: auto !important;
-  margin-right: auto !important;
+.vh-100 {
+  height: 100vh !important;
 }
 
 .vh-50 {
@@ -6599,94 +6703,10 @@ html.is-leaving .transition-fade {
   height: 85vh;
 }
 
-.vh-100 {
-  height: 100vh !important;
-}
-
-.arrow-right-icon {
-  fill: #84aba4;
-  pointer-events: none;
-}
-
-.text-alert {
-  color: #912d2d;
-}
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.img-fluid {
-  width: 100%;
-  height: auto;
-}
-
-.section-mb {
-  padding-bottom: clamp(75px, 8.5vw, 150px);
-}
-
-.section-mt {
-  padding-top: clamp(75px, 8.5vw, 150px);
-}
-
-.mb-10 {
-  margin-bottom: 100px;
-}
-
-.mt-10 {
-  margin-top: 100px !important;
-}
-
-.mt-150 {
-  margin-top: 150px;
-}
-
-.p-75 {
-  padding: 75px;
-}
-
-.bg-darker {
-  background-color: #e7e1de;
-}
-
-.blend-soft-light {
-  mix-blend-mode: soft-light;
-}
-
-.blend-screen {
-  mix-blend-mode: screen;
-}
-
-.row {
-  padding: 0px !important;
-  margin: 0px !important;
-}
-
-.overflow-hidden {
-  overflow: hidden !important;
-}
-
 @media (max-width: 768px) {
   .section-divider {
     margin-top: 75px;
     margin-bottom: 50px;
-  }
-
-  .section-mb {
-    padding-bottom: clamp(30px, 10vw, 75px) !important;
-  }
-}
-@media (max-width: 576px) {
-  .container-text-sm-center {
-    text-align: center;
-  }
-
-  .arrow-wrapper {
-    display: none !important;
-  }
-
-  .sm-d-none {
-    display: none !important;
   }
 }
 .btn {
@@ -6700,6 +6720,31 @@ html.is-leaving .transition-fade {
   font-family: "Poppins";
   background-color: #36393b;
   color: #ebebeb;
+}
+
+.btn-secondary {
+  padding: 1.2em 3.5em;
+  font-family: "Poppins";
+  background-color: #b1b1b1;
+  color: #36393b;
+  border: none !important;
+  outline: none !important;
+}
+
+.btn-outline-primary {
+  padding: 1.125em 3.5em;
+  font-family: "Poppins";
+  background-color: #f8f3f1;
+  outline: 1px solid #36393b;
+  color: #36393b;
+}
+
+.btn-outline-secondary {
+  padding: 1.125em 3.5em;
+  font-family: "Poppins";
+  background-color: none !important;
+  outline: 1px solid #36393b;
+  color: #36393b;
 }
 
 .btn-submit {

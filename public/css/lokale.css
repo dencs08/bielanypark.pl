@@ -1,0 +1,50 @@
+@charset "UTF-8";
+#mieszkania h1 {
+  margin-top: clamp(20px, 6vh, 90px);
+  font-size: clamp(2rem, 6vw, 8rem);
+}
+#mieszkania .app {
+  background-color: #e8e8e8 !important;
+}
+#mieszkania .app img {
+  width: clamp(300px, 70%, 3200px);
+  height: auto;
+}
+
+.card-body p {
+  font-family: "Poppins";
+  margin: 0;
+  padding: 0;
+}
+
+#storeFrontNav {
+  height: clamp(40px, 20vh, 150px);
+  width: clamp(200px, 90%, 95vw);
+}
+#storeFrontNav select.select-arrow {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #fdf9f8;
+  width: 100%;
+  padding: 0.5em 5em 0.5em 3.5em;
+  font-family: "Poppins";
+  font-size: clamp(1rem, 1vw, 1.75rem);
+  border: none;
+  outline: none;
+  border-right: 1px solid #b3b3b3;
+}
+#storeFrontNav .select:after {
+  content: "🢓";
+  position: absolute;
+  top: -4px;
+  right: 25px;
+  bottom: 0;
+  font-size: 2rem;
+  padding: 11px 15px;
+  pointer-events: none;
+  color: #a5a5a5;
+}
+#storeFrontNav .select {
+  position: relative;
+}

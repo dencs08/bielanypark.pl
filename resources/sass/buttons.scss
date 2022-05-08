@@ -16,6 +16,43 @@
     color: $font-color-secondary;
 }
 
+.btn-secondary {
+    padding: 1.2em 3.5em;
+
+    font-family: $font-family-secondary;
+
+    background-color: #b1b1b1;
+
+    color: $font-color-primary;
+
+    border: none !important;
+    outline: none !important;
+}
+
+.btn-outline-primary {
+    padding: 1.125em 3.5em;
+
+    font-family: $font-family-secondary;
+
+    background-color: $body-bg;
+
+    outline: 1px solid $font-color-primary;
+
+    color: $font-color-primary;
+}
+
+.btn-outline-secondary {
+    padding: 1.125em 3.5em;
+
+    font-family: $font-family-secondary;
+
+    background-color: none !important;
+
+    outline: 1px solid $font-color-primary;
+
+    color: $font-color-primary;
+}
+
 .btn-submit {
     padding: 20px 25px;
 
