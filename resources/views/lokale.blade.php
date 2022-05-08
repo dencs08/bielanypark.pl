@@ -1,16 +1,16 @@
 @extends('layouts.master')
-@section('title', 'Mieszkania')
+@section('title', 'Bielanypark - Lokale')
 
 @section('meta')
 <meta name="description" content='Wyszukaj lokale usługowe "bielanypark" zlokalizowane przy ulicy Myrka 9 w Legnicy, najlepsze miejsce dla Twojej usługi!'>
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/mieszkania.css') }}">
+<link rel="stylesheet" href="{{ asset('css/lokale.css') }}">
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/mieszkania.js') }}"></script>
+    <script src="{{ asset('js/lokale.js') }}"></script>
 @endsection
     
 @section('content')
@@ -48,52 +48,38 @@
         </div>
     </section> -->
 
-    <div class="container mt-150 mb-10">
-        <section data-scroll-section>
+    <div id="Storefronts" data-scroll-container class="container mt-150 mb-10">
 
-            <?php 
-            $counter=0;
-            ?>
-
-            @if(!empty($results))
-            @foreach($floorDis as $floor)
-            <div class="checkboxes">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" {{($counter == 0 ? 'checked' : '')}}
-                    attr-name="{{$floor->floor}}"
-                    class="custom-control-input floor-checkbox" id="{{$floor->id}}">
-                    <label class="custom-control-label" for="{{$floor->id}}">{{ucfirst($floor->floor)}}</label>
-                </div>
+        <section data-scroll-section class="display-grid-center">
+            <div id="storeFrontNav" class="bg-light display-grid-center">
+            <h3>Znaleźliśmy dla Ciebie <span class="storeCount">15</span> lokali</h3>
+                <?php $counter=0;?>
+                @if(!empty($floors))
+                    @foreach($floors as $floor)
+                        <div class="checkboxes d-inline-block">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" {{($counter == 0 ? 'checked' : '')}}
+                                attr-name="{{$floor->floor}}"
+                                class="custom-control-input floor-checkbox" id="{{$floor->floor}}">
+                                <label class="custom-control-label" for="{{$floor->floor}}">{{ucfirst($floor->floor)}}</label>
+                            </div>
+                        </div>
+                        <?php $counter++;?>
+                    @endforeach
+                @endif 
             </div>
-            <?php $counter++;?>
-            @endforeach
-            @endif 
         </section>
         
         <section data-scroll-section>
-            <div class="result">
-                <div class="w-100 container">
-                @foreach($results as $result)
-                    <div class="d-inline-block card">
-                        <div class="card-header">
-                            <a href="#"><img class="img-fluid w-100" src="{{ asset('images/cards/jpg/' . $result->name . '.jpg')}}" alt=""></a>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="mt-4 mb-2">Lokal {{ $result->name }}</h3>
-                            <p>Metraż: <span class="fw-light">{{ $result->metric }}</span></p>
-                            <p>Piętro: <span class="fw-light">{{ $result->floor }}</span></p>
-                            <p>Pokój sanitarny:<span class="fw-light"> {{ $result->sanitary }}</span></p>
+            <div class="text-center">
+                <div class="row results">
 
-                            <p class="mt-4">Cena:<span class="fw-light"> {{ $result->buyPrice }}</span></p>
-                            <button type="button" class="btn btn-primary mt-2">Zapytaj</button>
-                        </div>
-                    </div>
-                    @endforeach
                 </div>
             </div>
         </section>
     </div>
 
-    <x-MainFooterDark/>
+    <!-- <x-MainFooterDark/> -->
+    <x-light-footer/>
 
 @endsection

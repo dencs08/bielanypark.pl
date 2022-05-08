@@ -7,7 +7,7 @@
         <link rel="canonical" href="https://www.bielanypark.pl"/>
         <link rel="apple-touch-icon" href="{{asset('images/logos/favicon.png')}}">
         <link rel="shortcut icon" href="{{asset('images/logos/favicon.png')}}" />
-        <link rel="stylesheet" href="css/app.css" />
+        <link rel="stylesheet" href="{{asset('css/app.css')}}" />
         @yield('css')
         <title>@yield('title')</title>
     </head>
@@ -19,5 +19,5 @@
             @yield('js')
         </div>
     </body>
-    <script src="js/app.js"></script>
+    <script src="{{asset('js/app.js')}}"></script>
 </html>
