@@ -10965,31 +10965,59 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!*********************************!*\
-  !*** ./resources/js/contact.js ***!
-  \*********************************/
+/*!********************************!*\
+  !*** ./resources/js/lokale.js ***!
+  \********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "contactInit": () => (/* binding */ contactInit)
+/* harmony export */   "fetchStores": () => (/* binding */ fetchStores),
+/* harmony export */   "storefrontsInit": () => (/* binding */ storefrontsInit)
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 
 
-function contactInit() {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()('.js-input').keyup(function () {
-    if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).val()) {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('not-empty');
-    } else {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('not-empty');
+function storefrontsInit() {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('click', '.floor-checkbox', function () {
+      var ids = [];
+      var counter = 0;
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.floor-checkbox').each(function () {
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).is(":checked")) {
+          ids.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id'));
+          counter++;
+        }
+      });
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.storeCount').text(ids.length);
+
+      if (counter == 0) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').empty();
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("<h3 class=\"mt-5\">Brak lokali w wybranych kryteriach</h3>");
+      } else {
+        fetchStores(ids);
+      }
+    });
+  });
+}
+
+function fetchStores(id) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').empty();
+  jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+    type: 'GET',
+    url: 'testFilter?' + id,
+    success: function success(response) {
+      var response = JSON.parse(response);
+      console.log('testFilter?' + id); // console.log(response);
+
+      if (response.length == 0) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("<h3 class=\"mt-5\">Brak lokali w wybranych kryteriach</h3>");
+      } else {
+        response.forEach(function (store) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n                    <div class=\"col-md-12 col-lg-6 col-xl-4\">\n                        <div class=\"card\">\n                            <div class=\"card-header png-bg-color-superLight p-4\">\n                                <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n                            </div>\n                            <div class=\"card-body\">\n                                <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                                <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                                <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                                <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n\n                                <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                                <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                                <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m     mt-2\">Podgl\u0105d</button></a>\n                            </div>\n                        </div>\n                    </div>\n                    "));
+        });
+      }
     }
   });
-
-  if (jquery__WEBPACK_IMPORTED_MODULE_0___default()("#content").val().length > 0) {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#content").addClass('not-empty');
-  } else {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#content").addClass('not-empty');
-  }
 }
 
 

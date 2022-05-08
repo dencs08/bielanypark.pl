@@ -2501,13 +2501,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _swup_head_plugin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @swup/head-plugin */ "./node_modules/@swup/head-plugin/lib/index.js");
 /* harmony import */ var _swup_body_class_plugin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @swup/body-class-plugin */ "./node_modules/@swup/body-class-plugin/lib/index.js");
 /* harmony import */ var locomotive_scroll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! locomotive-scroll */ "./node_modules/locomotive-scroll/dist/locomotive-scroll.esm.js");
-/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
-/* harmony import */ var gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! gsap/ScrollTrigger */ "./node_modules/gsap/ScrollTrigger.js");
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+/* harmony import */ var gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! gsap/ScrollTrigger */ "./node_modules/gsap/ScrollTrigger.js");
 /* harmony import */ var _contact__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./contact */ "./resources/js/contact.js");
 /* harmony import */ var _start__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./start */ "./resources/js/start.js");
-/* harmony import */ var _components_magnetic__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/magnetic */ "./resources/js/components/magnetic.js");
-/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+/* harmony import */ var _lokale__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lokale */ "./resources/js/lokale.js");
+/* harmony import */ var _components_magnetic__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/magnetic */ "./resources/js/components/magnetic.js");
+/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -2533,15 +2535,15 @@ var locoScroll = new locomotive_scroll__WEBPACK_IMPORTED_MODULE_3__["default"]({
 });
 
 function locoInit() {
-  gsap__WEBPACK_IMPORTED_MODULE_8__.gsap.registerPlugin(gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_9__.ScrollTrigger);
+  gsap__WEBPACK_IMPORTED_MODULE_9__.gsap.registerPlugin(gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger);
 
   function scrollPositionValue() {// locoScrollPosValue = locoScroll.scroll.instance.scroll.y
   }
 
-  locoScroll.on("scroll", gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_9__.ScrollTrigger.update);
+  locoScroll.on("scroll", gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.update);
   locoScroll.on("scroll", scrollPositionValue); // tell ScrollTrigger to use these proxy methods for the ".smooth-locomotive-scroll" element since Locomotive Scroll is hijacking things
 
-  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_9__.ScrollTrigger.scrollerProxy("body", {
+  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.scrollerProxy("body", {
     scrollTop: function scrollTop(value) {
       return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
     },
@@ -2582,7 +2584,7 @@ function locoInit() {
 
     elem.style.transform = "translate(" + x + "px, " + y + "px)";
     elem.style.opacity = "0";
-    gsap__WEBPACK_IMPORTED_MODULE_8__.gsap.fromTo(elem, {
+    gsap__WEBPACK_IMPORTED_MODULE_9__.gsap.fromTo(elem, {
       x: x,
       y: y,
       autoAlpha: 0
@@ -2596,18 +2598,18 @@ function locoInit() {
   }
 
   function hide(elem) {
-    gsap__WEBPACK_IMPORTED_MODULE_8__.gsap.set(elem, {
+    gsap__WEBPACK_IMPORTED_MODULE_9__.gsap.set(elem, {
       autoAlpha: 0
     });
   } // //!On doc load hide .gs elements and create scroll trigger
 
 
   document.addEventListener("DOMContentLoaded", function () {
-    gsap__WEBPACK_IMPORTED_MODULE_8__.gsap.registerPlugin(gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_9__.ScrollTrigger);
-    gsap__WEBPACK_IMPORTED_MODULE_8__.gsap.utils.toArray(".gs").forEach(function (elem) {
+    gsap__WEBPACK_IMPORTED_MODULE_9__.gsap.registerPlugin(gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger);
+    gsap__WEBPACK_IMPORTED_MODULE_9__.gsap.utils.toArray(".gs").forEach(function (elem) {
       hide(elem); // assure that the element is hidden when scrolled into view
 
-      gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_9__.ScrollTrigger.create({
+      gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.create({
         trigger: elem,
         start: startTrigger(),
         end: "top top",
@@ -2641,17 +2643,17 @@ function locoInit() {
   } // each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
 
 
-  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_9__.ScrollTrigger.addEventListener("refresh", function () {
+  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.addEventListener("refresh", function () {
     return locoScroll.update();
   }); // after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
 
-  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_9__.ScrollTrigger.refresh();
+  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.refresh();
 }
 
 locoInit();
 
 function locoReload() {
-  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_9__.ScrollTrigger.refresh();
+  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.refresh();
   scrollToTop();
 }
 
@@ -2667,9 +2669,9 @@ function scrollToTop() {
 
 function init() {
   if (document.querySelector('body')) {
-    (0,_components_cursor__WEBPACK_IMPORTED_MODULE_7__.cursorInit)();
-    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_6__.magneticInit)();
-    gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_9__.ScrollTrigger.refresh();
+    (0,_components_cursor__WEBPACK_IMPORTED_MODULE_8__.cursorInit)();
+    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_7__.magneticInit)();
+    gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.refresh();
   }
 
   if (document.querySelector("#Contact")) {
@@ -2679,21 +2681,35 @@ function init() {
   if (document.querySelector('#landing_page')) {
     (0,_start__WEBPACK_IMPORTED_MODULE_5__.startInit)();
   }
+
+  if (document.querySelector('#Storefronts')) {
+    (0,_lokale__WEBPACK_IMPORTED_MODULE_6__.fetchStores)();
+    (0,_lokale__WEBPACK_IMPORTED_MODULE_6__.storefrontsInit)();
+    locoReload();
+  }
 } //Initialize script here when entering the page for the first time
 
 
 document.addEventListener("DOMContentLoaded", function () {
   if (document.querySelector('body')) {
-    (0,_components_cursor__WEBPACK_IMPORTED_MODULE_7__.cursorInit)();
-    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_6__.magneticInit)();
+    (0,_components_cursor__WEBPACK_IMPORTED_MODULE_8__.cursorInit)();
+    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_7__.magneticInit)();
+  }
+
+  if (document.querySelector('#Contact')) {
+    (0,_contact__WEBPACK_IMPORTED_MODULE_4__.contactInit)();
   }
 
   if (document.querySelector('#landing_page')) {
     (0,_start__WEBPACK_IMPORTED_MODULE_5__.startInit)();
   }
 
-  if (document.querySelector('#Contact')) {
-    (0,_contact__WEBPACK_IMPORTED_MODULE_4__.contactInit)();
+  if (document.querySelector('#Storefronts')) {
+    (0,_lokale__WEBPACK_IMPORTED_MODULE_6__.fetchStores)();
+    (0,_lokale__WEBPACK_IMPORTED_MODULE_6__.storefrontsInit)();
+    setTimeout(function () {
+      locoReload();
+    }, 300);
   }
 });
 
@@ -2974,36 +2990,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
- // import mapboxgl from 'mapbox-gl';
+
 
 function contactInit() {
   jquery__WEBPACK_IMPORTED_MODULE_0___default()('.js-input').keyup(function () {
-    console.log("KEY");
-
     if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).val()) {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('not-empty');
     } else {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('not-empty');
     }
-  }); // mapboxgl.accessToken = 'pk.eyJ1IjoiZGVuY3MwOCIsImEiOiJjanYxaXgxN2YwYmlrNDRydHB6c3Q5eWNjIn0.Rs2kuHA93nRix-LXRVRDPA';
-  // navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
-  //     enableHighAccuracy: true
-  // })
-  // function successLocation(position) {
-  //     setMap([16.177654970029643, 51.19004853682276])
-  // }
-  // function errorLocation() {
-  // }
-  // function setMap(center) {
-  //     const map = new mapboxgl.Map({
-  //         container: 'map',
-  //         style: 'mapbox://styles/dencs08/cl210mbvs00c714mqvui4941i',
-  //         center: center,
-  //         zoom: 15
-  //     });
-  //     const nav = new mapboxgl.NavigationControl()
-  //     map.addControl(nav)
-  // }
+  });
+
+  if (jquery__WEBPACK_IMPORTED_MODULE_0___default()("#content").val().length > 0) {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#content").addClass('not-empty');
+  } else {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#content").addClass('not-empty');
+  }
 }
 
 
@@ -3025,6 +3027,69 @@ function contactInit() {
   !*** ./resources/js/locomotive-scroll.js ***!
   \*******************************************/
 /***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./resources/js/lokale.js":
+/*!********************************!*\
+  !*** ./resources/js/lokale.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fetchStores": () => (/* binding */ fetchStores),
+/* harmony export */   "storefrontsInit": () => (/* binding */ storefrontsInit)
+/* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function storefrontsInit() {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('click', '.floor-checkbox', function () {
+      var ids = [];
+      var counter = 0;
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.floor-checkbox').each(function () {
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).is(":checked")) {
+          ids.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id'));
+          counter++;
+        }
+      });
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.storeCount').text(ids.length);
+
+      if (counter == 0) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').empty();
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("<h3 class=\"mt-5\">Brak lokali w wybranych kryteriach</h3>");
+      } else {
+        fetchStores(ids);
+      }
+    });
+  });
+}
+
+function fetchStores(id) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').empty();
+  jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+    type: 'GET',
+    url: 'testFilter?' + id,
+    success: function success(response) {
+      var response = JSON.parse(response);
+      console.log('testFilter?' + id); // console.log(response);
+
+      if (response.length == 0) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("<h3 class=\"mt-5\">Brak lokali w wybranych kryteriach</h3>");
+      } else {
+        response.forEach(function (store) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n                    <div class=\"col-md-12 col-lg-6 col-xl-4\">\n                        <div class=\"card\">\n                            <div class=\"card-header png-bg-color-superLight p-4\">\n                                <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n                            </div>\n                            <div class=\"card-body\">\n                                <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                                <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                                <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                                <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n\n                                <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                                <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                                <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m     mt-2\">Podgl\u0105d</button></a>\n                            </div>\n                        </div>\n                    </div>\n                    "));
+        });
+      }
+    }
+  });
+}
 
 
 
@@ -43233,10 +43298,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/sass/mieszkania.scss":
-/*!****************************************!*\
-  !*** ./resources/sass/mieszkania.scss ***!
-  \****************************************/
+/***/ "./resources/sass/lokale.scss":
+/*!************************************!*\
+  !*** ./resources/sass/lokale.scss ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -44859,7 +44924,7 @@ var queryAll = exports.queryAll = function queryAll(selector) {
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0,
 /******/ 			"css/contact": 0,
-/******/ 			"css/mieszkania": 0,
+/******/ 			"css/lokale": 0,
 /******/ 			"css/start": 0
 /******/ 		};
 /******/ 		
@@ -44910,14 +44975,14 @@ var queryAll = exports.queryAll = function queryAll(selector) {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/mieszkania","css/start"], () => (__webpack_require__("./resources/js/components/navbar.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/mieszkania","css/start"], () => (__webpack_require__("./resources/js/gsapAnims.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/mieszkania","css/start"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/mieszkania","css/start"], () => (__webpack_require__("./resources/js/locomotive-scroll.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/mieszkania","css/start"], () => (__webpack_require__("./resources/sass/app.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/mieszkania","css/start"], () => (__webpack_require__("./resources/sass/start.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/mieszkania","css/start"], () => (__webpack_require__("./resources/sass/mieszkania.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","css/contact","css/mieszkania","css/start"], () => (__webpack_require__("./resources/sass/contact.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/js/components/navbar.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/js/gsapAnims.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/js/locomotive-scroll.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/sass/start.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/sass/lokale.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/sass/contact.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
