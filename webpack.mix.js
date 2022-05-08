@@ -21,14 +21,14 @@ mix.js([
         'resources/js/contact.js',
     ], 'public/js/contact.js').version()
     .js([
-        'resources/js/mieszkania.js',
-    ], 'public/js/mieszkania.js').version()
+        'resources/js/lokale.js',
+    ], 'public/js/lokale.js').version()
     .js([
         'resources/js/start.js',
     ], 'public/js/start.js').version()
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/start.scss', 'public/css')
-    .sass('resources/sass/mieszkania.scss', 'public/css')
+    .sass('resources/sass/lokale.scss', 'public/css')
     .sass('resources/sass/contact.scss', 'public/css');
 
 mix.browserSync('127.0.0.1:8000');
