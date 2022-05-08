@@ -13,6 +13,7 @@ class StorefrontFilter extends AbstractFilter
         'metric' => MetricFilter::class,
         'floor' => FloorFilter::class,
         'available' => AvailableFilter::class,
+        'visible' => VisibleFilter::class,
         'buyPrice' => BuyPriceFilter::class,
         'rentPrice' => RentPriceFilter::class
     ];

@@ -7,7 +7,8 @@ namespace App\Filters;
 class MetricFilter
 {
     public function filter($builder, $value)
-    {
-        return $builder->where('metric', $value);
+    {        
+        $arr = json_decode($value, true);
+        return $builder->whereBetween('metric', [$arr[0],$arr[1]]);
     }
 }

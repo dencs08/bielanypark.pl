@@ -8,6 +8,7 @@ class RentPriceFilter
 {
     public function filter($builder, $value)
     {
-        return $builder->where('rentPrice', $value);
+        $arr = json_decode($value, true);
+        return $builder->whereBetween('rentPrice', [$arr[0],$arr[1]]);
     }
 }
