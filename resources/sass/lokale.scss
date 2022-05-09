@@ -1,4 +1,5 @@
 @import "variables";
+@import "~omni-slider/src/omni-slider";
 
 #mieszkania {
     h1 {
@@ -25,7 +26,7 @@
 }
 
 #storeFrontNav {
-    height: clamp(40px, 20vh, 150px);
+    height: clamp(40px, 20vh, 400px);
     width: clamp(200px, 90%, 95vw);
 
     select.select-arrow {
@@ -59,5 +60,42 @@
     }
     .select {
         position: relative;
+    }
+
+    //slider
+    .slider-circle {
+        display: none;
+    }
+
+    .slider {
+        height: 5px;
+        background: $font-color-secondary;
+        border: none;
+        border-radius: 50px;
+    }
+
+    .slider-fill {
+        height: 5px;
+        color: $font-color-primary;
+        background: $font-color-primary;
+        border-radius: 50px;
+    }
+
+    .handle {
+        width: 30px;
+        height: 30px;
+        border-radius: 22px;
+        border: $body-bg-color-lighter solid 10px !important;
+        background: $font-color-primary;
+        top: -13px;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25),
+            0 0px 2px 0 rgba(0, 0, 0, 0.25);
+        transition: box-shadow 0.25s;
+    }
+
+    .handle:active {
+        box-shadow: $font-color-secondary !important;
+        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.25),
+            0 -3px 5px 0 rgba(0, 0, 0, 0.25);
     }
 }

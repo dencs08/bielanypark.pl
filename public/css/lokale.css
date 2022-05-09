@@ -1,4 +1,64 @@
 @charset "UTF-8";
+.slider {
+  width: 100%;
+  height: 0.7rem;
+  border: 1px solid #000;
+  position: relative;
+}
+.slider.one-way .handle.handle-left {
+  visibility: hidden;
+}
+.slider .slider-circle {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: #0a84c1;
+  position: relative;
+  display: inline-block;
+  margin-top: 1rem;
+  pointer-events: none;
+  -webkit-user-select: none;
+}
+.slider .handle {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 2.6rem;
+  position: absolute;
+  top: -1rem;
+  border: 1px solid #000;
+  background-color: #fff;
+  text-align: center;
+  cursor: pointer;
+  z-index: 1;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.slider .handle.ontop {
+  z-index: 2;
+}
+.slider .handle:active {
+  border-color: #0a84c1;
+  box-shadow: 0 0 0.5rem #0a84c1;
+}
+.slider .handle-left {
+  left: 0;
+}
+.slider .handle-right {
+  right: 0;
+}
+.slider .slider-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #0a84c1;
+  pointer-events: none;
+  -webkit-user-select: none;
+}
+.slider .slider-transition {
+  transition: all 0.5s ease;
+}
+
 #mieszkania h1 {
   margin-top: clamp(20px, 6vh, 90px);
   font-size: clamp(2rem, 6vw, 8rem);
@@ -18,7 +78,7 @@
 }
 
 #storeFrontNav {
-  height: clamp(40px, 20vh, 150px);
+  height: clamp(40px, 20vh, 400px);
   width: clamp(200px, 90%, 95vw);
 }
 #storeFrontNav select.select-arrow {
@@ -47,4 +107,33 @@
 }
 #storeFrontNav .select {
   position: relative;
+}
+#storeFrontNav .slider-circle {
+  display: none;
+}
+#storeFrontNav .slider {
+  height: 5px;
+  background: #ebebeb;
+  border: none;
+  border-radius: 50px;
+}
+#storeFrontNav .slider-fill {
+  height: 5px;
+  color: #36393b;
+  background: #36393b;
+  border-radius: 50px;
+}
+#storeFrontNav .handle {
+  width: 30px;
+  height: 30px;
+  border-radius: 22px;
+  border: #fdf9f8 solid 10px !important;
+  background: #36393b;
+  top: -13px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25), 0 0px 2px 0 rgba(0, 0, 0, 0.25);
+  transition: box-shadow 0.25s;
+}
+#storeFrontNav .handle:active {
+  box-shadow: #ebebeb !important;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.25), 0 -3px 5px 0 rgba(0, 0, 0, 0.25);
 }
