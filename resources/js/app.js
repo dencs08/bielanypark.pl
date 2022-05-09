@@ -11,7 +11,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { contactInit } from './contact'
 import { startInit } from './start'
-import { fetchStores, storefrontsInit } from './lokale'
+import { storefrontsInit } from './lokale'
 import { magneticInit } from './components/magnetic'
 import { cursorInit } from './components/cursor'
 
@@ -157,9 +157,11 @@ function init() {
         startInit();
     }
     if (document.querySelector('#Storefronts')) {
-        fetchStores();
         storefrontsInit();
-        locoReload();
+
+        setInterval(() => {
+            locoReload();
+        }, 300)
     }
 }
 //Initialize script here when entering the page for the first time
@@ -175,10 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
         startInit();
     }
     if (document.querySelector('#Storefronts')) {
-        fetchStores();
         storefrontsInit();
 
-        setTimeout(() => {
+        setInterval(() => {
             locoReload();
         }, 300)
     }
