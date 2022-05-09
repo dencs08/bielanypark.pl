@@ -18,6 +18,7 @@
 @section('content')
 
 <div data-scroll-container>
+<section id="page_top" data-scroll-section></section>
 <div id="Contact" class="container-fluid mb-10 mt-5" data-scroll-section>
     <div class="row">
         <div class="bg-darker col-md-6 p-0 display-grid-center">

@@ -14,59 +14,54 @@
 @endsection
     
 @section('content')
-    <!-- <x-WebStillInDev/> -->
-    <!-- <section id="mieszkania" data-scroll-section>
-        <div class="container text-center display-grid-center">
-            <div>
-                <div id="app" class="app mb-5 mt-10 p-75 mt-4 vh-75">
-                    <div id="floor_picker">
-                        <h1>
-                            Wybierz ineresujące Cię piętra
-                        </h1>
-                        <img src="{{ asset('images/building/png/chalk_side.png') }}" class="img-fluid mt-5" alt="">
-                    </div>
-
-                    <div id="metric_picker" class="d-none">
-                        <h1>
-                            Zaznacz interesujący Cię metraż
-                        </h1>
-                    </div>
-
-                    <div id="flat_cards" class="d-none">
-                        <h1>
-                            CARDS
-                        </h1>
-                    </div>
-                </div>
-
-                <div class="buttons">
-                    <button id="previous" class="btn btn-next mr-5"><</button>
-                    <button id="next" class="btn btn-next">></button>
-                </div>
-            </div>
-
-        </div>
-    </section> -->
-
     <div id="Storefronts" data-scroll-container class="container mt-150 mb-10">
 
         <section data-scroll-section class="display-grid-center">
-            <div id="storeFrontNav" class="bg-light display-grid-center">
-            <h3>Znaleźliśmy dla Ciebie <span class="storeCount">15</span> lokali</h3>
-                <?php $counter=0;?>
-                @if(!empty($floors))
-                    @foreach($floors as $floor)
-                        <div class="checkboxes d-inline-block">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" {{($counter == 0 ? 'checked' : '')}}
-                                attr-name="{{$floor->floor}}"
-                                class="custom-control-input floor-checkbox" id="{{$floor->floor}}">
-                                <label class="custom-control-label" for="{{$floor->floor}}">{{ucfirst($floor->floor)}}</label>
-                            </div>
+            <div id="storeFrontNav" class="bg-light text-center">
+            <h3 class="mb-1">Znaleźliśmy dla Ciebie <span class="storeCount">15</span> lokali</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="filters-floor text-center">
+                            <p>Piętro</p>
+                            @if(!empty($floors))
+                                @foreach($floors as $floor)
+                                    <div class="checkboxes d-inline-block">
+                                        <div class="custom-control custom-checkbox">
+                                            <input name="floor" type="checkbox" checked="" class="custom-control-input floor-checkbox" id="{{$floor->floor}}" value="{{$floor->floor}}" checked>
+                                            <label class="custom-control-label" for="{{$floor->floor}}">{{ucfirst($floor->floor)}}</label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif 
                         </div>
-                        <?php $counter++;?>
-                    @endforeach
-                @endif 
+                    </div>
+                    <div class="col-md-4">
+                        <div class="filters-metric container">
+                            <p>Metraż</p>
+
+                            <div class="mb-2">
+                                <strong id="minMetric" class="min"></strong
+                                ><strong class="to"> - to - </strong
+                                ><strong id="maxMetric" class="max"></strong>
+                              </div>
+                              <div name="metric" attr-valueMin="{{$metrics[0]}}" attr-valueMax="{{$metrics[1]}}" id="sliderMetric" class="wrap sliderMetric"></div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="filters-buyPrice container">
+                            <p>Cena</p>
+
+                              <div class="mb-2">
+                                <strong id="minBuyPrice" class="min"></strong
+                                ><strong class="to"> - to - </strong
+                                ><strong id="maxBuyPrice" class="max"></strong>
+                              </div>
+                              <div name="buyPrice" attr-valueMin="{{$buyPrices[0]}}" attr-valueMax="{{$buyPrices[1]}}" id="sliderBuyPrice" class="wrap sliderBuyPrice"></div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         
