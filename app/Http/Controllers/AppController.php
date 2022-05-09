@@ -18,10 +18,20 @@ class AppController extends Controller
         $results = (new StorefrontController)->index($request);
 
         $floors = DB::table('storefronts')->select('floor')->distinct()->get();
+        $metricMin = DB::table('storefronts')->min('metric');
+        $metricMax = DB::table('storefronts')->max('metric');
+        $buyPriceMin = DB::table('storefronts')->min('buyPrice');
+        $buyPriceMax = DB::table('storefronts')->max('buyPrice');
+        $rentPriceMin = DB::table('storefronts')->min('rentPrice');
+        $rentPriceMax = DB::table('storefronts')->max('rentPrice');
 
+        
+        // $floors_decoded = json_decode($floors, false);
         return view('lokale', [
             'results' => $results,
-            'floors' => $floors
+            'floors' => $floors,
+            'metrics' => [$metricMin,$metricMax],
+            'buyPrices' => [$buyPriceMin,$buyPriceMax]
         ]);
     }
 
