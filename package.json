@@ -30,6 +30,7 @@
         "jquery": "^3.6.0",
         "locomotive-scroll": "^4.1.4",
         "mapbox-gl": "^2.8.1",
+        "omni-slider": "^1.2.1",
         "swup": "^2.0.14"
     }
 }
