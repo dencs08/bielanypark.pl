@@ -6055,15 +6055,26 @@ html.has-scroll-dragging {
   opacity: 0;
   transition: 0.4s;
 }
-.cursor.active {
+.cursor.active-expand {
   opacity: 0.975;
   transform: scale(2.5) translate(-10px, -10px);
 }
-.cursor.active svg {
+.cursor.active-expand svg {
   height: 60%;
   width: 60%;
   opacity: 1;
   transition: 0.4s;
+}
+.cursor.active-shrink {
+  opacity: 0.975;
+  transform: scale(0.5) translate(-30px, -30px);
+}
+.cursor.active-shrink svg {
+  height: 60%;
+  width: 60%;
+  opacity: 1;
+  transition: 0.4s;
+  opacity: 0;
 }
 .cursor.hovered {
   opacity: 0.975;

@@ -35,18 +35,35 @@ function cursorInit() {
             mouseY = e.clientY;
         });
 
-        let items = document.querySelectorAll("a, button, input, textarea, input, label, .cursor_expand")
+        let itemsGrow;
+        let itemsShrink;
+        function cursorItems() {
+            itemsGrow = document.querySelectorAll("a, button, .btn, .cursor_expand");
+            itemsShrink = document.querySelectorAll("textarea, input, label, .cursor_shrink");
 
-        for (var i = 0; i < items.length; i++) {
-            (function (index) {
-                items[index].addEventListener("mouseover", function (e) {
-                    cursor.classList.add("active");
-                })
-                items[index].addEventListener("mouseleave", function (e) {
-                    cursor.classList.remove("active");
-                })
-            })(i);
+            for (var i = 0; i < itemsGrow.length; i++) {
+                (function (index) {
+                    itemsGrow[index].addEventListener("mouseover", function (e) {
+                        cursor.classList.add("active-expand");
+                    })
+                    itemsGrow[index].addEventListener("mouseleave", function (e) {
+                        cursor.classList.remove("active-expand");
+                    })
+                })(i);
+            }
+
+            for (var i = 0; i < itemsShrink.length; i++) {
+                (function (index) {
+                    itemsShrink[index].addEventListener("mouseover", function (e) {
+                        cursor.classList.add("active-shrink");
+                    })
+                    itemsShrink[index].addEventListener("mouseleave", function (e) {
+                        cursor.classList.remove("active-shrink");
+                    })
+                })(i);
+            }
         }
+        cursorItems();
     }
 }
 

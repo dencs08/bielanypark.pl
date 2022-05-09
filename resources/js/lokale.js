@@ -1,6 +1,8 @@
 import $ from 'jquery';
 import Slider from 'omni-slider';
 
+import { cursorInit } from './components/cursor';
+
 function storefrontsInit() {
     $(document).on('click', '.floor-checkbox', function () {
         fetchStores();
@@ -32,6 +34,7 @@ function storefrontsInit() {
         href += '&visible=1';
         // console.log(floorIds);
         // console.log(href);
+
         $.ajax({
             type: 'GET',
             url: href,
@@ -56,7 +59,7 @@ function storefrontsInit() {
     
                                     <p class="mt-4 font-size-l">Cena:<span class="fw-light"> ${store.buyPrice}</span></p>
                                     <a href="/kontakt/${store.name}"><button type="button" class="btn btn-secondary font-size-m mt-2 mr-2">Zapytaj</button></a>
-                                    <a href="/lokale/${store.name}"><button type="button" class="btn btn-outline-secondary text-center font-size-m     mt-2">Podgląd</button></a>
+                                    <a href="/lokale/${store.name}"><button type="button" class="btn btn-outline-secondary text-center font-size-m mt-2">Podgląd</button></a>
                                 </div>
                             </div>
                         </div>
@@ -67,6 +70,8 @@ function storefrontsInit() {
                 //After success response get how many records we got
                 let resultCount = document.querySelectorAll('.card')
                 $('.storeCount').text(resultCount.length)
+
+                cursorInit();
             }
         });
     }

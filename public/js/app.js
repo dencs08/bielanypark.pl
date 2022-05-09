@@ -2766,47 +2766,60 @@ function cursorInit() {
     cursor.style.display = "none";
     follower.style.display = "none";
   } else {
-    var posX, posY;
-    var mouseX, mouseY;
-    var i;
+    var cursorItems = function cursorItems() {
+      itemsGrow = document.querySelectorAll("a, button, .btn, .cursor_expand");
+      itemsShrink = document.querySelectorAll("textarea, input, label, .cursor_shrink");
 
-    (function () {
-      var cursor = document.getElementById("cursor");
-      posX = 0;
-      posY = 0;
-      mouseX = 0;
-      mouseY = 0;
-      gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.to(cursor, {
-        duration: 0.005,
-        repeat: -1,
-        onRepeat: function onRepeat() {
-          posX += (mouseX - posX) / 9;
-          posY += (mouseY - posY) / 9;
-          gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.set(cursor, {
-            css: {
-              left: mouseX,
-              top: mouseY
-            }
-          });
-        }
-      });
-      document.addEventListener("mousemove", function (e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
-      var items = document.querySelectorAll("a, button, input, textarea, input, label, .cursor_expand");
-
-      for (i = 0; i < items.length; i++) {
+      for (var i = 0; i < itemsGrow.length; i++) {
         (function (index) {
-          items[index].addEventListener("mouseover", function (e) {
-            cursor.classList.add("active");
+          itemsGrow[index].addEventListener("mouseover", function (e) {
+            _cursor.classList.add("active-expand");
           });
-          items[index].addEventListener("mouseleave", function (e) {
-            cursor.classList.remove("active");
+          itemsGrow[index].addEventListener("mouseleave", function (e) {
+            _cursor.classList.remove("active-expand");
           });
         })(i);
       }
-    })();
+
+      for (var i = 0; i < itemsShrink.length; i++) {
+        (function (index) {
+          itemsShrink[index].addEventListener("mouseover", function (e) {
+            _cursor.classList.add("active-shrink");
+          });
+          itemsShrink[index].addEventListener("mouseleave", function (e) {
+            _cursor.classList.remove("active-shrink");
+          });
+        })(i);
+      }
+    };
+
+    var _cursor = document.getElementById("cursor");
+
+    var posX = 0,
+        posY = 0;
+    var mouseX = 0,
+        mouseY = 0;
+    gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.to(_cursor, {
+      duration: 0.005,
+      repeat: -1,
+      onRepeat: function onRepeat() {
+        posX += (mouseX - posX) / 9;
+        posY += (mouseY - posY) / 9;
+        gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.set(_cursor, {
+          css: {
+            left: mouseX,
+            top: mouseY
+          }
+        });
+      }
+    });
+    document.addEventListener("mousemove", function (e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    var itemsGrow;
+    var itemsShrink;
+    cursorItems();
   }
 }
 
@@ -3047,6 +3060,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var omni_slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! omni-slider */ "./node_modules/omni-slider/omni-slider.js");
 /* harmony import */ var omni_slider__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(omni_slider__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+
 
 
 
@@ -3092,13 +3107,14 @@ function storefrontsInit() {
           jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("<h3 class=\"mt-5\">Brak lokali w wybranych kryteriach</h3>");
         } else {
           response.forEach(function (store) {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n                        <div class=\"col-md-12 col-lg-6 col-xl-4\">\n                            <div class=\"card\">\n                                <div class=\"card-header png-bg-color-superLight p-4\">\n                                    <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n                                </div>\n                                <div class=\"card-body\">\n                                    <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                                    <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                                    <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                                    <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n    \n                                    <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                                    <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                                    <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m     mt-2\">Podgl\u0105d</button></a>\n                                </div>\n                            </div>\n                        </div>\n                        "));
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n                        <div class=\"col-md-12 col-lg-6 col-xl-4\">\n                            <div class=\"card\">\n                                <div class=\"card-header png-bg-color-superLight p-4\">\n                                    <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n                                </div>\n                                <div class=\"card-body\">\n                                    <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                                    <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                                    <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                                    <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n    \n                                    <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                                    <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                                    <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2\">Podgl\u0105d</button></a>\n                                </div>\n                            </div>\n                        </div>\n                        "));
           });
         } //After success response get how many records we got
 
 
         var resultCount = document.querySelectorAll('.card');
         jquery__WEBPACK_IMPORTED_MODULE_0___default()('.storeCount').text(resultCount.length);
+        (0,_components_cursor__WEBPACK_IMPORTED_MODULE_2__.cursorInit)();
       }
     });
   } //Sliders

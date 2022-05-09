@@ -44,7 +44,7 @@
                                 ><strong class="to"> - to - </strong
                                 ><strong id="maxMetric" class="max"></strong>
                               </div>
-                              <div name="metric" attr-valueMin="{{$metrics[0]}}" attr-valueMax="{{$metrics[1]}}" id="sliderMetric" class="wrap sliderMetric"></div>
+                              <div name="metric" attr-valueMin="{{$metrics[0]}}" attr-valueMax="{{$metrics[1]}}" id="sliderMetric" class="wrap sliderMetric cursor_shrink"></div>
 
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                                 ><strong class="to"> - to - </strong
                                 ><strong id="maxBuyPrice" class="max"></strong>
                               </div>
-                              <div name="buyPrice" attr-valueMin="{{$buyPrices[0]}}" attr-valueMax="{{$buyPrices[1]}}" id="sliderBuyPrice" class="wrap sliderBuyPrice"></div>
+                              <div name="buyPrice" attr-valueMin="{{$buyPrices[0]}}" attr-valueMax="{{$buyPrices[1]}}" id="sliderBuyPrice" class="wrap sliderBuyPrice cursor_shrink"></div>
 
                         </div>
                     </div>
