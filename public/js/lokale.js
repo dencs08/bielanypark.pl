@@ -17290,9 +17290,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function storefrontsInit() {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('click', '.floor-checkbox', function () {
-    fetchStores();
-  });
+  var floorCheckBoxes = document.querySelectorAll(".floor-checkbox");
+
+  for (var i = 0; i < floorCheckBoxes.length; i++) {
+    var element = floorCheckBoxes[i];
+    element.addEventListener("click", fetchStores);
+  }
 
   function getIds(checkboxName) {
     var checkBoxes = document.getElementsByName(checkboxName);
@@ -17304,6 +17307,8 @@ function storefrontsInit() {
 
     return ids;
   }
+
+  var response;
 
   function fetchStores() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').empty();
@@ -17325,13 +17330,13 @@ function storefrontsInit() {
       url: href,
       success: function success(response) {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()('.filter_data').html(response);
-        var response = JSON.parse(response);
+        response = JSON.parse(response);
 
         if (response.length == 0) {
           jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("<h3 class=\"mt-5\">Brak lokali w wybranych kryteriach</h3>");
         } else {
           response.forEach(function (store) {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n                        <div class=\"col-md-12 col-lg-6 col-xl-4\">\n                            <div class=\"card\">\n                                <div class=\"card-header png-bg-color-superLight p-4\">\n                                    <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n                                </div>\n                                <div class=\"card-body\">\n                                    <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                                    <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                                    <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                                    <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n    \n                                    <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                                    <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                                    <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2\">Podgl\u0105d</button></a>\n                                </div>\n                            </div>\n                        </div>\n                        "));
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n                        <div class=\"col-md-12 col-lg-6 col-xl-4\">\n                            <div class=\"card\">\n                                <div class=\"card-header png-bg-color-superLight p-4\">\n                                    <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n                                </div>\n                                <div class=\"card-body\">\n                                    <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                                    <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                                    <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                                    <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n\n                                    <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                                    <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                                    <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2\">Podgl\u0105d</button></a>\n                                </div>\n                            </div>\n                        </div>\n                        "));
           });
         } //After success response get how many records we got
 

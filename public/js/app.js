@@ -2497,6 +2497,9 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ScrollTrigger": () => (/* reexport safe */ gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger)
+/* harmony export */ });
 /* harmony import */ var swup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! swup */ "./node_modules/swup/lib/index.js");
 /* harmony import */ var _swup_head_plugin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @swup/head-plugin */ "./node_modules/@swup/head-plugin/lib/index.js");
 /* harmony import */ var _swup_body_class_plugin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @swup/body-class-plugin */ "./node_modules/@swup/body-class-plugin/lib/index.js");
@@ -2523,7 +2526,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.swup = new swup__WEBPACK_IMPORTED_MODULE_0__["default"]({
   plugins: [new _swup_head_plugin__WEBPACK_IMPORTED_MODULE_1__["default"](), new _swup_body_class_plugin__WEBPACK_IMPORTED_MODULE_2__["default"]()]
-});
+}); // swup.on('willReplaceContent', unload);
+
 swup.on('contentReplaced', init);
 swup.on('transitionEnd', locoReload);
 var locoScroll = new locomotive_scroll__WEBPACK_IMPORTED_MODULE_3__["default"]({
@@ -2655,6 +2659,14 @@ locoInit();
 function locoReload() {
   gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.refresh();
   scrollToTop();
+  console.log("reload");
+}
+
+function refreshScrollTrigger() {
+  setTimeout(function () {
+    gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.refresh();
+    console.log("refresh");
+  }, 300);
 }
 
 function scrollToTop() {
@@ -2670,8 +2682,7 @@ function scrollToTop() {
 function init() {
   if (document.querySelector('body')) {
     (0,_components_cursor__WEBPACK_IMPORTED_MODULE_8__.cursorInit)();
-    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_7__.magneticInit)();
-    gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.refresh();
+    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_7__.magneticInit)(); // locoReload();
   }
 
   if (document.querySelector("#Contact")) {
@@ -2684,34 +2695,18 @@ function init() {
 
   if (document.querySelector('#Storefronts')) {
     (0,_lokale__WEBPACK_IMPORTED_MODULE_6__.storefrontsInit)();
-    setInterval(function () {
-      locoReload();
-    }, 300);
+    var floorCheckBoxes = document.querySelectorAll(".floor-checkbox");
+
+    for (var i = 0; i < floorCheckBoxes.length; i++) {
+      var element = floorCheckBoxes[i];
+      element.addEventListener("click", refreshScrollTrigger);
+    }
   }
 } //Initialize script here when entering the page for the first time
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  if (document.querySelector('body')) {
-    (0,_components_cursor__WEBPACK_IMPORTED_MODULE_8__.cursorInit)();
-    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_7__.magneticInit)();
-  }
+init();
 
-  if (document.querySelector('#Contact')) {
-    (0,_contact__WEBPACK_IMPORTED_MODULE_4__.contactInit)();
-  }
-
-  if (document.querySelector('#landing_page')) {
-    (0,_start__WEBPACK_IMPORTED_MODULE_5__.startInit)();
-  }
-
-  if (document.querySelector('#Storefronts')) {
-    (0,_lokale__WEBPACK_IMPORTED_MODULE_6__.storefrontsInit)();
-    setInterval(function () {
-      locoReload();
-    }, 300);
-  }
-});
 
 /***/ }),
 
@@ -3066,9 +3061,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function storefrontsInit() {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('click', '.floor-checkbox', function () {
-    fetchStores();
-  });
+  var floorCheckBoxes = document.querySelectorAll(".floor-checkbox");
+
+  for (var i = 0; i < floorCheckBoxes.length; i++) {
+    var element = floorCheckBoxes[i];
+    element.addEventListener("click", fetchStores);
+  }
 
   function getIds(checkboxName) {
     var checkBoxes = document.getElementsByName(checkboxName);
@@ -3080,6 +3078,8 @@ function storefrontsInit() {
 
     return ids;
   }
+
+  var response;
 
   function fetchStores() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').empty();
@@ -3101,13 +3101,13 @@ function storefrontsInit() {
       url: href,
       success: function success(response) {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()('.filter_data').html(response);
-        var response = JSON.parse(response);
+        response = JSON.parse(response);
 
         if (response.length == 0) {
           jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("<h3 class=\"mt-5\">Brak lokali w wybranych kryteriach</h3>");
         } else {
           response.forEach(function (store) {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n                        <div class=\"col-md-12 col-lg-6 col-xl-4\">\n                            <div class=\"card\">\n                                <div class=\"card-header png-bg-color-superLight p-4\">\n                                    <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n                                </div>\n                                <div class=\"card-body\">\n                                    <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                                    <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                                    <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                                    <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n    \n                                    <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                                    <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                                    <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2\">Podgl\u0105d</button></a>\n                                </div>\n                            </div>\n                        </div>\n                        "));
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n                        <div class=\"col-md-12 col-lg-6 col-xl-4\">\n                            <div class=\"card\">\n                                <div class=\"card-header png-bg-color-superLight p-4\">\n                                    <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n                                </div>\n                                <div class=\"card-body\">\n                                    <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                                    <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                                    <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                                    <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n\n                                    <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                                    <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                                    <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2\">Podgl\u0105d</button></a>\n                                </div>\n                            </div>\n                        </div>\n                        "));
           });
         } //After success response get how many records we got
 

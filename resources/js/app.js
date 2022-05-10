@@ -19,6 +19,7 @@ window.swup = new Swup({
     plugins: [new SwupHeadPlugin(), new SwupBodyClassPlugin()]
 });
 
+// swup.on('willReplaceContent', unload);
 swup.on('contentReplaced', init);
 swup.on('transitionEnd', locoReload);
 
@@ -130,11 +131,18 @@ function locoInit() {
     // after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
     ScrollTrigger.refresh();
 }
-locoInit()
-
+locoInit();
 function locoReload() {
     ScrollTrigger.refresh();
     scrollToTop();
+    console.log("reload");
+}
+
+function refreshScrollTrigger() {
+    setTimeout(() => {
+        ScrollTrigger.refresh();
+        console.log("refresh");
+    }, 300)
 }
 
 function scrollToTop() {
@@ -148,7 +156,7 @@ function init() {
     if (document.querySelector('body')) {
         cursorInit();
         magneticInit();
-        ScrollTrigger.refresh();
+        // locoReload();
     }
     if (document.querySelector("#Contact")) {
         contactInit();
@@ -159,29 +167,15 @@ function init() {
     if (document.querySelector('#Storefronts')) {
         storefrontsInit();
 
-        setInterval(() => {
-            locoReload();
-        }, 300)
+        let floorCheckBoxes = document.querySelectorAll(".floor-checkbox");
+        for (let i = 0; i < floorCheckBoxes.length; i++) {
+            const element = floorCheckBoxes[i];
+            element.addEventListener("click", refreshScrollTrigger);
+        }
     }
 }
+
 //Initialize script here when entering the page for the first time
-document.addEventListener("DOMContentLoaded", () => {
-    if (document.querySelector('body')) {
-        cursorInit();
-        magneticInit();
-    }
-    if (document.querySelector('#Contact')) {
-        contactInit();
-    }
-    if (document.querySelector('#landing_page')) {
-        startInit();
-    }
-    if (document.querySelector('#Storefronts')) {
-        storefrontsInit();
+init();
 
-        setInterval(() => {
-            locoReload();
-        }, 300)
-    }
-});
-
+export { ScrollTrigger }

@@ -4,9 +4,11 @@ import Slider from 'omni-slider';
 import { cursorInit } from './components/cursor';
 
 function storefrontsInit() {
-    $(document).on('click', '.floor-checkbox', function () {
-        fetchStores();
-    });
+    let floorCheckBoxes = document.querySelectorAll(".floor-checkbox");
+    for (let i = 0; i < floorCheckBoxes.length; i++) {
+        const element = floorCheckBoxes[i];
+        element.addEventListener("click", fetchStores);
+    }
 
     function getIds(checkboxName) {
         let checkBoxes = document.getElementsByName(checkboxName);
@@ -17,7 +19,7 @@ function storefrontsInit() {
 
         return ids;
     }
-
+    let response;
     function fetchStores() {
         $('.results').empty();
 
@@ -40,7 +42,7 @@ function storefrontsInit() {
             url: href,
             success: function (response) {
                 $('.filter_data').html(response)
-                var response = JSON.parse(response);
+                response = JSON.parse(response);
                 if (response.length == 0) {
                     $('.results').append(`<h3 class="mt-5">Brak lokali w wybranych kryteriach</h3>`);
                 } else {
@@ -56,7 +58,7 @@ function storefrontsInit() {
                                     <p>Metraż: <span class="fw-light"> ${store.metric}</span></p>
                                     <p>Piętro: <span class="fw-light"> ${store.floor}</span></p>
                                     <p>Pokój sanitarny:<span class="fw-light"> ${store.sanitary}</span></p>
-    
+
                                     <p class="mt-4 font-size-l">Cena:<span class="fw-light"> ${store.buyPrice}</span></p>
                                     <a href="/kontakt/${store.name}"><button type="button" class="btn btn-secondary font-size-m mt-2 mr-2">Zapytaj</button></a>
                                     <a href="/lokale/${store.name}"><button type="button" class="btn btn-outline-secondary text-center font-size-m mt-2">Podgląd</button></a>
@@ -70,7 +72,6 @@ function storefrontsInit() {
                 //After success response get how many records we got
                 let resultCount = document.querySelectorAll('.card')
                 $('.storeCount').text(resultCount.length)
-
                 cursorInit();
             }
         });

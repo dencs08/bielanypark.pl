@@ -78,8 +78,8 @@
 }
 
 #storeFrontNav {
-  height: clamp(40px, 20vh, 400px);
-  width: clamp(200px, 90%, 95vw);
+  height: clamp(40px, 15vh, 400px);
+  width: clamp(200px, 97%, 95vw);
 }
 #storeFrontNav select.select-arrow {
   -webkit-appearance: none;
