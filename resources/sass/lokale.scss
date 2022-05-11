@@ -99,3 +99,18 @@
             0 -3px 5px 0 rgba(0, 0, 0, 0.25);
     }
 }
+
+.view {
+    display: none;
+    opacity: 0;
+}
+.view.active {
+    display: block !important;
+}
+
+a.active {
+    span {
+        color: $font-color-primary !important;
+    }
+    color: $font-color-primary !important;
+}

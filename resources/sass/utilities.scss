@@ -224,7 +224,6 @@
     text-decoration: none;
     display: inline-block;
     position: relative;
-    // color: $font-color-tertiary;
 
     transition: all 0.5s;
 
@@ -285,6 +284,44 @@
     width: 90%;
     left: 0;
     background: $secondary-color !important;
+}
+
+.underline_medium {
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    // color: $font-color-tertiary;
+
+    transition: all 0.5s;
+
+    cursor: pointer;
+}
+
+.underline_medium:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: -0.05em;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 0%;
+    position: absolute;
+    background: $font-color-fourth;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s, background 0.15s ease 0s;
+    width: 100%;
+}
+
+.underline_medium.active:after {
+    background: $font-color-primary !important;
+}
+
+.underline_mediumt:hover {
+    // color: $font-color-secondary;
+}
+
+.underline_medium:hover:after {
+    width: 90%;
+    left: 0;
+    background: $font-color-primary !important;
 }
 
 .vh-100 {

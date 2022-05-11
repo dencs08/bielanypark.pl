@@ -6323,6 +6323,11 @@ html.is-leaving .transition-fade {
   transition: transform 0.5s ease 0s;
 }
 
+.swup-progress-bar {
+  height: 4px;
+  background-color: #1373c6;
+}
+
 @-webkit-keyframes isLeaving {
   0% {
     transform: translateX(0);
@@ -6379,27 +6384,27 @@ html.is-leaving .transition-fade {
   }
 }
 .font-color-primary {
-  color: #36393b !important;
+  color: #36393b;
 }
 
 .font-color-secondary {
-  color: #ebebeb !important;
+  color: #ebebeb;
 }
 
 .font-color-tertiary {
-  color: #e8e8e8 !important;
+  color: #e8e8e8;
 }
 
 .font-color-fourth {
-  color: #bbbbbb !important;
+  color: #bbbbbb;
 }
 
 .font-color-fifth {
-  color: #535353 !important;
+  color: #535353;
 }
 
 .font-color-sixth {
-  color: #777777 !important;
+  color: #777777;
 }
 
 .font-color-primaryColor {
@@ -6432,6 +6437,10 @@ html.is-leaving .transition-fade {
 
 .font-size-xl {
   font-size: clamp(1.5rem, 1.75vw, 2.25rem);
+}
+
+.font-weight-bold {
+  font-weight: bold !important;
 }
 
 .bg_text {
@@ -6696,6 +6705,37 @@ html.is-leaving .transition-fade {
   width: 90%;
   left: 0;
   background: #2c8cb3 !important;
+}
+
+.underline_medium {
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.underline_medium:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: -0.05em;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 0%;
+  position: absolute;
+  background: #bbbbbb;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s, background 0.15s ease 0s;
+  width: 100%;
+}
+
+.underline_medium.active:after {
+  background: #36393b !important;
+}
+
+.underline_medium:hover:after {
+  width: 90%;
+  left: 0;
+  background: #36393b !important;
 }
 
 .vh-100 {

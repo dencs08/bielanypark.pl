@@ -137,3 +137,19 @@
   box-shadow: #ebebeb !important;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.25), 0 -3px 5px 0 rgba(0, 0, 0, 0.25);
 }
+
+.view {
+  display: none;
+  opacity: 0;
+}
+
+.view.active {
+  display: block !important;
+}
+
+a.active {
+  color: #36393b !important;
+}
+a.active span {
+  color: #36393b !important;
+}
