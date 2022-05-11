@@ -14,8 +14,7 @@ const mix = require('laravel-mix');
 mix.js([
     'resources/js/components/navbar.js',
     'resources/js/gsapAnims.js',
-    'resources/js/app.js',
-    'resources/js/locomotive-scroll.js'
+    'resources/js/app.js'
 ], 'public/js/app.js').version()
     .js([
         'resources/js/contact.js',
