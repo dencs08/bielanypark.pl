@@ -16,6 +16,11 @@ html.is-leaving .transition-fade {
     // animation: isLeaving 1s;
 }
 
+.swup-progress-bar {
+    height: 4px;
+    background-color: #1373c6;
+}
+
 @keyframes isLeaving {
     0% {
         transform: translateX(0);

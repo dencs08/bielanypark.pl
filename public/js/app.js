@@ -334,6 +334,566 @@ exports["default"] = Plugin;
 
 /***/ }),
 
+/***/ "./node_modules/@swup/preload-plugin/lib/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@swup/preload-plugin/lib/index.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _plugin = __webpack_require__(/*! @swup/plugin */ "./node_modules/@swup/plugin/lib/index.js");
+
+var _plugin2 = _interopRequireDefault(_plugin);
+
+var _delegate = __webpack_require__(/*! delegate */ "./node_modules/@swup/preload-plugin/node_modules/delegate/src/delegate.js");
+
+var _delegate2 = _interopRequireDefault(_delegate);
+
+var _utils = __webpack_require__(/*! swup/lib/utils */ "./node_modules/swup/lib/utils/index.js");
+
+var _helpers = __webpack_require__(/*! swup/lib/helpers */ "./node_modules/swup/lib/helpers/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PreloadPlugin = function (_Plugin) {
+    _inherits(PreloadPlugin, _Plugin);
+
+    function PreloadPlugin() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, PreloadPlugin);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PreloadPlugin.__proto__ || Object.getPrototypeOf(PreloadPlugin)).call.apply(_ref, [this].concat(args))), _this), _this.name = "PreloadPlugin", _this.onContentReplaced = function () {
+            _this.swup.preloadPages();
+        }, _this.onMouseover = function (event) {
+            var swup = _this.swup;
+
+            swup.triggerEvent('hoverLink', event);
+
+            var link = new _helpers.Link(event.delegateTarget);
+            if (link.getAddress() !== (0, _helpers.getCurrentUrl)() && !swup.cache.exists(link.getAddress()) && swup.preloadPromise == null) {
+                swup.preloadPromise = swup.preloadPage(link.getAddress());
+                swup.preloadPromise.route = link.getAddress();
+                swup.preloadPromise.finally(function () {
+                    swup.preloadPromise = null;
+                });
+            }
+        }, _this.preloadPage = function (pathname) {
+            var swup = _this.swup;
+
+            var link = new _helpers.Link(pathname);
+            return new Promise(function (resolve, reject) {
+                if (link.getAddress() != (0, _helpers.getCurrentUrl)() && !swup.cache.exists(link.getAddress())) {
+                    (0, _helpers.fetch)({ url: link.getAddress(), headers: swup.options.requestHeaders }, function (response) {
+                        if (response.status === 500) {
+                            swup.triggerEvent('serverError');
+                            reject();
+                        } else {
+                            // get json data
+                            var page = swup.getPageData(response);
+                            if (page != null) {
+                                page.url = link.getAddress();
+                                swup.cache.cacheUrl(page, swup.options.debugMode);
+                                swup.triggerEvent('pagePreloaded');
+                            } else {
+                                reject(link.getAddress());
+                                return;
+                            }
+                            resolve(swup.cache.getPage(link.getAddress()));
+                        }
+                    });
+                } else {
+                    resolve(swup.cache.getPage(link.getAddress()));
+                }
+            });
+        }, _this.preloadPages = function () {
+            (0, _utils.queryAll)('[data-swup-preload]').forEach(function (element) {
+                _this.swup.preloadPage(element.href);
+            });
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(PreloadPlugin, [{
+        key: 'mount',
+        value: function mount() {
+            var swup = this.swup;
+
+            swup._handlers.pagePreloaded = [];
+            swup._handlers.hoverLink = [];
+
+            swup.preloadPage = this.preloadPage;
+            swup.preloadPages = this.preloadPages;
+
+            // register mouseover handler
+            swup.delegatedListeners.mouseover = (0, _delegate2.default)(document.body, swup.options.linkSelector, 'mouseover', this.onMouseover.bind(this));
+
+            // initial preload of page form links with [data-swup-preload]
+            swup.preloadPages();
+
+            // do the same on every content replace
+            swup.on('contentReplaced', this.onContentReplaced);
+        }
+    }, {
+        key: 'unmount',
+        value: function unmount() {
+            var swup = this.swup;
+
+            swup._handlers.pagePreloaded = null;
+            swup._handlers.hoverLink = null;
+
+            swup.preloadPage = null;
+            swup.preloadPages = null;
+
+            swup.delegatedListeners.mouseover.destroy();
+
+            swup.off('contentReplaced', this.onContentReplaced);
+        }
+    }]);
+
+    return PreloadPlugin;
+}(_plugin2.default);
+
+exports["default"] = PreloadPlugin;
+
+/***/ }),
+
+/***/ "./node_modules/@swup/preload-plugin/node_modules/delegate/src/closest.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@swup/preload-plugin/node_modules/delegate/src/closest.js ***!
+  \********************************************************************************/
+/***/ ((module) => {
+
+var DOCUMENT_NODE_TYPE = 9;
+
+/**
+ * A polyfill for Element.matches()
+ */
+if (typeof Element !== 'undefined' && !Element.prototype.matches) {
+    var proto = Element.prototype;
+
+    proto.matches = proto.matchesSelector ||
+                    proto.mozMatchesSelector ||
+                    proto.msMatchesSelector ||
+                    proto.oMatchesSelector ||
+                    proto.webkitMatchesSelector;
+}
+
+/**
+ * Finds the closest parent that matches a selector.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @return {Function}
+ */
+function closest (element, selector) {
+    while (element && element.nodeType !== DOCUMENT_NODE_TYPE) {
+        if (typeof element.matches === 'function' &&
+            element.matches(selector)) {
+          return element;
+        }
+        element = element.parentNode;
+    }
+}
+
+module.exports = closest;
+
+
+/***/ }),
+
+/***/ "./node_modules/@swup/preload-plugin/node_modules/delegate/src/delegate.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@swup/preload-plugin/node_modules/delegate/src/delegate.js ***!
+  \*********************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var closest = __webpack_require__(/*! ./closest */ "./node_modules/@swup/preload-plugin/node_modules/delegate/src/closest.js");
+
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function _delegate(element, selector, type, callback, useCapture) {
+    var listenerFn = listener.apply(this, arguments);
+
+    element.addEventListener(type, listenerFn, useCapture);
+
+    return {
+        destroy: function() {
+            element.removeEventListener(type, listenerFn, useCapture);
+        }
+    }
+}
+
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element|String|Array} [elements]
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function delegate(elements, selector, type, callback, useCapture) {
+    // Handle the regular Element usage
+    if (typeof elements.addEventListener === 'function') {
+        return _delegate.apply(null, arguments);
+    }
+
+    // Handle Element-less usage, it defaults to global delegation
+    if (typeof type === 'function') {
+        // Use `document` as the first parameter, then apply arguments
+        // This is a short way to .unshift `arguments` without running into deoptimizations
+        return _delegate.bind(null, document).apply(null, arguments);
+    }
+
+    // Handle Selector-based usage
+    if (typeof elements === 'string') {
+        elements = document.querySelectorAll(elements);
+    }
+
+    // Handle Array-like based usage
+    return Array.prototype.map.call(elements, function (element) {
+        return _delegate(element, selector, type, callback, useCapture);
+    });
+}
+
+/**
+ * Finds closest match and invokes callback.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Function}
+ */
+function listener(element, selector, type, callback) {
+    return function(e) {
+        e.delegateTarget = closest(e.target, selector);
+
+        if (e.delegateTarget) {
+            callback.call(element, e);
+        }
+    }
+}
+
+module.exports = delegate;
+
+
+/***/ }),
+
+/***/ "./node_modules/@swup/progress-plugin/lib/ProgressBar.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@swup/progress-plugin/lib/ProgressBar.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+	value: true
+}));
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ProgressBar = function () {
+	function ProgressBar(_ref) {
+		var _this = this;
+
+		var _ref$className = _ref.className,
+		    className = _ref$className === undefined ? null : _ref$className,
+		    _ref$animationDuratio = _ref.animationDuration,
+		    animationDuration = _ref$animationDuratio === undefined ? null : _ref$animationDuratio;
+
+		_classCallCheck(this, ProgressBar);
+
+		this.className = 'progress-bar';
+		this.animationDuration = 300;
+		this.minValue = 0.1;
+		this.stylesheetElement = null;
+		this.progressElement = null;
+		this.hiding = false;
+		this.trickleInterval = null;
+		this.value = 0;
+		this.visible = false;
+
+		this.trickle = function () {
+			var advance = Math.random() * 3 / 100;
+			_this.setValue(_this.value + advance);
+		};
+
+		if (className !== null) {
+			this.className = className;
+		}
+		if (animationDuration !== null) {
+			this.animationDuration = animationDuration;
+		}
+
+		this.stylesheetElement = this.createStylesheetElement();
+		this.progressElement = this.createProgressElement();
+	} // ms
+
+
+	_createClass(ProgressBar, [{
+		key: 'show',
+		value: function show() {
+			if (!this.visible) {
+				this.visible = true;
+				this.installStylesheetElement();
+				this.installProgressElement();
+				this.startTrickling();
+			}
+		}
+	}, {
+		key: 'hide',
+		value: function hide() {
+			var _this2 = this;
+
+			if (this.visible && !this.hiding) {
+				this.hiding = true;
+				this.fadeProgressElement(function () {
+					_this2.uninstallProgressElement();
+					_this2.stopTrickling();
+					_this2.visible = false;
+					_this2.hiding = false;
+				});
+			}
+		}
+	}, {
+		key: 'setValue',
+		value: function setValue(value) {
+			this.value = Math.max(this.minValue, value);
+			this.refresh();
+		}
+
+		// Private
+
+	}, {
+		key: 'installStylesheetElement',
+		value: function installStylesheetElement() {
+			document.head.insertBefore(this.stylesheetElement, document.head.firstChild);
+		}
+	}, {
+		key: 'installProgressElement',
+		value: function installProgressElement() {
+			this.progressElement.style.width = '0';
+			this.progressElement.style.opacity = '1';
+			document.documentElement.insertBefore(this.progressElement, document.body);
+			this.refresh();
+		}
+	}, {
+		key: 'fadeProgressElement',
+		value: function fadeProgressElement(callback) {
+			this.progressElement.style.opacity = '0';
+			setTimeout(callback, this.animationDuration * 1.5);
+		}
+	}, {
+		key: 'uninstallProgressElement',
+		value: function uninstallProgressElement() {
+			if (this.progressElement.parentNode) {
+				document.documentElement.removeChild(this.progressElement);
+			}
+		}
+	}, {
+		key: 'startTrickling',
+		value: function startTrickling() {
+			if (!this.trickleInterval) {
+				this.trickleInterval = window.setInterval(this.trickle, this.animationDuration);
+			}
+		}
+	}, {
+		key: 'stopTrickling',
+		value: function stopTrickling() {
+			window.clearInterval(this.trickleInterval);
+			delete this.trickleInterval;
+		}
+	}, {
+		key: 'refresh',
+		value: function refresh() {
+			var _this3 = this;
+
+			requestAnimationFrame(function () {
+				_this3.progressElement.style.width = 10 + _this3.value * 90 + '%';
+			});
+		}
+	}, {
+		key: 'createStylesheetElement',
+		value: function createStylesheetElement() {
+			var element = document.createElement('style');
+			element.setAttribute('data-progressbar-styles', '');
+			element.textContent = this.defaultCSS;
+			return element;
+		}
+	}, {
+		key: 'createProgressElement',
+		value: function createProgressElement() {
+			var element = document.createElement('div');
+			element.className = this.className;
+			return element;
+		}
+	}, {
+		key: 'defaultCSS',
+		get: function get() {
+			return '\n    .' + this.className + ' {\n        position: fixed;\n        display: block;\n        top: 0;\n        left: 0;\n        height: 3px;\n        background-color: black;\n        z-index: 9999;\n        transition:\n          width ' + this.animationDuration + 'ms ease-out,\n          opacity ' + this.animationDuration / 2 + 'ms ' + this.animationDuration / 2 + 'ms ease-in;\n        transform: translate3d(0, 0, 0);\n      }\n    ';
+		}
+	}]);
+
+	return ProgressBar;
+}();
+
+exports["default"] = ProgressBar;
+
+/***/ }),
+
+/***/ "./node_modules/@swup/progress-plugin/lib/index.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@swup/progress-plugin/lib/index.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+	value: true
+}));
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _plugin = __webpack_require__(/*! @swup/plugin */ "./node_modules/@swup/plugin/lib/index.js");
+
+var _plugin2 = _interopRequireDefault(_plugin);
+
+var _ProgressBar = __webpack_require__(/*! ./ProgressBar */ "./node_modules/@swup/progress-plugin/lib/ProgressBar.js");
+
+var _ProgressBar2 = _interopRequireDefault(_ProgressBar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SwupProgressPlugin = function (_Plugin) {
+	_inherits(SwupProgressPlugin, _Plugin);
+
+	function SwupProgressPlugin(options) {
+		_classCallCheck(this, SwupProgressPlugin);
+
+		var _this = _possibleConstructorReturn(this, (SwupProgressPlugin.__proto__ || Object.getPrototypeOf(SwupProgressPlugin)).call(this));
+
+		_this.name = 'SwupProgressPlugin';
+
+		_this.startShowingProgress = function () {
+			_this.progressBar.setValue(0);
+			_this.showProgressBarAfterDelay();
+		};
+
+		_this.stopShowingProgress = function () {
+			_this.progressBar.setValue(1);
+			if (_this.options.hideImmediately) {
+				_this.hideProgressBar();
+			} else {
+				_this.finishAnimationAndHideProgressBar();
+			}
+		};
+
+		_this.showProgressBar = function () {
+			if (_this.hideProgressBarTimeout != null) {
+				window.clearTimeout(_this.hideProgressBarTimeout);
+				delete _this.hideProgressBarTimeout;
+			}
+			_this.progressBar.show();
+		};
+
+		_this.showProgressBarAfterDelay = function () {
+			_this.showProgressBarTimeout = window.setTimeout(_this.showProgressBar, _this.options.delay);
+		};
+
+		_this.hideProgressBar = function () {
+			_this.progressBar.hide();
+		};
+
+		_this.finishAnimationAndHideProgressBar = function () {
+			_this.hideProgressBarTimeout = window.setTimeout(_this.hideProgressBar, _this.options.transition);
+
+			if (_this.showProgressBarTimeout != null) {
+				window.clearTimeout(_this.showProgressBarTimeout);
+				delete _this.showProgressBarTimeout;
+			}
+		};
+
+		var defaultOptions = {
+			className: 'swup-progress-bar',
+			transition: 300,
+			delay: 300,
+			hideImmediately: true
+		};
+
+		_this.options = _extends({}, defaultOptions, options);
+
+		_this.showProgressBarTimeout = null;
+		_this.progressBar = new _ProgressBar2.default({
+			className: _this.options.className,
+			animationDuration: _this.options.transition
+		});
+		return _this;
+	}
+
+	_createClass(SwupProgressPlugin, [{
+		key: 'mount',
+		value: function mount() {
+			this.swup.on('transitionStart', this.startShowingProgress);
+			this.swup.on('contentReplaced', this.stopShowingProgress);
+		}
+	}, {
+		key: 'unmount',
+		value: function unmount() {
+			this.swup.off('transitionStart', this.startShowingProgress);
+			this.swup.off('contentReplaced', this.stopShowingProgress);
+		}
+	}]);
+
+	return SwupProgressPlugin;
+}(_plugin2.default);
+
+exports["default"] = SwupProgressPlugin;
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -2497,20 +3057,17 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ScrollTrigger": () => (/* reexport safe */ gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger)
-/* harmony export */ });
 /* harmony import */ var swup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! swup */ "./node_modules/swup/lib/index.js");
 /* harmony import */ var _swup_head_plugin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @swup/head-plugin */ "./node_modules/@swup/head-plugin/lib/index.js");
 /* harmony import */ var _swup_body_class_plugin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @swup/body-class-plugin */ "./node_modules/@swup/body-class-plugin/lib/index.js");
-/* harmony import */ var locomotive_scroll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! locomotive-scroll */ "./node_modules/locomotive-scroll/dist/locomotive-scroll.esm.js");
-/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
-/* harmony import */ var gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! gsap/ScrollTrigger */ "./node_modules/gsap/ScrollTrigger.js");
-/* harmony import */ var _contact__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./contact */ "./resources/js/contact.js");
-/* harmony import */ var _start__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./start */ "./resources/js/start.js");
-/* harmony import */ var _lokale__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lokale */ "./resources/js/lokale.js");
-/* harmony import */ var _components_magnetic__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/magnetic */ "./resources/js/components/magnetic.js");
-/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+/* harmony import */ var _swup_preload_plugin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @swup/preload-plugin */ "./node_modules/@swup/preload-plugin/lib/index.js");
+/* harmony import */ var _swup_progress_plugin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @swup/progress-plugin */ "./node_modules/@swup/progress-plugin/lib/index.js");
+/* harmony import */ var _contact__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./contact */ "./resources/js/contact.js");
+/* harmony import */ var _start__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./start */ "./resources/js/start.js");
+/* harmony import */ var _lokale__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lokale */ "./resources/js/lokale.js");
+/* harmony import */ var _components_magnetic__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/magnetic */ "./resources/js/components/magnetic.js");
+/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+/* harmony import */ var _locomotive_scroll__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./locomotive-scroll */ "./resources/js/locomotive-scroll.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -2525,188 +3082,44 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 window.swup = new swup__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  plugins: [new _swup_head_plugin__WEBPACK_IMPORTED_MODULE_1__["default"](), new _swup_body_class_plugin__WEBPACK_IMPORTED_MODULE_2__["default"]()]
+  plugins: [new _swup_head_plugin__WEBPACK_IMPORTED_MODULE_1__["default"](), new _swup_body_class_plugin__WEBPACK_IMPORTED_MODULE_2__["default"](), new _swup_preload_plugin__WEBPACK_IMPORTED_MODULE_3__["default"](), new _swup_progress_plugin__WEBPACK_IMPORTED_MODULE_4__["default"]()]
 }); // swup.on('willReplaceContent', unload);
 
 swup.on('contentReplaced', init);
-swup.on('transitionEnd', locoReload);
-var locoScroll = new locomotive_scroll__WEBPACK_IMPORTED_MODULE_3__["default"]({
-  el: document.querySelector('body'),
-  smooth: true,
-  lerp: .1,
-  multiplier: 1.125,
-  firefoxMultiplier: 50
-});
-
-function locoInit() {
-  gsap__WEBPACK_IMPORTED_MODULE_9__.gsap.registerPlugin(gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger);
-
-  function scrollPositionValue() {// locoScrollPosValue = locoScroll.scroll.instance.scroll.y
-  }
-
-  locoScroll.on("scroll", gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.update);
-  locoScroll.on("scroll", scrollPositionValue); // tell ScrollTrigger to use these proxy methods for the ".smooth-locomotive-scroll" element since Locomotive Scroll is hijacking things
-
-  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.scrollerProxy("body", {
-    scrollTop: function scrollTop(value) {
-      return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
-    },
-    // we don't have to define a scrollLeft because we're only scrolling vertically.
-    getBoundingClientRect: function getBoundingClientRect() {
-      return {
-        top: 0,
-        left: 0,
-        width: window.innerWidth,
-        height: window.innerHeight
-      };
-    },
-    // LocomotiveScroll handles things completely differently on mobile devices - it doesn't even transform the container at all! So to get the correct behavior and avoid jitters, we should pin things with position: fixed on mobile. We sense it by checking to see if there's a transform applied to the container (the LocomotiveScroll-controlled element).
-    pinType: document.querySelector("body").style.transform ? "transform" : "fixed"
-  }); //!auto animations
-
-  function animateFrom(elem, direction) {
-    direction = direction || 1;
-    var x = 0,
-        y = direction * 100;
-
-    if (elem.classList.contains("gs_fromLeft")) {
-      x = -100;
-      y = 0;
-    } else if (elem.classList.contains("gs_fromRight")) {
-      x = 100;
-      y = 0;
-    } else if (elem.classList.contains("gs_fromBottom")) {
-      y = 50;
-      x = 0;
-    } else if (elem.classList.contains("gs_fromTop")) {
-      y = -50;
-      x = 0;
-    } else if (elem.classList.contains("gs_fromFadeIn")) {
-      y = 0;
-      x = 0;
-    }
-
-    elem.style.transform = "translate(" + x + "px, " + y + "px)";
-    elem.style.opacity = "0";
-    gsap__WEBPACK_IMPORTED_MODULE_9__.gsap.fromTo(elem, {
-      x: x,
-      y: y,
-      autoAlpha: 0
-    }, {
-      autoAlpha: 1,
-      duration: 1,
-      ease: "expo",
-      y: 0,
-      x: 0
-    });
-  }
-
-  function hide(elem) {
-    gsap__WEBPACK_IMPORTED_MODULE_9__.gsap.set(elem, {
-      autoAlpha: 0
-    });
-  } // //!On doc load hide .gs elements and create scroll trigger
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-    gsap__WEBPACK_IMPORTED_MODULE_9__.gsap.registerPlugin(gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger);
-    gsap__WEBPACK_IMPORTED_MODULE_9__.gsap.utils.toArray(".gs").forEach(function (elem) {
-      hide(elem); // assure that the element is hidden when scrolled into view
-
-      gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.create({
-        trigger: elem,
-        start: startTrigger(),
-        end: "top top",
-        once: true,
-        scroller: ".smooth-locomotive-scroll",
-        // markers: true,
-        onEnter: function onEnter() {
-          animateFrom(elem);
-        } // onEnterBack: function () { animateFrom(elem) },
-        // onLeave: function () { hide(elem) } // assure that the element is hidden when scrolled into view
-
-      });
-    });
-  });
-
-  function startTrigger() {
-    var h = document.documentElement.clientHeight;
-    var h2 = window.innerHeight;
-    var start = "";
-
-    if (h == 0) {
-      var startTriggerNumber = h2 * 0.85;
-      start = "top " + startTriggerNumber;
-    } else {
-      var _startTriggerNumber = h * 0.85;
-
-      start = "top " + _startTriggerNumber;
-    }
-
-    return start;
-  } // each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
-
-
-  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.addEventListener("refresh", function () {
-    return locoScroll.update();
-  }); // after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
-
-  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.refresh();
-}
-
-locoInit();
-
-function locoReload() {
-  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.refresh();
-  scrollToTop();
-  console.log("reload");
-}
-
-function refreshScrollTrigger() {
-  setTimeout(function () {
-    gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_10__.ScrollTrigger.refresh();
-    console.log("refresh");
-  }, 300);
-}
-
-function scrollToTop() {
-  if (document.querySelector('#page_top')) {
-    var target = document.querySelector('#page_top');
-    locoScroll.scrollTo(target, {
-      duration: 1
-    });
-  }
-} //Initialize script here when going to the next page
-
+swup.on('transitionEnd', _locomotive_scroll__WEBPACK_IMPORTED_MODULE_10__.locoReload);
+(0,_locomotive_scroll__WEBPACK_IMPORTED_MODULE_10__.locoInit)(); //Initialize script here when going to the next page
 
 function init() {
   if (document.querySelector('body')) {
-    (0,_components_cursor__WEBPACK_IMPORTED_MODULE_8__.cursorInit)();
-    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_7__.magneticInit)(); // locoReload();
+    (0,_components_cursor__WEBPACK_IMPORTED_MODULE_9__.cursorInit)();
+    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_8__.magneticInit)(); // locoReload();
   }
 
   if (document.querySelector("#Contact")) {
-    (0,_contact__WEBPACK_IMPORTED_MODULE_4__.contactInit)();
+    (0,_contact__WEBPACK_IMPORTED_MODULE_5__.contactInit)();
   }
 
   if (document.querySelector('#landing_page')) {
-    (0,_start__WEBPACK_IMPORTED_MODULE_5__.startInit)();
+    (0,_start__WEBPACK_IMPORTED_MODULE_6__.startInit)();
   }
 
   if (document.querySelector('#Storefronts')) {
-    (0,_lokale__WEBPACK_IMPORTED_MODULE_6__.storefrontsInit)();
+    (0,_lokale__WEBPACK_IMPORTED_MODULE_7__.storefrontsInit)();
     var floorCheckBoxes = document.querySelectorAll(".floor-checkbox");
 
     for (var i = 0; i < floorCheckBoxes.length; i++) {
       var element = floorCheckBoxes[i];
-      element.addEventListener("click", refreshScrollTrigger);
+      element.addEventListener("click", _locomotive_scroll__WEBPACK_IMPORTED_MODULE_10__.refreshScrollTrigger);
     }
+  }
+
+  if (document.querySelector('#Storefront')) {
+    (0,_lokale__WEBPACK_IMPORTED_MODULE_7__.storefrontsInit)();
   }
 } //Initialize script here when entering the page for the first time
 
 
 init();
-
 
 /***/ }),
 
@@ -3034,7 +3447,166 @@ function contactInit() {
 /*!*******************************************!*\
   !*** ./resources/js/locomotive-scroll.js ***!
   \*******************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ScrollTrigger": () => (/* reexport safe */ gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger),
+/* harmony export */   "locoInit": () => (/* binding */ locoInit),
+/* harmony export */   "locoReload": () => (/* binding */ locoReload),
+/* harmony export */   "refreshScrollTrigger": () => (/* binding */ refreshScrollTrigger),
+/* harmony export */   "scrollToTop": () => (/* binding */ scrollToTop)
+/* harmony export */ });
+/* harmony import */ var locomotive_scroll__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! locomotive-scroll */ "./node_modules/locomotive-scroll/dist/locomotive-scroll.esm.js");
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+/* harmony import */ var gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! gsap/ScrollTrigger */ "./node_modules/gsap/ScrollTrigger.js");
+
+
+
+var locoScroll = new locomotive_scroll__WEBPACK_IMPORTED_MODULE_0__["default"]({
+  el: document.querySelector('body'),
+  smooth: true,
+  lerp: .1,
+  multiplier: 1.125,
+  firefoxMultiplier: 50
+});
+
+function locoInit() {
+  gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.registerPlugin(gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger);
+
+  function scrollPositionValue() {// locoScrollPosValue = locoScroll.scroll.instance.scroll.y
+  }
+
+  locoScroll.on("scroll", gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.update);
+  locoScroll.on("scroll", scrollPositionValue); // tell ScrollTrigger to use these proxy methods for the ".smooth-locomotive-scroll" element since Locomotive Scroll is hijacking things
+
+  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.scrollerProxy("body", {
+    scrollTop: function scrollTop(value) {
+      return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+    },
+    // we don't have to define a scrollLeft because we're only scrolling vertically.
+    getBoundingClientRect: function getBoundingClientRect() {
+      return {
+        top: 0,
+        left: 0,
+        width: window.innerWidth,
+        height: window.innerHeight
+      };
+    },
+    // LocomotiveScroll handles things completely differently on mobile devices - it doesn't even transform the container at all! So to get the correct behavior and avoid jitters, we should pin things with position: fixed on mobile. We sense it by checking to see if there's a transform applied to the container (the LocomotiveScroll-controlled element).
+    pinType: document.querySelector("body").style.transform ? "transform" : "fixed"
+  }); //!auto animations
+
+  function animateFrom(elem, direction) {
+    direction = direction || 1;
+    var x = 0,
+        y = direction * 100;
+
+    if (elem.classList.contains("gs_fromLeft")) {
+      x = -100;
+      y = 0;
+    } else if (elem.classList.contains("gs_fromRight")) {
+      x = 100;
+      y = 0;
+    } else if (elem.classList.contains("gs_fromBottom")) {
+      y = 50;
+      x = 0;
+    } else if (elem.classList.contains("gs_fromTop")) {
+      y = -50;
+      x = 0;
+    } else if (elem.classList.contains("gs_fromFadeIn")) {
+      y = 0;
+      x = 0;
+    }
+
+    elem.style.transform = "translate(" + x + "px, " + y + "px)";
+    elem.style.opacity = "0";
+    gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.fromTo(elem, {
+      x: x,
+      y: y,
+      autoAlpha: 0
+    }, {
+      autoAlpha: 1,
+      duration: 1,
+      ease: "expo",
+      y: 0,
+      x: 0
+    });
+  }
+
+  function hide(elem) {
+    gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.set(elem, {
+      autoAlpha: 0
+    });
+  } // //!On doc load hide .gs elements and create scroll trigger
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.registerPlugin(gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger);
+    gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.utils.toArray(".gs").forEach(function (elem) {
+      hide(elem); // assure that the element is hidden when scrolled into view
+
+      gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.create({
+        trigger: elem,
+        start: startTrigger(),
+        end: "top top",
+        once: true,
+        scroller: ".smooth-locomotive-scroll",
+        // markers: true,
+        onEnter: function onEnter() {
+          animateFrom(elem);
+        } // onEnterBack: function () { animateFrom(elem) },
+        // onLeave: function () { hide(elem) } // assure that the element is hidden when scrolled into view
+
+      });
+    });
+  });
+
+  function startTrigger() {
+    var h = document.documentElement.clientHeight;
+    var h2 = window.innerHeight;
+    var start = "";
+
+    if (h == 0) {
+      var startTriggerNumber = h2 * 0.85;
+      start = "top " + startTriggerNumber;
+    } else {
+      var _startTriggerNumber = h * 0.85;
+
+      start = "top " + _startTriggerNumber;
+    }
+
+    return start;
+  } // each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
+
+
+  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.addEventListener("refresh", function () {
+    return locoScroll.update();
+  }); // after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
+
+  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.refresh();
+}
+
+function locoReload() {
+  gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.refresh();
+  scrollToTop();
+}
+
+function refreshScrollTrigger() {
+  setTimeout(function () {
+    gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.refresh(); // console.log("refresh");
+  }, 300);
+}
+
+function scrollToTop() {
+  if (document.querySelector('#page_top')) {
+    var target = document.querySelector('#page_top');
+    locoScroll.scrollTo(target, {
+      duration: 1
+    });
+  }
+}
 
 
 
@@ -3055,7 +3627,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var omni_slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! omni-slider */ "./node_modules/omni-slider/omni-slider.js");
 /* harmony import */ var omni_slider__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(omni_slider__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+/* harmony import */ var _locomotive_scroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./locomotive-scroll */ "./resources/js/locomotive-scroll.js");
+/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+
+
 
 
 
@@ -3106,15 +3682,24 @@ function storefrontsInit() {
         if (response.length == 0) {
           jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("<h3 class=\"mt-5\">Brak lokali w wybranych kryteriach</h3>");
         } else {
+          var _i = 0;
           response.forEach(function (store) {
             jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n                        <div class=\"col-md-12 col-lg-6 col-xl-4\">\n                            <div class=\"card\">\n                                <div class=\"card-header png-bg-color-superLight p-4\">\n                                    <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n                                </div>\n                                <div class=\"card-body\">\n                                    <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                                    <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                                    <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                                    <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n\n                                    <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                                    <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                                    <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2\">Podgl\u0105d</button></a>\n                                </div>\n                            </div>\n                        </div>\n                        "));
+            if (_i == response.length - 1) setTimeout(function () {
+              _locomotive_scroll__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.refresh();
+            }, 500);
+            _i++;
           });
+          setTimeout(function () {
+            _locomotive_scroll__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.refresh();
+          }, 300);
         } //After success response get how many records we got
 
 
         var resultCount = document.querySelectorAll('.card');
         jquery__WEBPACK_IMPORTED_MODULE_0___default()('.storeCount').text(resultCount.length);
-        (0,_components_cursor__WEBPACK_IMPORTED_MODULE_2__.cursorInit)();
+        (0,_components_cursor__WEBPACK_IMPORTED_MODULE_3__.cursorInit)();
+        _locomotive_scroll__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.refresh();
       }
     });
   } //Sliders
@@ -3165,6 +3750,71 @@ function storefrontsInit() {
   }); //Initial ajax call
 
   fetchStores();
+  var btn3d = document.getElementById("view-3d");
+  var btnList = document.getElementById("view-list");
+  var view3d = document.getElementById('Storefronts-3D');
+  var viewList = document.getElementById('Storefronts-List');
+  var animating = false;
+  btn3d.addEventListener("click", function () {
+    if (animating == true || view3d.classList.contains("active")) return false;
+    animating = true;
+    btn3d.classList.add("active");
+    btnList.classList.remove("active");
+    var tl = gsap__WEBPACK_IMPORTED_MODULE_4__.gsap.timeline();
+    tl.fromTo(viewList, {
+      opacity: 1
+    }, {
+      opacity: 0,
+      duration: 0.5,
+      ease: 'power.out',
+      onComplete: function onComplete() {
+        viewList.classList.remove("active");
+      }
+    });
+    tl.fromTo(view3d, {
+      opacity: 0
+    }, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'sine.in',
+      onStart: function onStart() {
+        view3d.classList.add("active");
+      },
+      onComplete: function onComplete() {
+        animating = false;
+      }
+    });
+  });
+  btnList.addEventListener("click", function () {
+    if (animating == true || viewList.classList.contains("active")) return false;
+    animating = true;
+    btnList.classList.add("active");
+    btn3d.classList.remove("active");
+    var tl = gsap__WEBPACK_IMPORTED_MODULE_4__.gsap.timeline();
+    tl.fromTo(view3d, {
+      opacity: 1
+    }, {
+      opacity: 0,
+      duration: 0.5,
+      ease: 'power.out',
+      onComplete: function onComplete() {
+        view3d.classList.remove("active");
+      }
+    });
+    tl.fromTo(viewList, {
+      opacity: 0
+    }, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'sine.in',
+      onStart: function onStart() {
+        viewList.classList.add("active");
+      },
+      onComplete: function onComplete() {
+        animating = false;
+      }
+    });
+  });
 }
 
 
@@ -45628,7 +46278,6 @@ var queryAll = exports.queryAll = function queryAll(selector) {
 /******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/js/components/navbar.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/js/gsapAnims.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/js/locomotive-scroll.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/sass/app.scss")))
 /******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/sass/start.scss")))
 /******/ 	__webpack_require__.O(undefined, ["css/app","css/contact","css/lokale","css/start"], () => (__webpack_require__("./resources/sass/lokale.scss")))
