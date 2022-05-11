@@ -10,12 +10,28 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/lokale.js') }}"></script>
+    <!-- <script src="{{ asset('js/lokale.js') }}"></script> -->
 @endsection
     
 @section('content')
     <div id="Storefronts" data-scroll-container class="container mt-150 mb-10">
     <section id="page_top" data-scroll-section></section>
+
+        <section class="" data-scroll-section>
+            <div class="text-center font-family-secondary font-size-xl font-weight-bold">
+                <div class="row">
+                    <div class="col-md-6 mb-5">
+                        <a href="#" id="view-3d" class="view-3d underline_medium font-color-fourth"><span>Wybór 3D</span></a>
+                    </div>
+                    <div class="col-md-6 mb-5">
+                        <a href="#" id="view-list" class="view-list underline_medium font-color-fourth"><span>Karty</span></a>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+
         <section data-scroll-section class="display-grid-center">
             <div id="storeFrontNav" class="bg-light text-center">
                 <div class="row">
@@ -64,13 +80,17 @@
             </div>
         </section>
         
-        <section data-scroll-section>
+        <section id="Storefronts-List" class="view" data-scroll-section>
         <h4 class="mx-4 mb-1 font-family-secondary">Znaleźliśmy dla Ciebie <span class="storeCount">0</span> lokali</h4>
             <div class="text-center">
                 <div class="row results">
 
                 </div>
             </div>
+        </section>
+
+        <section id="Storefronts-3D" class="view" data-scroll-section>
+            <h1>WIDOK 3D</h1>
         </section>
     </div>
 

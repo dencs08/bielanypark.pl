@@ -10,14 +10,14 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/lokale.js') }}"></script>
+    <!-- <script src="{{ asset('js/lokale.js') }}"></script> -->
 @endsection
     
 @section('content')
 
 <div data-scroll-container>
 <section id="page_top" data-scroll-section></section>
-    <section class="vh-100 display-grid-center" data-scroll-section>
+    <section id="Storefront" class="vh-100 display-grid-center" data-scroll-section>
         <div class="container mb-10 mt-10" >
             <div class="mb-3">
                 <a href="/lokale"><button class="btn btn-outline-primary btn-items-center" type="button"><x-arrow-left/><span class="font-size-m"> Powrót</span></button></a>

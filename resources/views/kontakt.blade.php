@@ -12,7 +12,7 @@
 
 @section('js')
     <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js'></script> -->
-    <script src="{{ asset('js/contact.js') }}"></script>
+    <!-- <script src="{{ asset('js/contact.js') }}"></script> -->
 @endsection
 
 @section('content')

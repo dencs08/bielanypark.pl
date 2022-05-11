@@ -10,7 +10,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/start.js') }}"></script>
+    <!-- <script src="{{ asset('js/start.js') }}"></script> -->
 @endsection
 
 @section('content')
