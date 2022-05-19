@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('visible');
             $table->float('buyPrice');
             $table->float('rentPrice');
+            $table->mediumText('points');
         });
     }
 
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storefront');
+        Schema::dropIfExists('storefronts');
     }
 };
