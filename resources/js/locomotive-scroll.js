@@ -14,12 +14,7 @@ const locoScroll = new LocomotiveScroll({
 function locoInit() {
     gsap.registerPlugin(ScrollTrigger);
 
-    function scrollPositionValue() {
-        // locoScrollPosValue = locoScroll.scroll.instance.scroll.y
-    }
-
     locoScroll.on("scroll", ScrollTrigger.update);
-    locoScroll.on("scroll", scrollPositionValue);
     // tell ScrollTrigger to use these proxy methods for the ".smooth-locomotive-scroll" element since Locomotive Scroll is hijacking things
     ScrollTrigger.scrollerProxy("body", {
         scrollTop(value) {
