@@ -2,10 +2,15 @@ import $ from 'jquery';
 
 var app;
 var appFloors;
-if (document.querySelector('#Storefronts')) {
-    app = document.querySelector('[data-3d-app]')
-    appFloors = app.querySelectorAll("[data-floor]")
+function appInit() {
+    if (document.querySelector('#Storefronts')) {
+        app = document.querySelector('[data-3d-app]')
+        appFloors = app.querySelectorAll("[data-floor]")
+        console.log(app);
+    }
 }
+
+
 
 function floorPicker() {
     app.addEventListener("click", e => {
@@ -28,4 +33,4 @@ function showCurrentFloor(floorClicked) {
     floor.addClass("active")
 }
 
-export { floorPicker }
+export { floorPicker, appInit }
