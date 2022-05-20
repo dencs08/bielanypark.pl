@@ -1,6 +1,34 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./resources/js/components/appenders.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/appenders.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "appendAppFloor": () => (/* binding */ appendAppFloor),
+/* harmony export */   "appendCards": () => (/* binding */ appendCards)
+/* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function appendCards(store) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n    <div class=\"col-md-12 col-lg-6 col-xl-4\">\n        <div class=\"card\">\n            <div class=\"card-header png-bg-color-superLight p-4\">\n                <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n            </div>\n            <div class=\"card-body\">\n                <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n\n                <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2\">Podgl\u0105d</button></a>\n            </div>\n        </div>\n    </div>\n    "));
+}
+
+function appendAppFloor(store) {
+  document.getElementById("results-3d-floor-".concat(store.floor)).innerHTML += "  \n    <polygon id=\"_".concat(store.name, "\" class=\"svg-store cursor_expand\" data-name=\"").concat(store.floor, "\" points=\"").concat(store.points, "\"/>\n");
+}
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/cursor.js":
 /*!*******************************************!*\
   !*** ./resources/js/components/cursor.js ***!
@@ -82,6 +110,147 @@ function cursorInit() {
 
 /***/ }),
 
+/***/ "./resources/js/components/storefront-app.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/storefront-app.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "appInit": () => (/* binding */ appInit),
+/* harmony export */   "floorPicker": () => (/* binding */ floorPicker)
+/* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+
+var app;
+var appFloors;
+
+function appInit() {
+  if (document.querySelector('#Storefronts')) {
+    app = document.querySelector('[data-3d-app]');
+    appFloors = app.querySelectorAll("[data-floor]");
+    console.log(app);
+  }
+}
+
+function floorPicker() {
+  app.addEventListener("click", function (e) {
+    if (e.target.matches("[data-floor-picker]")) {
+      var floorClicked = e.target.getAttribute("data-floor-picker");
+      showCurrentFloor(floorClicked);
+    }
+  });
+}
+
+function showCurrentFloor(floorClicked) {
+  for (var i = 0; i < appFloors.length; i++) {
+    var _floor = appFloors[i];
+    if (!_floor.className == "active") return;
+
+    _floor.classList.remove("active");
+  }
+
+  var floor = jquery__WEBPACK_IMPORTED_MODULE_0___default()('[data-floor=' + floorClicked + ']');
+  floor.addClass("active");
+}
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/storefront-view-change.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/storefront-view-change.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "viewChange": () => (/* binding */ viewChange)
+/* harmony export */ });
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+/* harmony import */ var _locomotive_scroll__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../locomotive-scroll */ "./resources/js/locomotive-scroll.js");
+
+
+
+function viewChange() {
+  var btn3d = document.getElementById("view-3d");
+  var btnList = document.getElementById("view-list");
+  var view3d = document.getElementById('Storefronts-3D');
+  var viewList = document.getElementById('Storefronts-List');
+  var animating = false;
+  btn3d.addEventListener("click", function () {
+    if (animating == true || view3d.classList.contains("active")) return false;
+    animating = true;
+    btn3d.classList.add("active");
+    btnList.classList.remove("active");
+    var tl = gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.timeline();
+    tl.fromTo(viewList, {
+      opacity: 1
+    }, {
+      opacity: 0,
+      duration: 0.5,
+      ease: 'power.out',
+      onComplete: function onComplete() {
+        viewList.classList.remove("active");
+      }
+    });
+    tl.fromTo(view3d, {
+      opacity: 0
+    }, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'sine.in',
+      onStart: function onStart() {
+        view3d.classList.add("active");
+        _locomotive_scroll__WEBPACK_IMPORTED_MODULE_0__.ScrollTrigger.refresh();
+      },
+      onComplete: function onComplete() {
+        animating = false;
+      }
+    });
+  });
+  btnList.addEventListener("click", function () {
+    if (animating == true || viewList.classList.contains("active")) return false;
+    animating = true;
+    btnList.classList.add("active");
+    btn3d.classList.remove("active");
+    var tl = gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.timeline();
+    tl.fromTo(view3d, {
+      opacity: 1
+    }, {
+      opacity: 0,
+      duration: 0.5,
+      ease: 'power.out',
+      onComplete: function onComplete() {
+        view3d.classList.remove("active");
+      }
+    });
+    tl.fromTo(viewList, {
+      opacity: 0
+    }, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'sine.in',
+      onStart: function onStart() {
+        viewList.classList.add("active");
+        _locomotive_scroll__WEBPACK_IMPORTED_MODULE_0__.ScrollTrigger.refresh();
+      },
+      onComplete: function onComplete() {
+        animating = false;
+      }
+    });
+  });
+}
+
+
+
+/***/ }),
+
 /***/ "./resources/js/locomotive-scroll.js":
 /*!*******************************************!*\
   !*** ./resources/js/locomotive-scroll.js ***!
@@ -113,12 +282,7 @@ var locoScroll = new locomotive_scroll__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 function locoInit() {
   gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.registerPlugin(gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger);
-
-  function scrollPositionValue() {// locoScrollPosValue = locoScroll.scroll.instance.scroll.y
-  }
-
-  locoScroll.on("scroll", gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.update);
-  locoScroll.on("scroll", scrollPositionValue); // tell ScrollTrigger to use these proxy methods for the ".smooth-locomotive-scroll" element since Locomotive Scroll is hijacking things
+  locoScroll.on("scroll", gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.update); // tell ScrollTrigger to use these proxy methods for the ".smooth-locomotive-scroll" element since Locomotive Scroll is hijacking things
 
   gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.scrollerProxy("body", {
     scrollTop: function scrollTop(value) {
@@ -268,7 +432,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gsap-core.js */ "./node_modules/gsap/gsap-core.js");
 /*!
- * CSSPlugin 3.10.3
+ * CSSPlugin 3.10.4
  * https://greensock.com
  *
  * Copyright 2008-2022, GreenSock. All rights reserved.
@@ -1708,7 +1872,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /*!
- * Observer 3.10.3
+ * Observer 3.10.4
  * https://greensock.com
  *
  * @license Copyright 2008-2022, GreenSock. All rights reserved.
@@ -1771,32 +1935,36 @@ var gsap,
     capture: !!capture
   });
 },
-    _removeListener = function _removeListener(element, type, func) {
-  return element.removeEventListener(type, func);
+    _removeListener = function _removeListener(element, type, func, capture) {
+  return element.removeEventListener(type, func, !!capture);
 },
     _scrollLeft = "scrollLeft",
     _scrollTop = "scrollTop",
     _onScroll = function _onScroll() {
   return _normalizer && _normalizer.isPressed || _scrollers.cache++;
 },
-    _scrollCacheFunc = function _scrollCacheFunc(f) {
-  return function (value) {
+    _scrollCacheFunc = function _scrollCacheFunc(f, doNotCache) {
+  var cachingFunc = function cachingFunc(value) {
     // since reading the scrollTop/scrollLeft/pageOffsetY/pageOffsetX can trigger a layout, this function allows us to cache the value so it only gets read fresh after a "scroll" event fires (or while we're refreshing because that can lengthen the page and alter the scroll position). when "soft" is true, that means don't actually set the scroll, but cache the new value instead (useful in ScrollSmoother)
     if (value || value === 0) {
       _startup && (_win.history.scrollRestoration = "manual"); // otherwise the new position will get overwritten by the browser onload.
-      //value = Math.round(value);
+
+      var isNormalizing = _normalizer && _normalizer.isPressed;
+      value = cachingFunc.v = Math.round(value) || (_normalizer && _normalizer.iOS ? 1 : 0); //TODO: iOS Bug: if you allow it to go to 0, Safari can start to report super strange (wildly inaccurate) touch positions!
 
       f(value);
-      f.v = value;
-      f.c = _scrollers.cache;
-      _normalizer && _normalizer.isPressed && _bridge("ss", value); // set scroll (notify ScrollTrigger so it can dispatch a "scrollStart" event if necessary
-    } else if (_scrollers.cache !== f.c || _bridge("ref")) {
-      f.c = _scrollers.cache;
-      f.v = f();
+      cachingFunc.cacheID = _scrollers.cache;
+      isNormalizing && _bridge("ss", value); // set scroll (notify ScrollTrigger so it can dispatch a "scrollStart" event if necessary
+    } else if (doNotCache || _scrollers.cache !== cachingFunc.cacheID || _bridge("ref")) {
+      cachingFunc.cacheID = _scrollers.cache;
+      cachingFunc.v = f();
     }
 
-    return f.v;
+    return cachingFunc.v + cachingFunc.offset;
   };
+
+  cachingFunc.offset = 0;
+  return f && cachingFunc;
 },
     _horizontal = {
   s: _scrollLeft,
@@ -1837,7 +2005,7 @@ var gsap,
       offset = sc === _vertical.sc ? 1 : 2;
 
   !~i && (i = _scrollers.push(element) - 1);
-  return _scrollers[i + offset] || (_scrollers[i + offset] = _getProxyProp(element, s) || (_isViewport(element) ? sc : _scrollCacheFunc(function (value) {
+  return _scrollers[i + offset] || (_scrollers[i + offset] = _scrollCacheFunc(_getProxyProp(element, s), true) || (_isViewport(element) ? sc : _scrollCacheFunc(function (value) {
     return arguments.length ? element[s] = value : element[s];
   })));
 },
@@ -2138,7 +2306,7 @@ var Observer = /*#__PURE__*/function () {
 
       self._vy.reset();
 
-      _addListener(isNormalizer ? target : ownerDoc, _eventTypes[1], _onDrag, preventDefault, capture);
+      _addListener(isNormalizer ? target : ownerDoc, _eventTypes[1], _onDrag, preventDefault, true);
 
       self.deltaX = self.deltaY = 0;
       onPress && onPress(self);
@@ -2148,7 +2316,7 @@ var Observer = /*#__PURE__*/function () {
         return;
       }
 
-      _removeListener(isNormalizer ? target : ownerDoc, _eventTypes[1], _onDrag);
+      _removeListener(isNormalizer ? target : ownerDoc, _eventTypes[1], _onDrag, true);
 
       var wasDragging = self.isDragging && (Math.abs(self.x - self.startX) > 3 || Math.abs(self.y - self.startY) > 3),
           // some touch devices need some wiggle room in terms of sensing clicks - the finger may move a few pixels.
@@ -2160,7 +2328,7 @@ var Observer = /*#__PURE__*/function () {
         self._vy.reset();
 
         if (preventDefault && allowClicks) {
-          gsap.delayedCall(0.05, function () {
+          gsap.delayedCall(0.08, function () {
             // some browsers (like Firefox) won't trust script-generated clicks, so if the user tries to click on a video to play it, for example, it simply won't work. Since a regular "click" event will most likely be generated anyway (one that has its isTrusted flag set to true), we must slightly delay our script-generated click so that the "real"/trusted one is prioritized. Remember, when there are duplicate events in quick succession, we suppress all but the first one. Some browsers don't even trigger the "real" one at all, so our synthetic one is a safety valve that ensures that no matter what, a click event does get dispatched.
             if (_getTime() - onClickTime > 300 && !e.defaultPrevented) {
               if (e.target.click) {
@@ -2287,20 +2455,20 @@ var Observer = /*#__PURE__*/function () {
 
           self._vy.reset();
 
-          _removeListener(isNormalizer ? target : ownerDoc, _eventTypes[1], _onDrag);
+          _removeListener(isNormalizer ? target : ownerDoc, _eventTypes[1], _onDrag, true);
         }
 
-        _removeListener(isViewport ? ownerDoc : target, "scroll", onScroll);
+        _removeListener(isViewport ? ownerDoc : target, "scroll", onScroll, capture);
 
-        _removeListener(target, "wheel", _onWheel);
+        _removeListener(target, "wheel", _onWheel, capture);
 
-        _removeListener(target, _eventTypes[0], _onPress);
+        _removeListener(target, _eventTypes[0], _onPress, capture);
 
         _removeListener(ownerDoc, _eventTypes[2], _onRelease);
 
         _removeListener(ownerDoc, _eventTypes[3], _onRelease);
 
-        _removeListener(target, "click", clickCapture);
+        _removeListener(target, "click", clickCapture, true);
 
         _removeListener(target, "click", _onClick);
 
@@ -2348,7 +2516,7 @@ var Observer = /*#__PURE__*/function () {
 
   return Observer;
 }();
-Observer.version = "3.10.3";
+Observer.version = "3.10.4";
 
 Observer.create = function (vars) {
   return new Observer(vars);
@@ -2385,7 +2553,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Observer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Observer.js */ "./node_modules/gsap/Observer.js");
 /*!
- * ScrollTrigger 3.10.3
+ * ScrollTrigger 3.10.4
  * https://greensock.com
  *
  * @license Copyright 2008-2022, GreenSock. All rights reserved.
@@ -2423,6 +2591,7 @@ var gsap,
     _ignoreMobileResize,
     _baseScreenHeight,
     _baseScreenWidth,
+    _fixIOSBug,
     _limitCallbacks,
     // if true, we'll only trigger callbacks if the active state toggles, so if you scroll immediately past both the start and end positions of a ScrollTrigger (thus inactive to inactive), neither its onEnter nor onLeave will be called. This is useful during startup.
 _startup = 1,
@@ -2658,8 +2827,8 @@ _startup = 1,
     capture: !!capture
   });
 },
-    _removeListener = function _removeListener(element, type, func) {
-  return element.removeEventListener(type, func);
+    _removeListener = function _removeListener(element, type, func, capture) {
+  return element.removeEventListener(type, func, !!capture);
 },
     _wheelListener = function _wheelListener(func, el, scrollFunc) {
   return scrollFunc && scrollFunc.wheelHandler && func(el, "wheel", scrollFunc);
@@ -2748,7 +2917,8 @@ _startup = 1,
 },
     _onScroll = function _onScroll() {
   // previously, we tried to optimize performance by batching/deferring to the next requestAnimationFrame(), but discovered that Safari has a few bugs that make this unworkable (especially on iOS). See https://codepen.io/GreenSock/pen/16c435b12ef09c38125204818e7b45fc?editors=0010 and https://codepen.io/GreenSock/pen/JjOxYpQ/3dd65ccec5a60f1d862c355d84d14562?editors=0010 and https://codepen.io/GreenSock/pen/ExbrPNa/087cef197dc35445a0951e8935c41503?editors=0010
-  if (!_normalizer || !_normalizer.isPressed) {
+  if (!_normalizer || !_normalizer.isPressed || _normalizer.startX > _body.clientWidth) {
+    // if the user is dragging the scrollbar, allow it.
     _Observer_js__WEBPACK_IMPORTED_MODULE_0__._scrollers.cache++;
     _rafID || (_rafID = requestAnimationFrame(_updateAll));
     _lastScrollTime || _dispatch("scrollStart");
@@ -2761,7 +2931,7 @@ _startup = 1,
 },
     _onResize = function _onResize() {
   _Observer_js__WEBPACK_IMPORTED_MODULE_0__._scrollers.cache++;
-  !_refreshing && !_ignoreResize && !_doc.fullscreenElement && (!_ignoreMobileResize || _baseScreenWidth !== _win.innerWidth || Math.abs(_win.innerHeight - _baseScreenHeight) > _win.innerHeight * 0.25) && _resizeDelay.restart(true);
+  !_refreshing && !_ignoreResize && !_doc.fullscreenElement && !_doc.webkitFullscreenElement && (!_ignoreMobileResize || _baseScreenWidth !== _win.innerWidth || Math.abs(_win.innerHeight - _baseScreenHeight) > _win.innerHeight * 0.25) && _resizeDelay.restart(true);
 },
     // ignore resizes triggered by refresh()
 _listeners = {},
@@ -2892,9 +3062,8 @@ _refreshingAll,
     _primary,
     _updateAll = function _updateAll() {
   if (!_refreshingAll) {
-    _primary && _primary.update(0); // ScrollSmoother users refreshPriority -9999 to become the primary that gets updated before all others because it affects the scroll position.
-
     ScrollTrigger.isUpdating = true;
+    _primary && _primary.update(0); // ScrollSmoother users refreshPriority -9999 to become the primary that gets updated before all others because it affects the scroll position.
 
     var l = _triggers.length,
         time = _getTime(),
@@ -3703,7 +3872,7 @@ var ScrollTrigger = /*#__PURE__*/function () {
 
           animation.render(animation.duration(), true, true);
           pinChange = pinGetter(direction.a) - pinStart + change + otherPinOffset;
-          change !== pinChange && pinActiveState.splice(pinActiveState.length - 2, 2); // transform is the last property/value set in the state Array. Since the animation is controlling that, we should omit it.
+          change !== pinChange && useFixedPosition && pinActiveState.splice(pinActiveState.length - 2, 2); // transform is the last property/value set in the state Array. Since the animation is controlling that, we should omit it.
 
           animation.render(0, true, true);
           initted || animation.invalidate();
@@ -4128,6 +4297,7 @@ var ScrollTrigger = /*#__PURE__*/function () {
         _Observer_js__WEBPACK_IMPORTED_MODULE_0__.Observer.register(gsap); // isTouch is 0 if no touch, 1 if ONLY touch, and 2 if it can accommodate touch but also other types like mouse/pointer.
 
         ScrollTrigger.isTouch = _Observer_js__WEBPACK_IMPORTED_MODULE_0__.Observer.isTouch;
+        _fixIOSBug = _Observer_js__WEBPACK_IMPORTED_MODULE_0__.Observer.isTouch && /(iPad|iPhone|iPod|Mac)/g.test(navigator.userAgent); // since 2017, iOS has had a bug that causes event.clientX/Y to be inaccurate when a scroll occurs, thus we must alternate ignoring every other touchmove event to work around it. See https://bugs.webkit.org/show_bug.cgi?id=181954 and https://codepen.io/GreenSock/pen/ExbrPNa/087cef197dc35445a0951e8935c41503
 
         _addListener(_win, "wheel", _onScroll); // mostly for 3rd party smooth scrolling libraries.
 
@@ -4291,7 +4461,7 @@ var ScrollTrigger = /*#__PURE__*/function () {
 
   return ScrollTrigger;
 }();
-ScrollTrigger.version = "3.10.3";
+ScrollTrigger.version = "3.10.4";
 
 ScrollTrigger.saveStyles = function (targets) {
   return targets ? _toArray(targets).forEach(function (target) {
@@ -4414,10 +4584,10 @@ var _clampScrollAndGetDurationMultiplier = function _clampScrollAndGetDurationMu
   if (direction === true) {
     target.style.removeProperty("touch-action");
   } else {
-    target.style.touchAction = direction ? "pan-" + direction : "none"; // note: we tried adding pinch-zoom too, but Firefox doesn't support it properly.
+    target.style.touchAction = direction === true ? "auto" : direction ? "pan-" + direction + (_Observer_js__WEBPACK_IMPORTED_MODULE_0__.Observer.isTouch ? " pinch-zoom" : "") : "none"; // note: Firefox doesn't support it pinch-zoom properly, at least in addition to a pan-x or pan-y.
   }
 
-  target === _docEl && _allowNativePanning(_body);
+  target === _docEl && _allowNativePanning(_body, direction);
 },
     _overflow = {
   auto: 1,
@@ -4461,7 +4631,7 @@ _inputObserver = function _inputObserver(target, type, inputs, nested) {
       return inputs && _addListener(_doc, _Observer_js__WEBPACK_IMPORTED_MODULE_0__.Observer.eventTypes[0], _captureInputs, false, true);
     },
     onDisable: function onDisable() {
-      return _removeListener(_doc, _Observer_js__WEBPACK_IMPORTED_MODULE_0__.Observer.eventTypes[0], _captureInputs);
+      return _removeListener(_doc, _Observer_js__WEBPACK_IMPORTED_MODULE_0__.Observer.eventTypes[0], _captureInputs, true);
     }
   });
 },
@@ -4489,9 +4659,12 @@ _inputObserver = function _inputObserver(target, type, inputs, nested) {
       self,
       maxY,
       target = (0,_Observer_js__WEBPACK_IMPORTED_MODULE_0__._getTarget)(vars.target) || _docEl,
+      smoother = gsap.core.globals().ScrollSmoother,
+      content = _fixIOSBug && (vars.content && (0,_Observer_js__WEBPACK_IMPORTED_MODULE_0__._getTarget)(vars.content) || smoother && smoother.get() && smoother.get().content()),
       scrollFuncY = (0,_Observer_js__WEBPACK_IMPORTED_MODULE_0__._getScrollFunc)(target, _Observer_js__WEBPACK_IMPORTED_MODULE_0__._vertical),
       scrollFuncX = (0,_Observer_js__WEBPACK_IMPORTED_MODULE_0__._getScrollFunc)(target, _Observer_js__WEBPACK_IMPORTED_MODULE_0__._horizontal),
       scale = 1,
+      initialScale = (_Observer_js__WEBPACK_IMPORTED_MODULE_0__.Observer.isTouch && _win.visualViewport ? _win.visualViewport.scale * _win.visualViewport.width : _win.outerWidth) / _win.innerWidth,
       wheelRefresh = 0,
       resolveMomentumDuration = _isFunction(momentum) ? function () {
     return momentum(self);
@@ -4508,16 +4681,33 @@ _inputObserver = function _inputObserver(target, type, inputs, nested) {
       scrollClampY = _passThrough,
       updateClamps = function updateClamps() {
     maxY = _maxScroll(target, _Observer_js__WEBPACK_IMPORTED_MODULE_0__._vertical);
-    scrollClampY = _clamp(0, maxY);
+    scrollClampY = _clamp(_fixIOSBug ? 1 : 0, maxY);
     normalizeScrollX && (scrollClampX = _clamp(0, _maxScroll(target, _Observer_js__WEBPACK_IMPORTED_MODULE_0__._horizontal)));
     lastRefreshID = _refreshID;
   },
-      fixIOSBug = ScrollTrigger.isTouch && /(iPad|iPhone|iPod|Mac)/g.test(navigator.userAgent),
       ignoreDrag = function ignoreDrag() {
     if (skipTouchMove) {
       requestAnimationFrame(resumeTouchMove); // we MUST wait for a requestAnimationFrame, otherwise iOS will misreport the value.
 
+      var offset = _round(self.deltaY / 2),
+          scroll = scrollClampY(scrollFuncY.v - offset);
+
+      if (content && scroll !== scrollFuncY.v + scrollFuncY.offset) {
+        scrollFuncY.offset = scroll - scrollFuncY.v;
+        content.style.transform = "translateY(" + -scrollFuncY.offset + "px)";
+        content._gsap && (content._gsap.y = -scrollFuncY.offset + "px");
+        scrollFuncY.cacheID = _Observer_js__WEBPACK_IMPORTED_MODULE_0__._scrollers.cache;
+
+        _updateAll();
+      }
+
       return true;
+    }
+
+    if (content) {
+      content.style.transform = "translateY(0px)";
+      scrollFuncY.offset = scrollFuncY.cacheID = 0;
+      content._gsap && (content._gsap.y = "0px");
     }
 
     skipTouchMove = true;
@@ -4529,18 +4719,21 @@ _inputObserver = function _inputObserver(target, type, inputs, nested) {
       onResize = function onResize() {
     // if the window resizes, like on an iPhone which Apple FORCES the address bar to show/hide even if we event.preventDefault(), it may be scrolling too far now that the address bar is showing, so we must dynamically adjust the momentum tween.
     updateClamps();
-    tween.isActive() && tween.vars.scrollY > maxY && tween.resetTo("scrollY", _maxScroll(target, _Observer_js__WEBPACK_IMPORTED_MODULE_0__._vertical));
+
+    if (tween.isActive() && tween.vars.scrollY > maxY) {
+      scrollFuncY() > maxY ? tween.progress(1) && scrollFuncY(maxY) : tween.resetTo("scrollY", maxY);
+    }
   };
 
   vars.ignoreCheck = function (e) {
-    return fixIOSBug && e.type === "touchmove" && ignoreDrag(e) || scale > 1 || self.isGesturing || e.touches && e.touches.length > 1;
+    return _fixIOSBug && e.type === "touchmove" && ignoreDrag(e) || scale > 1.05 && e.type !== "touchstart" || self.isGesturing || e.touches && e.touches.length > 1;
   };
 
   vars.onPress = function () {
     var prevScale = scale;
-    scale = _win.visualViewport && _win.visualViewport.scale || 1;
+    scale = _round((_win.visualViewport && _win.visualViewport.scale || 1) / initialScale);
     tween.pause();
-    prevScale !== scale && _allowNativePanning(target, scale > 1 ? true : normalizeScrollX ? false : "x");
+    prevScale !== scale && _allowNativePanning(target, scale > 1.01 ? true : normalizeScrollX ? false : "x");
     skipTouchMove = false;
     startScrollX = scrollFuncX();
     startScrollY = scrollFuncY();
@@ -4549,28 +4742,44 @@ _inputObserver = function _inputObserver(target, type, inputs, nested) {
   };
 
   vars.onRelease = vars.onGestureStart = function (self, wasDragging) {
+    if (content) {
+      content.style.transform = "translateY(0px)";
+      scrollFuncY.offset = scrollFuncY.cacheID = 0;
+      content._gsap && (content._gsap.y = "0px");
+    }
+
     if (!wasDragging) {
       onStopDelayedCall.restart(true);
     } else {
+      _Observer_js__WEBPACK_IMPORTED_MODULE_0__._scrollers.cache++; // make sure we're pulling the non-cached value
       // alternate algorithm: durX = Math.min(6, Math.abs(self.velocityX / 800)),	dur = Math.max(durX, Math.min(6, Math.abs(self.velocityY / 800))); dur = dur * (0.4 + (1 - _power4In(dur / 6)) * 0.6)) * (momentumSpeed || 1)
+
       var dur = resolveMomentumDuration(),
           currentScroll,
           endScroll;
 
       if (normalizeScrollX) {
         currentScroll = scrollFuncX();
-        endScroll = currentScroll + dur * 0.05 * -self.velocityX / 0.227 / scale; // the constant .227 is from power4(0.05). velocity is inverted because scrolling goes in the opposite direction.
+        endScroll = currentScroll + dur * 0.05 * -self.velocityX / 0.227; // the constant .227 is from power4(0.05). velocity is inverted because scrolling goes in the opposite direction.
 
         dur *= _clampScrollAndGetDurationMultiplier(scrollFuncX, currentScroll, endScroll, _maxScroll(target, _Observer_js__WEBPACK_IMPORTED_MODULE_0__._horizontal));
         tween.vars.scrollX = scrollClampX(endScroll);
       }
 
       currentScroll = scrollFuncY();
-      endScroll = currentScroll + dur * 0.05 * -self.velocityY / 0.227 / scale; // the constant .227 is from power4(0.05)
+      endScroll = currentScroll + dur * 0.05 * -self.velocityY / 0.227; // the constant .227 is from power4(0.05)
 
       dur *= _clampScrollAndGetDurationMultiplier(scrollFuncY, currentScroll, endScroll, _maxScroll(target, _Observer_js__WEBPACK_IMPORTED_MODULE_0__._vertical));
       tween.vars.scrollY = scrollClampY(endScroll);
       tween.invalidate().duration(dur).play(0.01);
+
+      if (_fixIOSBug && tween.vars.scrollY >= maxY || currentScroll >= maxY - 1) {
+        // iOS bug: it'll show the address bar but NOT fire the window "resize" event until the animation is done but we must protect against overshoot so we leverage an onUpdate to do so.
+        gsap.to({}, {
+          onUpdate: onResize,
+          duration: dur
+        });
+      }
     }
   };
 
@@ -4586,9 +4795,9 @@ _inputObserver = function _inputObserver(target, type, inputs, nested) {
 
   vars.onChange = function (self, dx, dy, xArray, yArray) {
     _refreshID !== lastRefreshID && updateClamps();
-    dx && normalizeScrollX && scrollFuncX(scrollClampX(xArray[2] === dx ? startScrollX + (self.startX - self.x) / scale : scrollFuncX() + dx - xArray[1])); // for more precision, we track pointer/touch movement from the start, otherwise it'll drift.
+    dx && normalizeScrollX && scrollFuncX(scrollClampX(xArray[2] === dx ? startScrollX + (self.startX - self.x) : scrollFuncX() + dx - xArray[1])); // for more precision, we track pointer/touch movement from the start, otherwise it'll drift.
 
-    dy && scrollFuncY(scrollClampY(yArray[2] === dy ? startScrollY + (self.startY - self.y) / scale : scrollFuncY() + dy - yArray[1]));
+    dy && scrollFuncY(scrollClampY(yArray[2] === dy ? startScrollY + (self.startY - self.y) : scrollFuncY() + dy - yArray[1]));
 
     _updateAll();
   };
@@ -4610,6 +4819,10 @@ _inputObserver = function _inputObserver(target, type, inputs, nested) {
   };
 
   self = new _Observer_js__WEBPACK_IMPORTED_MODULE_0__.Observer(vars);
+  self.iOS = _fixIOSBug; // used in the Observer getCachedScroll() function to work around an iOS bug that wreaks havoc with TouchEvent.clientY if we allow scroll to go all the way back to 0.
+
+  _fixIOSBug && !scrollFuncY() && scrollFuncY(1); // iOS bug causes event.clientY values to freak out (wildly inaccurate) if the scroll position is exactly 0.
+
   onStopDelayedCall = self._dc;
   tween = gsap.to(self, {
     ease: "power4",
@@ -4757,7 +4970,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 /*!
- * GSAP 3.10.3
+ * GSAP 3.10.4
  * https://greensock.com
  *
  * @license Copyright 2008-2022, GreenSock. All rights reserved.
@@ -8821,7 +9034,7 @@ var gsap = _gsap.registerPlugin({
   }
 }, _buildModifierPlugin("roundProps", _roundModifier), _buildModifierPlugin("modifiers"), _buildModifierPlugin("snap", snap)) || _gsap; //to prevent the core plugins from being dropped via aggressive tree shaking, we must include them in the variable declaration in this way.
 
-Tween.version = Timeline.version = gsap.version = "3.10.3";
+Tween.version = Timeline.version = gsap.version = "3.10.4";
 _coreReady = 1;
 _windowExists() && _wake();
 var Power0 = _easeMap.Power0,
@@ -23696,9 +23909,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var omni_slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! omni-slider */ "./node_modules/omni-slider/omni-slider.js");
 /* harmony import */ var omni_slider__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(omni_slider__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
 /* harmony import */ var _locomotive_scroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./locomotive-scroll */ "./resources/js/locomotive-scroll.js");
-/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+/* harmony import */ var _components_storefront_view_change__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/storefront-view-change */ "./resources/js/components/storefront-view-change.js");
+/* harmony import */ var _components_storefront_app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/storefront-app */ "./resources/js/components/storefront-app.js");
+/* harmony import */ var _components_appenders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/appenders */ "./resources/js/components/appenders.js");
+/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+
+
+
 
 
 
@@ -23713,7 +23931,7 @@ function storefrontsInit() {
     element.addEventListener("click", fetchStores);
   }
 
-  function getIds(checkboxName) {
+  function getActiveIds(checkboxName) {
     var checkBoxes = document.getElementsByName(checkboxName);
     var ids = Array.prototype.slice.call(checkBoxes).filter(function (ch) {
       return ch.checked == true;
@@ -23724,12 +23942,80 @@ function storefrontsInit() {
     return ids;
   }
 
+  function getAllIds(checkboxName) {
+    var checkBoxes = document.getElementsByName(checkboxName);
+    var ids = Array.prototype.slice.call(checkBoxes).map(function (ch) {
+      return ch.value;
+    }); // console.log(ids);
+
+    return ids;
+  }
+
+  function clearSearched(floors) {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').empty();
+
+    for (var _i = 0; _i < floors.length; _i++) {
+      var floor = floors[_i];
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()("#results-3d-floor-".concat(floor)).html(" ");
+    }
+  }
+
+  var sliderOmniMetric;
+  var sliderOmniBuyPrice;
+
+  function sliders() {
+    //Sliders
+    var sliderMetric = document.getElementById("sliderMetric");
+    var minMetric = sliderMetric.getAttribute('attr-valueMin');
+    var maxMetric = sliderMetric.getAttribute('attr-valueMax');
+    var sliderBuyPrice = document.getElementById("sliderBuyPrice");
+    var minBuyPrice = sliderBuyPrice.getAttribute('attr-valueMin');
+    var maxBuyPrice = sliderBuyPrice.getAttribute('attr-valueMax');
+    sliderOmniMetric = new (omni_slider__WEBPACK_IMPORTED_MODULE_1___default())(sliderMetric, {
+      isDate: false,
+      min: minMetric,
+      max: maxMetric,
+      start: minMetric,
+      end: maxMetric,
+      overlap: true
+    });
+    sliderOmniBuyPrice = new (omni_slider__WEBPACK_IMPORTED_MODULE_1___default())(sliderBuyPrice, {
+      isDate: false,
+      min: minBuyPrice,
+      max: maxBuyPrice,
+      start: minBuyPrice,
+      end: maxBuyPrice,
+      overlap: true
+    }); //changed values while moving
+
+    sliderOmniMetric.subscribe("moving", function (data) {
+      document.getElementById("minMetric").innerHTML = data.left.toFixed(1) + "m²";
+      document.getElementById("maxMetric").innerHTML = data.right.toFixed(1) + "m²";
+    });
+    sliderOmniBuyPrice.subscribe("moving", function (data) {
+      document.getElementById("minBuyPrice").innerHTML = data.left.toFixed(0) + "zł";
+      document.getElementById("maxBuyPrice").innerHTML = data.right.toFixed(0) + "zł";
+    }); //set inital values
+
+    document.getElementById("minMetric").innerHTML = sliderOmniMetric.getInfo().left.toFixed(1) + "m²";
+    document.getElementById("maxMetric").innerHTML = sliderOmniMetric.getInfo().right.toFixed(1) + "m²";
+    document.getElementById("minBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().left.toFixed(0) + "zł";
+    document.getElementById("maxBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().right.toFixed(0) + "zł"; //fetch when stopped
+
+    sliderOmniMetric.subscribe("stop", function () {
+      fetchStores();
+    });
+    sliderOmniBuyPrice.subscribe("stop", function () {
+      fetchStores();
+    });
+  }
+
   var response;
 
   function fetchStores() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').empty();
-    var floorIds = getIds("floor");
+    var floorIds = getActiveIds("floor");
     var href = 'testFilter?';
+    clearSearched(getAllIds("floor"));
 
     if (floorIds.length) {
       href += 'floor=[' + floorIds + ']';
@@ -23745,19 +24031,28 @@ function storefrontsInit() {
       type: 'GET',
       url: href,
       success: function success(response) {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.filter_data').html(response);
+        // $('.filter_data').html(response)
         response = JSON.parse(response);
 
         if (response.length == 0) {
           jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("<h3 class=\"mt-5\">Brak lokali w wybranych kryteriach</h3>");
         } else {
-          var _i = 0;
+          var _i2 = 0;
           response.forEach(function (store) {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n                        <div class=\"col-md-12 col-lg-6 col-xl-4\">\n                            <div class=\"card\">\n                                <div class=\"card-header png-bg-color-superLight p-4\">\n                                    <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n                                </div>\n                                <div class=\"card-body\">\n                                    <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                                    <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                                    <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                                    <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n\n                                    <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                                    <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                                    <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2\">Podgl\u0105d</button></a>\n                                </div>\n                            </div>\n                        </div>\n                        "));
-            if (_i == response.length - 1) setTimeout(function () {
+            (0,_components_appenders__WEBPACK_IMPORTED_MODULE_5__.appendCards)(store);
+
+            if (store.floor == 0) {
+              (0,_components_appenders__WEBPACK_IMPORTED_MODULE_5__.appendAppFloor)(store);
+            }
+
+            if (store.floor == 1) {
+              (0,_components_appenders__WEBPACK_IMPORTED_MODULE_5__.appendAppFloor)(store);
+            }
+
+            if (_i2 == response.length - 1) setTimeout(function () {
               _locomotive_scroll__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.refresh();
             }, 500);
-            _i++;
+            _i2++;
           });
           setTimeout(function () {
             _locomotive_scroll__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.refresh();
@@ -23767,123 +24062,18 @@ function storefrontsInit() {
 
         var resultCount = document.querySelectorAll('.card');
         jquery__WEBPACK_IMPORTED_MODULE_0___default()('.storeCount').text(resultCount.length);
-        (0,_components_cursor__WEBPACK_IMPORTED_MODULE_3__.cursorInit)();
+        (0,_components_cursor__WEBPACK_IMPORTED_MODULE_6__.cursorInit)();
         _locomotive_scroll__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.refresh();
       }
     });
-  } //Sliders
+  }
 
-
-  var sliderMetric = document.getElementById("sliderMetric");
-  var minMetric = sliderMetric.getAttribute('attr-valueMin');
-  var maxMetric = sliderMetric.getAttribute('attr-valueMax');
-  var sliderBuyPrice = document.getElementById("sliderBuyPrice");
-  var minBuyPrice = sliderBuyPrice.getAttribute('attr-valueMin');
-  var maxBuyPrice = sliderBuyPrice.getAttribute('attr-valueMax');
-  var sliderOmniMetric = new (omni_slider__WEBPACK_IMPORTED_MODULE_1___default())(sliderMetric, {
-    isDate: false,
-    min: minMetric,
-    max: maxMetric,
-    start: minMetric,
-    end: maxMetric,
-    overlap: true
-  });
-  var sliderOmniBuyPrice = new (omni_slider__WEBPACK_IMPORTED_MODULE_1___default())(sliderBuyPrice, {
-    isDate: false,
-    min: minBuyPrice,
-    max: maxBuyPrice,
-    start: minBuyPrice,
-    end: maxBuyPrice,
-    overlap: true
-  }); //changed values while moving
-
-  sliderOmniMetric.subscribe("moving", function (data) {
-    document.getElementById("minMetric").innerHTML = data.left.toFixed(1) + "m²";
-    document.getElementById("maxMetric").innerHTML = data.right.toFixed(1) + "m²";
-  });
-  sliderOmniBuyPrice.subscribe("moving", function (data) {
-    document.getElementById("minBuyPrice").innerHTML = data.left.toFixed(0) + "zł";
-    document.getElementById("maxBuyPrice").innerHTML = data.right.toFixed(0) + "zł";
-  }); //set inital values
-
-  document.getElementById("minMetric").innerHTML = sliderOmniMetric.getInfo().left.toFixed(1) + "m²";
-  document.getElementById("maxMetric").innerHTML = sliderOmniMetric.getInfo().right.toFixed(1) + "m²";
-  document.getElementById("minBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().left.toFixed(0) + "zł";
-  document.getElementById("maxBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().right.toFixed(0) + "zł"; //fetch when stopped
-
-  sliderOmniMetric.subscribe("stop", function () {
-    fetchStores();
-  });
-  sliderOmniBuyPrice.subscribe("stop", function () {
-    fetchStores();
-  }); //Initial ajax call
+  sliders(); //Initial ajax call
 
   fetchStores();
-  var btn3d = document.getElementById("view-3d");
-  var btnList = document.getElementById("view-list");
-  var view3d = document.getElementById('Storefronts-3D');
-  var viewList = document.getElementById('Storefronts-List');
-  var animating = false;
-  btn3d.addEventListener("click", function () {
-    if (animating == true || view3d.classList.contains("active")) return false;
-    animating = true;
-    btn3d.classList.add("active");
-    btnList.classList.remove("active");
-    var tl = gsap__WEBPACK_IMPORTED_MODULE_4__.gsap.timeline();
-    tl.fromTo(viewList, {
-      opacity: 1
-    }, {
-      opacity: 0,
-      duration: 0.5,
-      ease: 'power.out',
-      onComplete: function onComplete() {
-        viewList.classList.remove("active");
-      }
-    });
-    tl.fromTo(view3d, {
-      opacity: 0
-    }, {
-      opacity: 1,
-      duration: 0.5,
-      ease: 'sine.in',
-      onStart: function onStart() {
-        view3d.classList.add("active");
-      },
-      onComplete: function onComplete() {
-        animating = false;
-      }
-    });
-  });
-  btnList.addEventListener("click", function () {
-    if (animating == true || viewList.classList.contains("active")) return false;
-    animating = true;
-    btnList.classList.add("active");
-    btn3d.classList.remove("active");
-    var tl = gsap__WEBPACK_IMPORTED_MODULE_4__.gsap.timeline();
-    tl.fromTo(view3d, {
-      opacity: 1
-    }, {
-      opacity: 0,
-      duration: 0.5,
-      ease: 'power.out',
-      onComplete: function onComplete() {
-        view3d.classList.remove("active");
-      }
-    });
-    tl.fromTo(viewList, {
-      opacity: 0
-    }, {
-      opacity: 1,
-      duration: 0.5,
-      ease: 'sine.in',
-      onStart: function onStart() {
-        viewList.classList.add("active");
-      },
-      onComplete: function onComplete() {
-        animating = false;
-      }
-    });
-  });
+  (0,_components_storefront_view_change__WEBPACK_IMPORTED_MODULE_3__.viewChange)();
+  (0,_components_storefront_app__WEBPACK_IMPORTED_MODULE_4__.appInit)();
+  (0,_components_storefront_app__WEBPACK_IMPORTED_MODULE_4__.floorPicker)();
 }
 
 
