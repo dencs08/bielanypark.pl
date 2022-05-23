@@ -25,7 +25,7 @@ function appendCards(store) {
 
 function appendAppFloor(store) {
     document.getElementById(`results-3d-floor-${store.floor}`).innerHTML += `  
-    <polygon id="_${store.name}" class="svg-store cursor_expand" data-name="${store.floor}" points="${store.points}"/>
+    <polygon id="_${store.name}" class="svg-store cursor_expand" data-name="${store.floor}" data-tooltip data-tooltip-name="${store.name}" data-tooltip-metric="${store.metric}" data-tooltip-floor="${store.floor}"  data-tooltip-buy-price="${store.buyPrice}" points="${store.points}"/>
 `
 }
 
