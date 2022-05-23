@@ -3175,7 +3175,7 @@ function appendCards(store) {
 }
 
 function appendAppFloor(store) {
-  document.getElementById("results-3d-floor-".concat(store.floor)).innerHTML += "  \n    <polygon id=\"_".concat(store.name, "\" class=\"svg-store cursor_expand\" data-name=\"").concat(store.floor, "\" points=\"").concat(store.points, "\"/>\n");
+  document.getElementById("results-3d-floor-".concat(store.floor)).innerHTML += "  \n    <polygon id=\"_".concat(store.name, "\" class=\"svg-store cursor_expand\" data-name=\"").concat(store.floor, "\" data-tooltip data-tooltip-name=\"").concat(store.name, "\" data-tooltip-metric=\"").concat(store.metric, "\" data-tooltip-floor=\"").concat(store.floor, "\"  data-tooltip-buy-price=\"").concat(store.buyPrice, "\" points=\"").concat(store.points, "\"/>\n");
 }
 
 
@@ -3440,15 +3440,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+
 
 var app;
 var appFloors;
+var tl;
+var animating;
 
 function appInit() {
   if (document.querySelector('#Storefronts')) {
     app = document.querySelector('[data-3d-app]');
     appFloors = app.querySelectorAll("[data-floor]");
-    console.log(app);
+    tl = gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.timeline();
+    animating = false;
   }
 }
 
@@ -3462,15 +3467,54 @@ function floorPicker() {
 }
 
 function showCurrentFloor(floorClicked) {
+  replaceCurrentFloor(floorClicked);
+}
+
+function replaceCurrentFloor(floorClicked) {
+  if (animating) return;
+
+  var _loop = function _loop(i) {
+    animating = true;
+    var floor = appFloors[i];
+
+    if (floor.classList.contains("active")) {
+      tl.fromTo(floor, {
+        opacity: 1
+      }, {
+        opacity: 0,
+        duration: 0.35,
+        ease: 'power.out',
+        onComplete: function onComplete() {
+          animating = false;
+          floor.classList.remove("active");
+          showPickedFloor(floorClicked);
+        }
+      });
+    }
+  };
+
   for (var i = 0; i < appFloors.length; i++) {
-    var _floor = appFloors[i];
-    if (!_floor.className == "active") return;
-
-    _floor.classList.remove("active");
+    _loop(i);
   }
+}
 
+function showPickedFloor(floorClicked) {
+  if (animating == true) return;
+  animating = true;
   var floor = jquery__WEBPACK_IMPORTED_MODULE_0___default()('[data-floor=' + floorClicked + ']');
-  floor.addClass("active");
+  tl.fromTo(floor, {
+    opacity: 0
+  }, {
+    opacity: 1,
+    duration: 0.35,
+    ease: 'sine.in',
+    onStart: function onStart() {
+      floor.addClass("active");
+    },
+    onComplete: function onComplete() {
+      animating = false;
+    }
+  });
 }
 
 
@@ -3560,6 +3604,55 @@ function viewChange() {
         animating = false;
       }
     });
+  });
+}
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tooltip.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/tooltip.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "tooltipInit": () => (/* binding */ tooltipInit)
+/* harmony export */ });
+
+var tooltipObjects;
+var tooltip;
+var app;
+
+function tooltipInit() {
+  if (document.querySelector('#Storefronts')) {
+    tooltip = document.querySelector('#tooltip');
+    setTimeout(function () {
+      app = document.querySelector('[data-3d-app]');
+      tooltipObjects = document.querySelectorAll("[data-tooltip]");
+      tooltipShow();
+    }, 1000);
+  }
+}
+
+function tooltipShow() {
+  app.addEventListener('mouseout', function (e) {
+    if (!e.target.matches("[data-tooltip]")) return; // tooltip.classList.remove('active');
+  });
+  app.addEventListener('mouseover', function (e) {
+    if (!e.target.matches("[data-tooltip]")) return;
+    var name = e.target.getAttribute('data-tooltip-name');
+    var metric = e.target.getAttribute('data-tooltip-metric');
+    var buyPrice = e.target.getAttribute('data-tooltip-buyPrice');
+    var floor = e.target.getAttribute('data-tooltip-floor'); // tooltip.classList.add('active');
+
+    var x = e.clientX;
+    var y = e.clientY;
+    tooltip.style.marginLeft = x + "px";
+    tooltip.style.marginTop = y + "px";
   });
 }
 
@@ -3795,7 +3888,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_storefront_view_change__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/storefront-view-change */ "./resources/js/components/storefront-view-change.js");
 /* harmony import */ var _components_storefront_app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/storefront-app */ "./resources/js/components/storefront-app.js");
 /* harmony import */ var _components_appenders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/appenders */ "./resources/js/components/appenders.js");
-/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+/* harmony import */ var _components_tooltip__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/tooltip */ "./resources/js/components/tooltip.js");
+/* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+
 
 
 
@@ -3944,7 +4039,7 @@ function storefrontsInit() {
 
         var resultCount = document.querySelectorAll('.card');
         jquery__WEBPACK_IMPORTED_MODULE_0___default()('.storeCount').text(resultCount.length);
-        (0,_components_cursor__WEBPACK_IMPORTED_MODULE_6__.cursorInit)();
+        (0,_components_cursor__WEBPACK_IMPORTED_MODULE_7__.cursorInit)();
         _locomotive_scroll__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.refresh();
       }
     });
@@ -3956,6 +4051,7 @@ function storefrontsInit() {
   (0,_components_storefront_view_change__WEBPACK_IMPORTED_MODULE_3__.viewChange)();
   (0,_components_storefront_app__WEBPACK_IMPORTED_MODULE_4__.appInit)();
   (0,_components_storefront_app__WEBPACK_IMPORTED_MODULE_4__.floorPicker)();
+  (0,_components_tooltip__WEBPACK_IMPORTED_MODULE_6__.tooltipInit)();
 }
 
 
