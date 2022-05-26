@@ -18,11 +18,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function appendCards(store) {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n    <div class=\"col-md-12 col-lg-6 col-xl-4\">\n        <div class=\"card\">\n            <div class=\"card-header png-bg-color-superLight p-4\">\n                <a href=\"/lokale/".concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n            </div>\n            <div class=\"card-body\">\n                <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "</span></p>\n                <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n\n                <p class=\"mt-4 font-size-l\">Cena:<span class=\"fw-light\"> ").concat(store.buyPrice, "</span></p>\n                <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary font-size-m mt-2 mr-2\">Zapytaj</button></a>\n                <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2\">Podgl\u0105d</button></a>\n            </div>\n        </div>\n    </div>\n    "));
+  var availableColor, availablePhrase;
+
+  if (store.available == 1) {
+    availableColor = "green";
+    availablePhrase = "Dostępne";
+  } else {
+    availableColor = "red";
+    availablePhrase = "Sprzedane";
+  }
+
+  if (!store.visible) return;
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n    <div class=\"col-md-12 col-lg-6 col-xl-4\">\n        <div class=\"card\">\n            <div class=\"card-header png-bg-color-superLight p-4\">\n            <div class=\"diagonal badge ".concat(availableColor, "\">\n                <span>").concat(availablePhrase, "</span>\n            </div>\n            <a href=\"/lokale/").concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n            </div>\n            <div class=\"card-body\">\n                <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "m\xB2</span></p>\n                <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n\n                <div class=\"\">\n                    <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary text-center font-size-m mt-2 mr-2 w-100\">Zapytaj</button></a>\n                </div>\n                <div class=\"\">\n                    <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2 w-100\">Podgl\u0105d</button></a>\n                </div>\n            </div>\n        </div>\n    </div>\n    "));
 }
 
 function appendAppFloor(store) {
-  document.getElementById("results-3d-floor-".concat(store.floor)).innerHTML += "  \n    <polygon id=\"_".concat(store.name, "\" class=\"svg-store cursor_expand\" data-name=\"").concat(store.floor, "\" data-tooltip data-tooltip-name=\"").concat(store.name, "\" data-tooltip-metric=\"").concat(store.metric, "\" data-tooltip-floor=\"").concat(store.floor, "\"  data-tooltip-buy-price=\"").concat(store.buyPrice, "\" points=\"").concat(store.points, "\"/>\n");
+  var fill;
+  var href;
+  var classes;
+
+  if (store.available == 1) {
+    fill = "#a1c4a1";
+    href = "/lokale/" + store.name;
+    classes = "svg-store cursor_expand";
+  } else {
+    fill = "#111111";
+    href = "";
+    classes = "cursor_shrink";
+  }
+
+  document.getElementById("results-3d-floor-".concat(store.floor)).innerHTML += "\n    <polygon id=\"_".concat(store.name, "\" class=\"").concat(classes, "\" fill=\"").concat(fill, "\" data-href=\"").concat(href, "\"  data-name=\"").concat(store.floor, "\" data-tooltip data-tooltip-name=\"").concat(store.name, "\" data-tooltip-metric=\"").concat(store.metric, "\" data-tooltip-floor=\"").concat(store.floor, "\"  data-tooltip-buy-price=\"").concat(store.buyPrice, "\" points=\"").concat(store.points, "\"/>");
 }
 
 
@@ -110,6 +135,39 @@ function cursorInit() {
 
 /***/ }),
 
+/***/ "./resources/js/components/filters-dropdown.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/filters-dropdown.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "filtersDropdownInit": () => (/* binding */ filtersDropdownInit)
+/* harmony export */ });
+
+var filterDropdowns;
+var dropdownsContainer;
+
+function filtersDropdownInit() {
+  if (document.querySelector('#Storefronts')) {
+    dropdownsContainer = document.querySelector('#Storefronts');
+    filterDropdowns = document.querySelector("[data-filter-dropdown]");
+    showDropdown();
+  }
+}
+
+function showDropdown() {
+  dropdownsContainer.addEventListener('mouseover', function (e) {
+    e.classList.add('active');
+  });
+}
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/storefront-app.js":
 /*!***************************************************!*\
   !*** ./resources/js/components/storefront-app.js ***!
@@ -129,6 +187,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var app;
 var appFloors;
+var sidebar;
 var tl;
 var animating;
 
@@ -136,6 +195,7 @@ function appInit() {
   if (document.querySelector('#Storefronts')) {
     app = document.querySelector('[data-3d-app]');
     appFloors = app.querySelectorAll("[data-floor]");
+    sidebar = app.querySelector("#sidebar_app");
     tl = gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.timeline();
     animating = false;
   }
@@ -162,7 +222,14 @@ function replaceCurrentFloor(floorClicked) {
     var floor = appFloors[i];
 
     if (floor.classList.contains("active")) {
-      tl.fromTo(floor, {
+      gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.fromTo(sidebar, {
+        opacity: 1
+      }, {
+        opacity: 0,
+        duration: 0.35,
+        ease: 'power.out'
+      });
+      gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.fromTo(floor, {
         opacity: 1
       }, {
         opacity: 0,
@@ -170,6 +237,7 @@ function replaceCurrentFloor(floorClicked) {
         ease: 'power.out',
         onComplete: function onComplete() {
           animating = false;
+          sidebar.classList.remove("active");
           floor.classList.remove("active");
           showPickedFloor(floorClicked);
         }
@@ -186,19 +254,34 @@ function showPickedFloor(floorClicked) {
   if (animating == true) return;
   animating = true;
   var floor = jquery__WEBPACK_IMPORTED_MODULE_0___default()('[data-floor=' + floorClicked + ']');
-  tl.fromTo(floor, {
+  gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.fromTo(sidebar, {
+    opacity: 0
+  }, {
+    opacity: 1,
+    duration: 0.35,
+    ease: 'power.out'
+  });
+  gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.fromTo(floor, {
     opacity: 0
   }, {
     opacity: 1,
     duration: 0.35,
     ease: 'sine.in',
     onStart: function onStart() {
+      if (isInt(floorClicked)) {
+        sidebar.classList.add("active");
+      }
+
       floor.addClass("active");
     },
     onComplete: function onComplete() {
       animating = false;
     }
   });
+}
+
+function isInt(value) {
+  return !isNaN(value) && parseInt(Number(value)) == value && !isNaN(parseInt(value, 10));
 }
 
 
@@ -306,14 +389,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "tooltipInit": () => (/* binding */ tooltipInit)
 /* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+
 
 var tooltipObjects;
 var tooltip;
 var app;
+var sidebar;
 
 function tooltipInit() {
   if (document.querySelector('#Storefronts')) {
-    tooltip = document.querySelector('#tooltip');
+    tooltip = document.querySelector('[data-tooltip-object]');
     setTimeout(function () {
       app = document.querySelector('[data-3d-app]');
       tooltipObjects = document.querySelectorAll("[data-tooltip]");
@@ -323,20 +410,49 @@ function tooltipInit() {
 }
 
 function tooltipShow() {
+  var name;
+  var metric;
+  var buyPrice;
+  var floor;
+  var url;
+  var tooltipName;
+  var tooltipMetric;
+  var tooltipPrice;
+  var tooltipFloor;
   app.addEventListener('mouseout', function (e) {
-    if (!e.target.matches("[data-tooltip]")) return; // tooltip.classList.remove('active');
+    if (!e.target.matches("[data-tooltip]")) return;
   });
   app.addEventListener('mouseover', function (e) {
     if (!e.target.matches("[data-tooltip]")) return;
-    var name = e.target.getAttribute('data-tooltip-name');
-    var metric = e.target.getAttribute('data-tooltip-metric');
-    var buyPrice = e.target.getAttribute('data-tooltip-buyPrice');
-    var floor = e.target.getAttribute('data-tooltip-floor'); // tooltip.classList.add('active');
+    name = e.target.getAttribute('data-tooltip-name');
+    metric = e.target.getAttribute('data-tooltip-metric');
+    floor = e.target.getAttribute('data-tooltip-floor'); // buyPrice = e.target.getAttribute('data-tooltip-buy-price')
 
-    var x = e.clientX;
-    var y = e.clientY;
-    tooltip.style.marginLeft = x + "px";
-    tooltip.style.marginTop = y + "px";
+    tooltipName = tooltip.querySelector("[data-tooltip-name]");
+    tooltipMetric = tooltip.querySelector("[data-tooltip-metric]");
+    tooltipFloor = tooltip.querySelector("[data-tooltip-floor]"); // tooltipPrice = tooltip.querySelector("[data-tooltip-price]")
+
+    tooltipName.innerHTML = "Lokal " + name;
+    tooltipMetric.innerHTML = metric + "m²";
+    tooltipFloor.innerHTML = floor; // tooltipPrice.innerHTML = buyPrice + "zł"
+  });
+  app.addEventListener('mousemove', function (e) {
+    if (!e.target.matches("[data-tooltip]")) return;
+  });
+  app.addEventListener('click', function (e) {
+    sidebar = app.querySelector("#sidebar_app");
+    if (!e.target.matches("[data-tooltip]")) return;
+    url = e.target.getAttribute('data-href');
+    if (!url) return; //for some reason swup.loadPage doesnt load properly so we need to setTimeout and reload page anyways.
+
+    swup.loadPage({
+      url: url,
+      method: 'GET',
+      customTransition: 'transition-fade'
+    });
+    setTimeout(function () {
+      window.location.href = url;
+    }, 500);
   });
 }
 
@@ -24008,6 +24124,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_appenders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/appenders */ "./resources/js/components/appenders.js");
 /* harmony import */ var _components_tooltip__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/tooltip */ "./resources/js/components/tooltip.js");
 /* harmony import */ var _components_cursor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/cursor */ "./resources/js/components/cursor.js");
+/* harmony import */ var _components_filters_dropdown__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/filters-dropdown */ "./resources/js/components/filters-dropdown.js");
+
 
 
 
@@ -24062,10 +24180,10 @@ function storefrontsInit() {
     //Sliders
     var sliderMetric = document.getElementById("sliderMetric");
     var minMetric = sliderMetric.getAttribute('attr-valueMin');
-    var maxMetric = sliderMetric.getAttribute('attr-valueMax');
-    var sliderBuyPrice = document.getElementById("sliderBuyPrice");
-    var minBuyPrice = sliderBuyPrice.getAttribute('attr-valueMin');
-    var maxBuyPrice = sliderBuyPrice.getAttribute('attr-valueMax');
+    var maxMetric = sliderMetric.getAttribute('attr-valueMax'); // var sliderBuyPrice = document.getElementById("sliderBuyPrice");
+    // var minBuyPrice = sliderBuyPrice.getAttribute('attr-valueMin');
+    // var maxBuyPrice = sliderBuyPrice.getAttribute('attr-valueMax');
+
     sliderOmniMetric = new (omni_slider__WEBPACK_IMPORTED_MODULE_1___default())(sliderMetric, {
       isDate: false,
       min: minMetric,
@@ -24073,36 +24191,35 @@ function storefrontsInit() {
       start: minMetric,
       end: maxMetric,
       overlap: true
-    });
-    sliderOmniBuyPrice = new (omni_slider__WEBPACK_IMPORTED_MODULE_1___default())(sliderBuyPrice, {
-      isDate: false,
-      min: minBuyPrice,
-      max: maxBuyPrice,
-      start: minBuyPrice,
-      end: maxBuyPrice,
-      overlap: true
-    }); //changed values while moving
+    }); // sliderOmniBuyPrice = new Slider(sliderBuyPrice, {
+    //     isDate: false,
+    //     min: minBuyPrice,
+    //     max: maxBuyPrice,
+    //     start: minBuyPrice,
+    //     end: maxBuyPrice,
+    //     overlap: true,
+    // });
+    //changed values while moving
 
     sliderOmniMetric.subscribe("moving", function (data) {
       document.getElementById("minMetric").innerHTML = data.left.toFixed(1) + "m²";
       document.getElementById("maxMetric").innerHTML = data.right.toFixed(1) + "m²";
-    });
-    sliderOmniBuyPrice.subscribe("moving", function (data) {
-      document.getElementById("minBuyPrice").innerHTML = data.left.toFixed(0) + "zł";
-      document.getElementById("maxBuyPrice").innerHTML = data.right.toFixed(0) + "zł";
-    }); //set inital values
+    }); // sliderOmniBuyPrice.subscribe("moving", function (data) {
+    //     document.getElementById("minBuyPrice").innerHTML = data.left.toFixed(0) + "zł";
+    //     document.getElementById("maxBuyPrice").innerHTML = data.right.toFixed(0) + "zł";
+    // });
+    //set inital values
 
     document.getElementById("minMetric").innerHTML = sliderOmniMetric.getInfo().left.toFixed(1) + "m²";
-    document.getElementById("maxMetric").innerHTML = sliderOmniMetric.getInfo().right.toFixed(1) + "m²";
-    document.getElementById("minBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().left.toFixed(0) + "zł";
-    document.getElementById("maxBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().right.toFixed(0) + "zł"; //fetch when stopped
+    document.getElementById("maxMetric").innerHTML = sliderOmniMetric.getInfo().right.toFixed(1) + "m²"; // document.getElementById("minBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().left.toFixed(0) + "zł";
+    // document.getElementById("maxBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().right.toFixed(0) + "zł";
+    //fetch when stopped
 
     sliderOmniMetric.subscribe("stop", function () {
       fetchStores();
-    });
-    sliderOmniBuyPrice.subscribe("stop", function () {
-      fetchStores();
-    });
+    }); // sliderOmniBuyPrice.subscribe("stop", function () {
+    //     fetchStores();
+    // });
   }
 
   var response;
@@ -24116,10 +24233,10 @@ function storefrontsInit() {
       href += 'floor=[' + floorIds + ']';
     }
 
-    href += '&metric=[' + [sliderOmniMetric.getInfo().left, sliderOmniMetric.getInfo().right] + ']';
-    href += '&buyPrice=[' + [sliderOmniBuyPrice.getInfo().left, sliderOmniBuyPrice.getInfo().right] + ']';
-    href += '&rentPrice=[' + [0, 1000] + ']';
-    href += '&visible=1'; // console.log(floorIds);
+    href += '&metric=[' + [sliderOmniMetric.getInfo().left, sliderOmniMetric.getInfo().right] + ']'; // href += '&buyPrice=[' + [sliderOmniBuyPrice.getInfo().left, sliderOmniBuyPrice.getInfo().right] + ']';
+
+    href += '&rentPrice=[' + [0, 1000] + ']'; // href += '&visible=1';
+    // console.log(floorIds);
     // console.log(href);
 
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
@@ -24170,6 +24287,7 @@ function storefrontsInit() {
   (0,_components_storefront_app__WEBPACK_IMPORTED_MODULE_4__.appInit)();
   (0,_components_storefront_app__WEBPACK_IMPORTED_MODULE_4__.floorPicker)();
   (0,_components_tooltip__WEBPACK_IMPORTED_MODULE_6__.tooltipInit)();
+  (0,_components_filters_dropdown__WEBPACK_IMPORTED_MODULE_8__.filtersDropdownInit)();
 }
 
 
