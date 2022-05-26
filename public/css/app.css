@@ -6087,8 +6087,8 @@ nav {
   grid-template-columns: 1.5% 1fr 1fr 3%;
   min-height: clamp(50px, 15vh, 100px);
   align-items: center;
-  z-index: 99999 !important;
   width: 100vw;
+  z-index: 9999 !important;
 }
 nav input[type=checkbox] {
   display: none;
@@ -6096,16 +6096,15 @@ nav input[type=checkbox] {
 nav .logo-top {
   width: clamp(5em, 25vw, 15em);
   grid-column: 2/3;
-  z-index: 9999 !important;
+  z-index: 99999 !important;
 }
 nav .logo-top img {
   width: clamp(5em, 25vw, 15em);
-  z-index: 9999 !important;
+  z-index: 99999 !important;
 }
 nav #menuToggle {
   display: block;
   position: relative;
-  z-index: 1;
   -webkit-user-select: none;
   -moz-user-select: none;
    -ms-user-select: none;
@@ -6809,6 +6808,12 @@ html.is-leaving .transition-fade {
   font-family: "Poppins";
   padding: 20px 25px;
   border-radius: 100px;
+}
+
+.btn-floor {
+  font-family: "Poppins";
+  padding: 5px 10px;
+  background-color: none !important;
 }
 
 .magnetic {

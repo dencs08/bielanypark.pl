@@ -78,8 +78,16 @@
 }
 
 #storeFrontNav {
-  height: clamp(40px, 15vh, 400px);
+  height: auto;
+  min-height: 100px;
   width: clamp(200px, 97%, 95vw);
+  padding: 15px 30px 50px 30px;
+}
+#storeFrontNav .filters {
+  display: none;
+}
+#storeFrontNav .filters.active {
+  display: block !important;
 }
 #storeFrontNav select.select-arrow {
   -webkit-appearance: none;
@@ -155,7 +163,6 @@ a.active span {
 }
 
 .svg-store {
-  fill: #a1c4a1;
   fill-rule: evenodd;
   opacity: 0.8;
   cursor: pointer !important;
@@ -192,29 +199,69 @@ a.active span {
   top: 0;
   left: 0;
 }
-#app #tooltip {
+#app #sidebar_app {
   display: none;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(31, 31, 31, 0.862745098);
-  height: clamp(115px, 12.5vw, 175px);
-  aspect-ratio: 1/1;
+}
+#app #sidebar_app.active {
+  display: block !important;
+}
+#app #tooltip {
+  padding: 50px 25px 50px 15px;
+  background-color: #2e2e2e;
+  width: 100% !important;
   color: #bbbbbb;
   font-family: "Poppins";
-  text-align: center;
 }
 #app #tooltip p {
+  font-size: clamp(1.1rem, 1.2vw, 1.5rem);
   margin: 0;
 }
 #app #tooltip h4 {
-  font-size: clamp(0.9rem, 1.7vw, 1.5rem);
+  font-size: clamp(1.8rem, 3.25vw, 3.3rem);
   color: #ebebeb !important;
   font-family: "Cormorant";
+  margin: 0;
   margin-bottom: 10px;
 }
-#app #tooltip.active {
-  display: block !important;
+
+.card-header {
+  position: relative;
+}
+.card-header .box {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  padding: 10px 10px;
+  /* Added a percentage value for top/bottom padding to keep the wrapper inside of the parent */
+  width: 100px;
+  height: 25px;
+  transform: skewY(-45deg);
+}
+.card-header .box > .wrapper {
+  transform: skewY(-45deg);
+}
+
+.card-header {
+  position: relative;
+  overflow: hidden;
+}
+.card-header .badge.red {
+  background: rgb(223, 91, 91);
+}
+.card-header .badge.green {
+  background: rgb(115, 179, 115);
+}
+.card-header .badge.diagonal {
+  white-space: nowrap;
+  position: absolute;
+  padding: 5px 65px;
+  min-width: 300px;
+  transform: rotate(-45deg) translate(-37%, 0);
+  color: white;
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 12px;
+  top: -80px;
+  box-sizing: border-box;
 }
