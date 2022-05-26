@@ -26,8 +26,18 @@
 }
 
 #storeFrontNav {
-    height: clamp(40px, 15vh, 400px);
+    height: auto;
+    min-height: 100px;
     width: clamp(200px, 97%, 95vw);
+
+    padding: 15px 30px 50px 30px;
+
+    .filters {
+        display: none;
+        &.active {
+            display: block !important;
+        }
+    }
 
     select.select-arrow {
         -webkit-appearance: none;
@@ -113,4 +123,141 @@ a.active {
         color: $font-color-primary !important;
     }
     color: $font-color-primary !important;
+}
+
+.svg-store {
+    // fill: #a1c4a1;
+    fill-rule: evenodd;
+
+    opacity: 0.8;
+
+    cursor: pointer !important;
+
+    transition: all 0.3s;
+    &:hover {
+        fill: #cfeecf;
+    }
+}
+
+#app {
+    height: 75vh;
+
+    .app-floor {
+        display: none;
+    }
+
+    .app-floor.active {
+        display: block !important;
+    }
+
+    .floor-picker-3d {
+        fill: #39b54a;
+
+        opacity: 0.3;
+
+        cursor: pointer;
+
+        transition: all 0.3s;
+        &:hover {
+            fill: #7ad887;
+        }
+    }
+
+    .floor_svg_container {
+        position: relative;
+        height: clamp(300px, 60vh, 80vh);
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+
+    #sidebar_app {
+        display: none;
+        &.active {
+            display: block !important;
+        }
+    }
+
+    #tooltip {
+        padding: 50px 25px 50px 15px;
+        background-color: #2e2e2e;
+        // aspect-ratio: 1/1;
+        width: 100% !important;
+
+        color: $font-color-fourth;
+        font-family: $font-family-secondary;
+
+        p {
+            font-size: clamp(1.1rem, 1.2vw, 1.5rem);
+            margin: 0;
+        }
+
+        h4 {
+            font-size: clamp(1.8rem, 3.25vw, 3.3rem);
+            color: $font-color-secondary !important;
+            font-family: $font-family-primary;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.card-header {
+    position: relative;
+    .box {
+        position: absolute;
+
+        top: 50px;
+        left: 0;
+        right: 0;
+
+        padding: 10px 10px; /* Added a percentage value for top/bottom padding to keep the wrapper inside of the parent */
+
+        width: 100px;
+        height: 25px;
+
+        -webkit-transform: skewY(-45deg);
+        -moz-transform: skewY(-45deg);
+        -ms-transform: skewY(-45deg);
+        -o-transform: skewY(-45deg);
+        transform: skewY(-45deg);
+    }
+
+    .box > .wrapper {
+        -webkit-transform: skewY(-45deg);
+        -moz-transform: skewY(-45deg);
+        -ms-transform: skewY(-45deg);
+        -o-transform: skewY(-45deg);
+        transform: skewY(-45deg);
+    }
+}
+
+$blue-accent-dark: darkblue;
+.card-header {
+    position: relative;
+    overflow: hidden;
+    .badge {
+        &.red {
+            background: rgb(223, 91, 91);
+        }
+        &.green {
+            background: rgb(115, 179, 115);
+        }
+        &.diagonal {
+            white-space: nowrap;
+            position: absolute;
+            padding: 5px 65px;
+            min-width: 300px;
+            transform: rotate(-45deg) translate(-37%, 0);
+            color: white;
+            text-align: left;
+            text-transform: uppercase;
+            font-size: 12px;
+            top: -80px;
+            box-sizing: border-box;
+        }
+    }
 }
