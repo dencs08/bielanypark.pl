@@ -10,6 +10,7 @@ import { floorPicker, appInit } from './components/storefront-app';
 import { appendCards, appendAppFloor } from './components/appenders';
 import { tooltipInit } from './components/tooltip'
 import { cursorInit } from './components/cursor';
+import { filtersDropdownInit } from './components/filters-dropdown'
 
 function storefrontsInit() {
     let floorCheckBoxes = document.querySelectorAll(".floor-checkbox");
@@ -53,9 +54,9 @@ function storefrontsInit() {
         var sliderMetric = document.getElementById("sliderMetric");
         var minMetric = sliderMetric.getAttribute('attr-valueMin');
         var maxMetric = sliderMetric.getAttribute('attr-valueMax');
-        var sliderBuyPrice = document.getElementById("sliderBuyPrice");
-        var minBuyPrice = sliderBuyPrice.getAttribute('attr-valueMin');
-        var maxBuyPrice = sliderBuyPrice.getAttribute('attr-valueMax');
+        // var sliderBuyPrice = document.getElementById("sliderBuyPrice");
+        // var minBuyPrice = sliderBuyPrice.getAttribute('attr-valueMin');
+        // var maxBuyPrice = sliderBuyPrice.getAttribute('attr-valueMax');
 
         sliderOmniMetric = new Slider(sliderMetric, {
             isDate: false,
@@ -66,38 +67,38 @@ function storefrontsInit() {
             overlap: true,
         });
 
-        sliderOmniBuyPrice = new Slider(sliderBuyPrice, {
-            isDate: false,
-            min: minBuyPrice,
-            max: maxBuyPrice,
-            start: minBuyPrice,
-            end: maxBuyPrice,
-            overlap: true,
-        });
+        // sliderOmniBuyPrice = new Slider(sliderBuyPrice, {
+        //     isDate: false,
+        //     min: minBuyPrice,
+        //     max: maxBuyPrice,
+        //     start: minBuyPrice,
+        //     end: maxBuyPrice,
+        //     overlap: true,
+        // });
 
         //changed values while moving
         sliderOmniMetric.subscribe("moving", function (data) {
             document.getElementById("minMetric").innerHTML = data.left.toFixed(1) + "m²";
             document.getElementById("maxMetric").innerHTML = data.right.toFixed(1) + "m²";
         });
-        sliderOmniBuyPrice.subscribe("moving", function (data) {
-            document.getElementById("minBuyPrice").innerHTML = data.left.toFixed(0) + "zł";
-            document.getElementById("maxBuyPrice").innerHTML = data.right.toFixed(0) + "zł";
-        });
+        // sliderOmniBuyPrice.subscribe("moving", function (data) {
+        //     document.getElementById("minBuyPrice").innerHTML = data.left.toFixed(0) + "zł";
+        //     document.getElementById("maxBuyPrice").innerHTML = data.right.toFixed(0) + "zł";
+        // });
 
         //set inital values
         document.getElementById("minMetric").innerHTML = sliderOmniMetric.getInfo().left.toFixed(1) + "m²";
         document.getElementById("maxMetric").innerHTML = sliderOmniMetric.getInfo().right.toFixed(1) + "m²";
-        document.getElementById("minBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().left.toFixed(0) + "zł";
-        document.getElementById("maxBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().right.toFixed(0) + "zł";
+        // document.getElementById("minBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().left.toFixed(0) + "zł";
+        // document.getElementById("maxBuyPrice").innerHTML = sliderOmniBuyPrice.getInfo().right.toFixed(0) + "zł";
 
         //fetch when stopped
         sliderOmniMetric.subscribe("stop", function () {
             fetchStores();
         });
-        sliderOmniBuyPrice.subscribe("stop", function () {
-            fetchStores();
-        });
+        // sliderOmniBuyPrice.subscribe("stop", function () {
+        //     fetchStores();
+        // });
     }
 
     let response;
@@ -115,9 +116,9 @@ function storefrontsInit() {
         }
 
         href += '&metric=[' + [sliderOmniMetric.getInfo().left, sliderOmniMetric.getInfo().right] + ']';
-        href += '&buyPrice=[' + [sliderOmniBuyPrice.getInfo().left, sliderOmniBuyPrice.getInfo().right] + ']';
+        // href += '&buyPrice=[' + [sliderOmniBuyPrice.getInfo().left, sliderOmniBuyPrice.getInfo().right] + ']';
         href += '&rentPrice=[' + [0, 1000] + ']';
-        href += '&visible=1';
+        // href += '&visible=1';
         // console.log(floorIds);
         // console.log(href);
 
@@ -171,6 +172,8 @@ function storefrontsInit() {
     floorPicker()
 
     tooltipInit()
+
+    filtersDropdownInit()
 }
 
 export { storefrontsInit }
