@@ -25,9 +25,13 @@ mix.js([
     .js([
         'resources/js/start.js',
     ], 'public/js/start.js').version()
+    .js([
+        'resources/js/auth.js',
+    ], 'public/js/auth.js').version()
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/start.scss', 'public/css')
     .sass('resources/sass/lokale.scss', 'public/css')
-    .sass('resources/sass/contact.scss', 'public/css');
+    .sass('resources/sass/contact.scss', 'public/css')
+    .sass('resources/sass/auth.scss', 'public/css');
 
 mix.browserSync('127.0.0.1:8000');
