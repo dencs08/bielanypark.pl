@@ -33,9 +33,9 @@
     padding: 15px 30px 50px 30px;
 
     .filters {
-        display: none;
+        // opacity: 0;
         &.active {
-            display: block !important;
+            // opacity: 1;
         }
     }
 
@@ -205,6 +205,7 @@ a.active {
     }
 }
 
+//ribbon
 .card-header {
     position: relative;
     .box {
@@ -235,7 +236,6 @@ a.active {
     }
 }
 
-$blue-accent-dark: darkblue;
 .card-header {
     position: relative;
     overflow: hidden;
