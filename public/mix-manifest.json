@@ -1,10 +1,12 @@
 {
-    "/js/app.js": "/js/app.js?id=0aeecd69c30fdbeeca532f2b80715077",
+    "/js/app.js": "/js/app.js?id=20ae32ee7db4be4d521d5a0cc6e90573",
     "/js/contact.js": "/js/contact.js?id=9603faf429ead65630fbb52e8a623e06",
-    "/js/lokale.js": "/js/lokale.js?id=f7c67e9ae234cbf9f1b27bc807e567b8",
+    "/js/lokale.js": "/js/lokale.js?id=61053596d8abfde06084ce960a317c01",
     "/js/start.js": "/js/start.js?id=4ac66852575f06e3ed0d5ab686b7d0d5",
+    "/js/auth.js": "/js/auth.js?id=ccc0ee9dfdde83e789b166ce27cb198b",
+    "/css/auth.css": "/css/auth.css?id=85900d8312f14809c81eeee6b7d18f7e",
     "/css/app.css": "/css/app.css?id=32161ac9c4b0142b48c0c7f518829cba",
     "/css/contact.css": "/css/contact.css?id=4bd7336d0f06dfda5bf416fbb48f797d",
-    "/css/lokale.css": "/css/lokale.css?id=936aef00b1f5049cdd1e6685545c3869",
+    "/css/lokale.css": "/css/lokale.css?id=3b2a8ffb02d7213a0aea7a0cbef991e1",
     "/css/start.css": "/css/start.css?id=12a735fd5ba453378a1c77f00064e95c"
 }
