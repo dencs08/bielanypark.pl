@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('email', function () {
     return view('email/email');
 });
@@ -29,3 +30,8 @@ Route::get('lokale/{name}', [App\Http\Controllers\AppController::class, 'lokalID
 // Route::get('testFilter/{id}', [App\Http\Controllers\StorefrontController::class, 'index']);
 
 Route::get('testFilter/', [App\Http\Controllers\StorefrontController::class, 'index']);
+
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('/storefront', [App\Http\Controllers\StorefrontController::class, 'edit']);
