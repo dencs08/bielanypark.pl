@@ -5,9 +5,9 @@ nav {
     grid-template-columns: 1.5% 1fr 1fr 3%;
     min-height: clamp(50px, 15vh, 100px);
     align-items: center;
-    z-index: 99999 !important;
     width: 100vw;
 
+    z-index: 9999 !important;
     input[type="checkbox"] {
         display: none;
     }
@@ -18,16 +18,14 @@ nav {
         img {
             // position: fixed;
             width: clamp(5em, 25vw, 15em);
-            z-index: 9999 !important;
+            z-index: 99999 !important;
         }
-        z-index: 9999 !important;
+        z-index: 99999 !important;
     }
 
     #menuToggle {
         display: block;
         position: relative;
-
-        z-index: 1;
 
         -webkit-user-select: none;
         user-select: none;
