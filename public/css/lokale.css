@@ -83,12 +83,6 @@
   width: clamp(200px, 97%, 95vw);
   padding: 15px 30px 50px 30px;
 }
-#storeFrontNav .filters {
-  display: none;
-}
-#storeFrontNav .filters.active {
-  display: block !important;
-}
 #storeFrontNav select.select-arrow {
   -webkit-appearance: none;
   -moz-appearance: none;
