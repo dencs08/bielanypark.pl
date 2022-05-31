@@ -252,7 +252,7 @@
                             <tr>
                                 <td class="font-family-poppins">
                                     <h3  style="font-weight:300; font-size: 16px;">
-                                        Dodatkowo załączam:
+                                        W załącznikach:
                                     </h3>
                                     <p style="font-size:14px; font-style: italic;">
                                         ZAŁĄCZNIKI DO UZUPEŁNIENIA
