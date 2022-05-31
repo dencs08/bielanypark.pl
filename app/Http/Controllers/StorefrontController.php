@@ -13,4 +13,8 @@ class StorefrontController extends Controller
         return json_encode($data);
         // return Storefront::filter($request)->get();
     }
+
+    public function edit (Request $request){
+
+    }
 }
