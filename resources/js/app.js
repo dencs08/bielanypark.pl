@@ -11,6 +11,7 @@ import { startInit } from './start'
 import { storefrontsInit } from './lokale'
 import { magneticInit } from './components/magnetic'
 import { cursorInit } from './components/cursor'
+import { updateActiveLink } from './components/navbar'
 
 import { locoInit, locoReload, refreshScrollTrigger, scrollToTop } from './locomotive-scroll';
 
@@ -19,34 +20,35 @@ window.swup = new Swup({
 });
 
 // swup.on('willReplaceContent', unload);
-swup.on('contentReplaced', init);
-swup.on('transitionEnd', locoReload);
+swup.on('contentReplaced', init)
+swup.on('transitionEnd', locoReload)
 
-locoInit();
+locoInit()
 //Initialize script here when going to the next page
 function init() {
     if (document.querySelector('body')) {
-        cursorInit();
-        magneticInit();
-        // locoReload();
+        updateActiveLink()
+        cursorInit()
+        magneticInit()
+        // locoReload()
     }
     if (document.querySelector("#Contact")) {
-        contactInit();
+        contactInit()
     }
     if (document.querySelector('#landing_page')) {
-        startInit();
+        startInit()
     }
     if (document.querySelector('#Storefronts')) {
-        storefrontsInit();
+        storefrontsInit()
 
         let floorCheckBoxes = document.querySelectorAll(".floor-checkbox");
         for (let i = 0; i < floorCheckBoxes.length; i++) {
-            const element = floorCheckBoxes[i];
-            element.addEventListener("click", refreshScrollTrigger);
+            const element = floorCheckBoxes[i]
+            element.addEventListener("click", refreshScrollTrigger)
         }
     }
     if (document.querySelector('#Storefront')) {
-        storefrontsInit();
+        storefrontsInit()
     }
 }
 
