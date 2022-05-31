@@ -153,14 +153,16 @@ var dropdownsContainer;
 function filtersDropdownInit() {
   if (document.querySelector('#Storefronts')) {
     dropdownsContainer = document.querySelector('#Storefronts');
-    filterDropdowns = document.querySelector("[data-filter-dropdown]");
+    filterDropdowns = document.querySelectorAll("[data-filter-dropdown]");
     showDropdown();
   }
 }
 
 function showDropdown() {
   dropdownsContainer.addEventListener('mouseover', function (e) {
-    e.classList.add('active');
+    if (!e.target.classList.contains('filters')) return; // console.log(e.target);
+
+    e.target.classList.add('active');
   });
 }
 
