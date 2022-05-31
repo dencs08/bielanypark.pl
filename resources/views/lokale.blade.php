@@ -19,6 +19,7 @@
     <section id="page_top" data-scroll-section></section>
         <section class="" data-scroll-section>
             <div class="text-center font-family-secondary font-size-xl font-weight-bold">
+                <h2>Wybierz jeden z widoków dostępnych poniżej</h2>
                 <div class="row">
                     <div class="col-md-6 mb-5">
                         <a href="#" id="view-3d" class="view-3d underline_medium font-color-fourth"><span>Wybór 3D</span></a>
