@@ -10,6 +10,7 @@
                 <h4 data-tooltip-name>Lokal</h4>
                 <p>Metraż: <span data-tooltip-metric>1</span></p>
                 <p>Piętro: <span data-tooltip-floor>2</span></p>
+                <p>Status: <span data-tooltip-available>Dostępne</span></p>
             </div>
         </div>
     </div>
