@@ -15,6 +15,11 @@ class StorefrontController extends Controller
     }
 
     public function edit (Request $request){
+        $data = Storefront::find($request->id);
+        $data->available=$request->available;
+        $data->visible=$request->visible;
+        $data->save();
 
+        return redirect('home');
     }
 }
