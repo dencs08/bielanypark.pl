@@ -3,12 +3,18 @@ import $ from 'jquery';
 function appendCards(store) {
     let availableColor, availablePhrase
 
-    if (store.available == 1) {
+    if (store.available == "Dostępne") {
         availableColor = "green"
         availablePhrase = "Dostępne"
-    } else {
+    } else if (store.available == "Sprzedane") {
         availableColor = "red"
         availablePhrase = "Sprzedane"
+    } else if (store.available == "Zarezerwowane") {
+        availableColor = "red"
+        availablePhrase = "Zarezerwowane"
+    } else if (store.available == "Wynajęte") {
+        availableColor = "red"
+        availablePhrase = "Wynajęte"
     }
 
     if (!store.visible) return
@@ -44,19 +50,27 @@ function appendAppFloor(store) {
     let fill
     let href
     let classes
-    if (store.available == 1) {
+
+    if (store.available == "Dostępne") {
         fill = "#a1c4a1"
         href = "/lokale/" + store.name
         classes = "svg-store cursor_expand"
-
-    } else {
+    } else if (store.available == "Sprzedane") {
+        fill = "#111111"
+        href = ""
+        classes = "cursor_shrink"
+    } else if (store.available == "Zarezerwowane") {
+        fill = "#111111"
+        href = ""
+        classes = "cursor_shrink"
+    } else if (store.available == "Wynajęte") {
         fill = "#111111"
         href = ""
         classes = "cursor_shrink"
     }
 
     document.getElementById(`results-3d-floor-${store.floor}`).innerHTML += `
-    <polygon id="_${store.name}" class="${classes}" fill="${fill}" data-href="${href}"  data-name="${store.floor}" data-tooltip data-tooltip-name="${store.name}" data-tooltip-metric="${store.metric}" data-tooltip-floor="${store.floor}"  data-tooltip-buy-price="${store.buyPrice}" points="${store.points}"/>`
+    <polygon id="_${store.name}" class="${classes}" fill="${fill}" data-href="${href}" data-tooltip-available="${store.available}" data-name="${store.floor}" data-tooltip data-tooltip-name="${store.name}" data-tooltip-metric="${store.metric}" data-tooltip-floor="${store.floor}"  data-tooltip-buy-price="${store.buyPrice}" points="${store.points}"/>`
 }
 
 export { appendCards, appendAppFloor }
