@@ -20,12 +20,18 @@ __webpack_require__.r(__webpack_exports__);
 function appendCards(store) {
   var availableColor, availablePhrase;
 
-  if (store.available == 1) {
+  if (store.available == "Dostępne") {
     availableColor = "green";
     availablePhrase = "Dostępne";
-  } else {
+  } else if (store.available == "Sprzedane") {
     availableColor = "red";
     availablePhrase = "Sprzedane";
+  } else if (store.available == "Zarezerwowane") {
+    availableColor = "red";
+    availablePhrase = "Zarezerwowane";
+  } else if (store.available == "Wynajęte") {
+    availableColor = "red";
+    availablePhrase = "Wynajęte";
   }
 
   if (!store.visible) return;
@@ -37,17 +43,25 @@ function appendAppFloor(store) {
   var href;
   var classes;
 
-  if (store.available == 1) {
+  if (store.available == "Dostępne") {
     fill = "#a1c4a1";
     href = "/lokale/" + store.name;
     classes = "svg-store cursor_expand";
-  } else {
+  } else if (store.available == "Sprzedane") {
+    fill = "#111111";
+    href = "";
+    classes = "cursor_shrink";
+  } else if (store.available == "Zarezerwowane") {
+    fill = "#111111";
+    href = "";
+    classes = "cursor_shrink";
+  } else if (store.available == "Wynajęte") {
     fill = "#111111";
     href = "";
     classes = "cursor_shrink";
   }
 
-  document.getElementById("results-3d-floor-".concat(store.floor)).innerHTML += "\n    <polygon id=\"_".concat(store.name, "\" class=\"").concat(classes, "\" fill=\"").concat(fill, "\" data-href=\"").concat(href, "\"  data-name=\"").concat(store.floor, "\" data-tooltip data-tooltip-name=\"").concat(store.name, "\" data-tooltip-metric=\"").concat(store.metric, "\" data-tooltip-floor=\"").concat(store.floor, "\"  data-tooltip-buy-price=\"").concat(store.buyPrice, "\" points=\"").concat(store.points, "\"/>");
+  document.getElementById("results-3d-floor-".concat(store.floor)).innerHTML += "\n    <polygon id=\"_".concat(store.name, "\" class=\"").concat(classes, "\" fill=\"").concat(fill, "\" data-href=\"").concat(href, "\" data-tooltip-available=\"").concat(store.available, "\" data-name=\"").concat(store.floor, "\" data-tooltip data-tooltip-name=\"").concat(store.name, "\" data-tooltip-metric=\"").concat(store.metric, "\" data-tooltip-floor=\"").concat(store.floor, "\"  data-tooltip-buy-price=\"").concat(store.buyPrice, "\" points=\"").concat(store.points, "\"/>");
 }
 
 
@@ -421,6 +435,8 @@ function tooltipShow() {
   var tooltipMetric;
   var tooltipPrice;
   var tooltipFloor;
+  var tooltipAvailable;
+  var available;
   app.addEventListener('mouseout', function (e) {
     if (!e.target.matches("[data-tooltip]")) return;
   });
@@ -428,15 +444,18 @@ function tooltipShow() {
     if (!e.target.matches("[data-tooltip]")) return;
     name = e.target.getAttribute('data-tooltip-name');
     metric = e.target.getAttribute('data-tooltip-metric');
-    floor = e.target.getAttribute('data-tooltip-floor'); // buyPrice = e.target.getAttribute('data-tooltip-buy-price')
+    floor = e.target.getAttribute('data-tooltip-floor');
+    available = e.target.getAttribute('data-tooltip-available'); // buyPrice = e.target.getAttribute('data-tooltip-buy-price')
 
     tooltipName = tooltip.querySelector("[data-tooltip-name]");
     tooltipMetric = tooltip.querySelector("[data-tooltip-metric]");
-    tooltipFloor = tooltip.querySelector("[data-tooltip-floor]"); // tooltipPrice = tooltip.querySelector("[data-tooltip-price]")
+    tooltipFloor = tooltip.querySelector("[data-tooltip-floor]");
+    tooltipAvailable = tooltip.querySelector("[data-tooltip-available]"); // tooltipPrice = tooltip.querySelector("[data-tooltip-price]")
 
     tooltipName.innerHTML = "Lokal " + name;
     tooltipMetric.innerHTML = metric + "m²";
-    tooltipFloor.innerHTML = floor; // tooltipPrice.innerHTML = buyPrice + "zł"
+    tooltipFloor.innerHTML = floor;
+    tooltipAvailable.innerHTML = available; // tooltipPrice.innerHTML = buyPrice + "zł"
   });
   app.addEventListener('mousemove', function (e) {
     if (!e.target.matches("[data-tooltip]")) return;
@@ -24237,8 +24256,8 @@ function storefrontsInit() {
 
     href += '&metric=[' + [sliderOmniMetric.getInfo().left, sliderOmniMetric.getInfo().right] + ']'; // href += '&buyPrice=[' + [sliderOmniBuyPrice.getInfo().left, sliderOmniBuyPrice.getInfo().right] + ']';
 
-    href += '&rentPrice=[' + [0, 1000] + ']'; // href += '&visible=1';
-    // console.log(floorIds);
+    href += '&rentPrice=[' + [0, 1000] + ']';
+    href += '&visible=Widoczne'; // console.log(floorIds);
     // console.log(href);
 
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({

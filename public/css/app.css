@@ -6941,6 +6941,10 @@ a {
   transform: translate(-50% -50%);
 }
 
+[data-scroll-section] {
+  perspective: 1px;
+}
+
 @media screen and (max-width: 992px) {
   h1 {
     font-size: clamp(2.1rem, 5vw, 5rem);
