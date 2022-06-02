@@ -10,18 +10,6 @@
                         <div class="row">
                             @if(!empty($results))
                             @foreach($results as $result)
-                                <!-- @if($result->available == 1)
-                                    {{$result->available = "Dostępne"}}
-                                @endif -->
-                                <!-- @if($result->available == 0)
-                                    {{$result->available = "Sprzedane"}}
-                                @endif -->
-                                <!-- @if($result->visible == 1)
-                                    {{$result->visible = "Widoczne"}}
-                                @endif -->
-                                <!-- @if($result->visible == 0)
-                                    {{$result->visible = "Niewidoczne"}}
-                                @endif -->
                                     <div class="col-md-4">
                                         <div class="card my-4">
                                             <div class="card-header">
@@ -30,7 +18,7 @@
                                                 <p class="my-0">Widoczność: <span class="fw-bold">{{$result->visible}}</span></p>
                                             </div>
                                             <div class="card-body">
-                                                <button id="" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal" data-name="{{$result->name}}" data-visible="{{$result->visible}}" data-available="{{$result->available}}">Edytuj</button>
+                                                <button id="" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal" data-name="{{$result->name}}" data-visible="{{$result->visible}}" data-available="{{$result->available}}" data-id="{{$result->id}}">Edytuj</button>
                                             </div>
                                         </div>
                                     </div>
@@ -55,25 +43,33 @@
         </button>
       </div>
 
-      {{ csrf_field() }}
-      {{ method_field('PUT') }}
       
-      <form id="editForm" action="/storefront" method="POST">
+      <form id="editForm" action="/storefrontedit" method="POST">
+      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+      <input type="hidden"  id="id" name="id" value="">
       <div class="modal-body">
         <div class="form-group my-2">
             <label for="available">Status</label>
-            <input type="text" name="available" id="available" class="form-control" placeholder="Dostępność lokalu">
+            <select class="form-select" name="available" id="available">
+                <option value="Dostępne">Dostępne</option>
+                <option value="Sprzedane">Sprzedane</option>
+                <option value="Zarezerwowane">Zarezerwowane</option>
+                <option value="Wynajęte">Wynajęte</option>
+            </select>
         </div>
         <div class="form-group my-2">
             <label for="visible">Widoczność</label>
-            <input type="text" name="visible" id="visible" class="form-control" placeholder="Widoczność lokalu"> 
+            <select class="form-select" name="visible" id="visible">
+                <option value="Widoczne">Widoczne</option>
+                <option value="Niewidoczne">Niewidoczne</option>
+            </select>
         </div>
       </div>
-      </form>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
         <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -84,13 +80,16 @@
 <script>
     $('#exampleModal').on('show.bs.modal', function (e) {
     var button = $(e.relatedTarget)
+    var id = button.data('id')
     var name = button.data('name')
     var available = button.data('available')
     var visible = button.data('visible')
     var modal = $(this)
 
     modal.find('.modal-title').text('Lokal ' + name)
+    modal.find('#id').val(id)
     modal.find('#available').val(available)
+    modal.find('#visible').val(visible)
     modal.find('#visible').val(visible)
 })
 </script>
