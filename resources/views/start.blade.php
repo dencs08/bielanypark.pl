@@ -15,8 +15,8 @@
 
 @section('content')
 <div class="data-scroll-container" data-scroll-container>
-<section id="page_top" data-scroll-section></section>
-<section id="landing_page" class="section-mb" data-scroll-section>
+<section id="page_top" data-scroll-section data-scroll></section>
+<section id="landing_page" class="section-mb" data-scroll-section data-scroll>
     <div class="hero-wrapper">
         <div class="hero text-center">
             <img src="{{ asset('images/building/jpg/back.jpg')}}" title="Bielanypark Legnica wieczorem - tył budynku" class="image-landing" alt="Bielanypark Legnica wieczorem">
@@ -34,9 +34,9 @@
         </div>
     </div>
 </section>
-<div data-scroll-section class="slider"></div>
+<div data-scroll-section data-scroll class="slider"></div>
 
-<section id="about_us" class="section-mb" data-scroll-section>
+<section id="about_us" class="section-mb" data-scroll-section data-scroll>
     <div class="container">
         <div class="row">
             <div class="col-lg-2">
@@ -70,7 +70,7 @@
     </div>
 </section>
 
-<section id="build_end" class="section-mb section-mt display-grid-center" data-scroll-section>
+<section id="build_end" class="section-mb section-mt display-grid-center" data-scroll-section data-scroll>
     <div class="container text-center" data-scroll data-scroll-speed="0.25">
         <div class="w-75 mx-auto">
             <h3>Zakończenie inwestycji bielanypark przewidywane jest na początek 2023 r. Jesteś zainteresowany w osiągnięciu nowego poziomu razem z nami?</h3>
@@ -79,13 +79,13 @@
     </div>
 </section>
 
-<section id="app" class="section-mb" data-scroll-section>
+<section id="app" class="section-mb" data-scroll-section data-scroll>
     <div class="container" data-scroll data-scroll-speed="0.5">
         <img src="{{ asset('images/building/jpg/chalk_top_myrka.jpg') }}" class="img-fluid" title="Bielanypark Legnica - Widok z drona" alt="Bielanypark Legnica Rysowane Kreską - Widok Z Drona">
     </div>
 </section>
 
-<section id="about_us2" class="section-mb section-mt display-grid-center overflow-hidden" data-scroll-section>
+<section id="about_us2" class="section-mb section-mt display-grid-center overflow-hidden" data-scroll-section data-scroll>
     <div class="container text-center" data-scroll data-scroll-speed="5">
         <div class="mx-auto">
         <h3>Ikoniczna architektura, nowoczesna prezencja z poszanowaniem otaczającej natury.</h3>
@@ -97,7 +97,7 @@
     </div>
 </section>
 
-<section id="about_us3" class="section-mb overflow-hidden" data-scroll-section>
+<section id="about_us3" class="section-mb overflow-hidden" data-scroll-section data-scroll>
     <div class="container">
         <div data-scroll data-scroll-speed="0.5">
             <img src="{{ asset('images/building/jpg/front_close.jpg') }}" class="img-fluid mb-5" title="Bielanypark Legnica wejście frontalne za dnia" alt="Bielanypark Legnica za dnia">
@@ -128,7 +128,7 @@
     </div>
 </section>
 
-<section id="sell" class="section-mb" data-scroll-section>
+<section id="sell" class="section-mb" data-scroll-section data-scroll>
     <div class="container text-center" data-scroll data-scroll-speed="6">
         <h3>Sprzedaż już się zaczęła, nie przegap okazji i skontaktuj się z nami!</h3>
         <div data-scroll class="magnetic magnetic-wrapper">
