@@ -8,6 +8,17 @@
         <link rel="apple-touch-icon" href="{{asset('images/logos/favicon.png')}}">
         <link rel="shortcut icon" href="{{asset('images/logos/favicon.png')}}" />
         <link rel="stylesheet" href="{{asset('css/app.css')}}" />
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3QYEP9Y738"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-3QYEP9Y738');
+        </script>
+
         @yield('css')
         <title>@yield('title')</title>
     </head>
