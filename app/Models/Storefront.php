@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Storefront extends Model
 {
     // use HasFactory;
-
+    public $timestamps = false;
     public function scopeFilter(Builder $builder, $request)
     {
         return (new StorefrontFilter($request))->filter($builder);
