@@ -17,7 +17,7 @@ function appendCards(store) {
         availablePhrase = "Wynajęte"
     }
 
-    if (!store.visible) return
+    if (store.visible == "Niewidoczne") return
     $('.results').append(`     
     <div class="col-md-12 col-lg-6 col-xl-4">
         <div class="card">
