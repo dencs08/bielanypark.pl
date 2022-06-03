@@ -14,11 +14,11 @@
                                         <div class="card my-4">
                                             <div class="card-header">
                                                 <h3>Lokal: <span class="fw-bold">{{$result->name}}</span></h3>
-                                                <p class="my-0">Status: <span class="fw-bold">{{$result->available}}</span></p>
-                                                <p class="my-0">Widoczność: <span class="fw-bold">{{$result->visible}}</span></p>
+                                                <p class="font-family-secondary my-0">Status: <span class="fw-bold font-family-secondary">{{$result->available}}</span></p>
+                                                <p class="font-family-secondary my-0">Widoczność: <span class="fw-bold font-family-secondary">{{$result->visible}}</span></p>
                                             </div>
-                                            <div class="card-body">
-                                                <button id="" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal" data-name="{{$result->name}}" data-visible="{{$result->visible}}" data-available="{{$result->available}}" data-id="{{$result->id}}">Edytuj</button>
+                                            <div class="card-footer">
+                                                <button id="" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-name="{{$result->name}}" data-visible="{{$result->visible}}" data-available="{{$result->available}}" data-id="{{$result->id}}">Edytuj</button>
                                             </div>
                                         </div>
                                     </div>
@@ -34,44 +34,42 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Lokal <span></span></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      
-      <form id="editForm" action="/storefrontedit" method="POST">
-      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-      <input type="hidden"  id="id" name="id" value="">
-      <div class="modal-body">
-        <div class="form-group my-2">
-            <label for="available">Status</label>
-            <select class="form-select" name="available" id="available">
-                <option value="Dostępne">Dostępne</option>
-                <option value="Sprzedane">Sprzedane</option>
-                <option value="Zarezerwowane">Zarezerwowane</option>
-                <option value="Wynajęte">Wynajęte</option>
-            </select>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header font-family-primary">
+                <h3 class="modal-title" id="exampleModalLabel">Lokal <span></span></h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editForm" action="/storefrontedit" method="POST" class="font-family-secondary">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden"  id="id" name="id" value="">
+                <div class="modal-body">
+                    <div class="form-group my-2">
+                        <label for="available">Status</label>
+                        <select class="form-select" name="available" id="available">
+                            <option value="Dostępne">Dostępne</option>
+                            <option value="Sprzedane">Sprzedane</option>
+                            <option value="Zarezerwowane">Zarezerwowane</option>
+                            <option value="Wynajęte">Wynajęte</option>
+                        </select>
+                    </div>
+                    <div class="form-group my-2">
+                        <label for="visible">Widoczność</label>
+                        <select class="form-select" name="visible" id="visible">
+                            <option value="Widoczne">Widoczne</option>
+                            <option value="Niewidoczne">Niewidoczne</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Zamknij</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group my-2">
-            <label for="visible">Widoczność</label>
-            <select class="form-select" name="visible" id="visible">
-                <option value="Widoczne">Widoczne</option>
-                <option value="Niewidoczne">Niewidoczne</option>
-            </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-      </div>
-      </form>
     </div>
-  </div>
 </div>
 @endsection
 
