@@ -5,7 +5,6 @@ function startInit() {
     const h1 = document.querySelector("h1")
     const h21 = document.querySelector("#h2-1")
     const h22 = document.querySelector("#h2-2")
-    const image = document.querySelector("#landing_image")
     const hero = document.querySelector(".hero")
     const slider = document.querySelector(".slider")
     const tl = gsap.timeline()
@@ -17,19 +16,35 @@ function startInit() {
     gsap.set(h21, { opacity: 0, x: "-100px" })
     gsap.set(h22, { opacity: 0, x: "100px" })
 
+    let heroHeight = '0%'
+    let heroDuration = 1
+    let heroWidth = '80%'
+
+    let h1Y = ['-90vh', '-75vh']
+
+    if (window.screen.width < 512) {
+        heroHeight = '80%'
+        heroDuration = 0.2
+        heroWidth = "90%"
+    }
+
+    if (window.screen.width <= 966) {
+        h1Y = ['-90vh', '-10vh']
+    }
+
     tl.fromTo(hero, {
-        height: '0%'
+        height: heroHeight
     },
         {
             height: '80%',
-            duration: 1,
+            duration: heroDuration,
             ease: 'Power2.easeInOut'
         })
         .fromTo(hero, {
             width: '100%'
         },
             {
-                width: '80%',
+                width: heroWidth,
                 duration: 1,
                 ease: 'Power2.easeInOut'
             })
@@ -43,10 +58,10 @@ function startInit() {
             })
         .fromTo(h1, {
             opacity: 0,
-            y: "-300px"
+            y: h1Y[0]
         }, {
             opacity: 1,
-            y: "-200px",
+            y: h1Y[1],
             x: 0,
             duration: 1,
             ease: "expo"
