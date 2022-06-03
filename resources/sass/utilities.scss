@@ -199,14 +199,11 @@
 }
 
 .section-mb {
-    padding-bottom: clamp(30px, 10vw, 75px) !important;
-}
-.section-mb {
-    padding-bottom: clamp(75px, 8.5vw, 150px);
+    padding-bottom: clamp(30px, 5vw, 75px) !important;
 }
 
 .section-mt {
-    padding-top: clamp(75px, 8.5vw, 150px);
+    padding-top: clamp(75px, 5vw, 150px);
 }
 
 .sm-d-none {
