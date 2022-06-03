@@ -118,7 +118,7 @@ function storefrontsInit() {
         href += '&metric=[' + [sliderOmniMetric.getInfo().left, sliderOmniMetric.getInfo().right] + ']';
         // href += '&buyPrice=[' + [sliderOmniBuyPrice.getInfo().left, sliderOmniBuyPrice.getInfo().right] + ']';
         href += '&rentPrice=[' + [0, 1000] + ']';
-        href += '&visible=Widoczne';
+        // href += '&visible=Widoczne';
         // console.log(floorIds);
         // console.log(href);
 
