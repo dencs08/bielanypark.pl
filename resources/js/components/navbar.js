@@ -56,7 +56,6 @@ function navBarAnimation() {
         navbarOpen()
     } else {
         navbarClose()
-        // setTimeout(zIndexNavBar, 1000);
     }
 }
 

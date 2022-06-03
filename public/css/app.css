@@ -6114,8 +6114,8 @@ nav #menuToggle {
 }
 nav #menuToggle input {
   display: block;
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   position: absolute;
   top: 65px;
   right: 75px;
@@ -6626,15 +6626,11 @@ html.is-leaving .transition-fade {
 }
 
 .section-mb {
-  padding-bottom: clamp(30px, 10vw, 75px) !important;
-}
-
-.section-mb {
-  padding-bottom: clamp(75px, 8.5vw, 150px);
+  padding-bottom: clamp(30px, 5vw, 75px) !important;
 }
 
 .section-mt {
-  padding-top: clamp(75px, 8.5vw, 150px);
+  padding-top: clamp(75px, 5vw, 150px);
 }
 
 .sm-d-none {
@@ -6918,6 +6914,13 @@ h4 {
 }
 
 p {
+  font-size: clamp(0.75rem, 1.75vw, 1rem);
+}
+
+ul {
+  padding-left: 37px;
+}
+ul li {
   font-size: clamp(0.75rem, 1.75vw, 1rem);
 }
 
