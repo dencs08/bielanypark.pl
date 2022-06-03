@@ -5725,7 +5725,6 @@ function startInit() {
   var h1 = document.querySelector("h1");
   var h21 = document.querySelector("#h2-1");
   var h22 = document.querySelector("#h2-2");
-  var image = document.querySelector("#landing_image");
   var hero = document.querySelector(".hero");
   var slider = document.querySelector(".slider");
   var tl = gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.timeline();
@@ -5749,16 +5748,31 @@ function startInit() {
     opacity: 0,
     x: "100px"
   });
+  var heroHeight = '0%';
+  var heroDuration = 1;
+  var heroWidth = '80%';
+  var h1Y = ['-90vh', '-75vh'];
+
+  if (window.screen.width < 512) {
+    heroHeight = '80%';
+    heroDuration = 0.2;
+    heroWidth = "90%";
+  }
+
+  if (window.screen.width <= 966) {
+    h1Y = ['-90vh', '-10vh'];
+  }
+
   tl.fromTo(hero, {
-    height: '0%'
+    height: heroHeight
   }, {
     height: '80%',
-    duration: 1,
+    duration: heroDuration,
     ease: 'Power2.easeInOut'
   }).fromTo(hero, {
     width: '100%'
   }, {
-    width: '80%',
+    width: heroWidth,
     duration: 1,
     ease: 'Power2.easeInOut'
   }).fromTo(slider, {
@@ -5769,10 +5783,10 @@ function startInit() {
     ease: 'Power2.easeInOut'
   }).fromTo(h1, {
     opacity: 0,
-    y: "-300px"
+    y: h1Y[0]
   }, {
     opacity: 1,
-    y: "-200px",
+    y: h1Y[1],
     x: 0,
     duration: 1,
     ease: "expo"

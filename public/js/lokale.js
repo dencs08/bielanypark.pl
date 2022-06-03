@@ -34,7 +34,7 @@ function appendCards(store) {
     availablePhrase = "Wynajęte";
   }
 
-  if (!store.visible) return;
+  if (store.visible == "Niewidoczne") return;
   jquery__WEBPACK_IMPORTED_MODULE_0___default()('.results').append("     \n    <div class=\"col-md-12 col-lg-6 col-xl-4\">\n        <div class=\"card\">\n            <div class=\"card-header png-bg-color-superLight p-4\">\n            <div class=\"diagonal badge ".concat(availableColor, "\">\n                <span>").concat(availablePhrase, "</span>\n            </div>\n            <a href=\"/lokale/").concat(store.name, "\"><img class=\"img-fluid w-100\" src=\"images/cards/web/png/").concat(store.name, ".png\" alt=\"\"></a>\n            </div>\n            <div class=\"card-body\">\n                <h3 class=\"mt-4 mb-2\">Lokal ").concat(store.name, "</h3>\n                <p>Metra\u017C: <span class=\"fw-light\"> ").concat(store.metric, "m\xB2</span></p>\n                <p>Pi\u0119tro: <span class=\"fw-light\"> ").concat(store.floor, "</span></p>\n                <p>Pok\xF3j sanitarny:<span class=\"fw-light\"> ").concat(store.sanitary, "</span></p>\n\n                <div class=\"\">\n                    <a href=\"/kontakt/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-secondary text-center font-size-m mt-2 mr-2 w-100\">Zapytaj</button></a>\n                </div>\n                <div class=\"\">\n                    <a href=\"/lokale/").concat(store.name, "\"><button type=\"button\" class=\"btn btn-outline-secondary text-center font-size-m mt-2 w-100\">Podgl\u0105d</button></a>\n                </div>\n            </div>\n        </div>\n    </div>\n    "));
 }
 
@@ -83,10 +83,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function cursorInit() {
-  //!Cursor
+  var cursor = document.getElementById("cursor"); //!Cursor
+
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     cursor.style.display = "none";
-    follower.style.display = "none";
   } else {
     var cursorItems = function cursorItems() {
       itemsGrow = document.querySelectorAll("a, button, .btn, .cursor_expand");
@@ -95,10 +95,10 @@ function cursorInit() {
       for (var i = 0; i < itemsGrow.length; i++) {
         (function (index) {
           itemsGrow[index].addEventListener("mouseover", function (e) {
-            _cursor.classList.add("active-expand");
+            cursor.classList.add("active-expand");
           });
           itemsGrow[index].addEventListener("mouseleave", function (e) {
-            _cursor.classList.remove("active-expand");
+            cursor.classList.remove("active-expand");
           });
         })(i);
       }
@@ -106,28 +106,26 @@ function cursorInit() {
       for (var i = 0; i < itemsShrink.length; i++) {
         (function (index) {
           itemsShrink[index].addEventListener("mouseover", function (e) {
-            _cursor.classList.add("active-shrink");
+            cursor.classList.add("active-shrink");
           });
           itemsShrink[index].addEventListener("mouseleave", function (e) {
-            _cursor.classList.remove("active-shrink");
+            cursor.classList.remove("active-shrink");
           });
         })(i);
       }
     };
 
-    var _cursor = document.getElementById("cursor");
-
     var posX = 0,
         posY = 0;
     var mouseX = 0,
         mouseY = 0;
-    gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.to(_cursor, {
+    gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.to(cursor, {
       duration: 0.005,
       repeat: -1,
       onRepeat: function onRepeat() {
         posX += (mouseX - posX) / 9;
         posY += (mouseY - posY) / 9;
-        gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.set(_cursor, {
+        gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.set(cursor, {
           css: {
             left: mouseX,
             top: mouseY
@@ -24256,8 +24254,8 @@ function storefrontsInit() {
 
     href += '&metric=[' + [sliderOmniMetric.getInfo().left, sliderOmniMetric.getInfo().right] + ']'; // href += '&buyPrice=[' + [sliderOmniBuyPrice.getInfo().left, sliderOmniBuyPrice.getInfo().right] + ']';
 
-    href += '&rentPrice=[' + [0, 1000] + ']';
-    href += '&visible=Widoczne'; // console.log(floorIds);
+    href += '&rentPrice=[' + [0, 1000] + ']'; // href += '&visible=Widoczne';
+    // console.log(floorIds);
     // console.log(href);
 
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
