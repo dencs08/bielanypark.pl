@@ -79,7 +79,7 @@
     </div>
 </section>
 
-<section id="app" class="section-mb" data-scroll-section data-scroll>
+<section id="app" class="section-mb section-mt" data-scroll-section data-scroll>
     <div class="container" data-scroll data-scroll-speed="0.5">
         <img src="{{ asset('images/building/jpg/chalk_top_myrka.jpg') }}" class="img-fluid" title="Bielanypark Legnica - Widok z drona" alt="Bielanypark Legnica Rysowane Kreską - Widok Z Drona">
     </div>
