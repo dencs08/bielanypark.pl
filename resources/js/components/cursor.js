@@ -1,12 +1,11 @@
 import { gsap } from "gsap";
 
 function cursorInit() {
+    const cursor = document.getElementById("cursor")
     //!Cursor
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         cursor.style.display = "none";
-        follower.style.display = "none";
     } else {
-        const cursor = document.getElementById("cursor")
 
         var posX = 0,
             posY = 0;
