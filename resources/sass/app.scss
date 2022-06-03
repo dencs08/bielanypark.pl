@@ -87,6 +87,13 @@ p {
     font-size: clamp(0.75rem, 1.75vw, 1rem);
 }
 
+ul {
+    padding-left: 37px;
+    li {
+        font-size: clamp(0.75rem, 1.75vw, 1rem);
+    }
+}
+
 hr {
     display: block;
     border: 1px solid $font-color-primary;
