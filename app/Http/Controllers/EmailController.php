@@ -38,7 +38,7 @@ class EmailController extends Controller
         Mail::send('email.email-template', $data, function($message) use ($data) {
           $message->to(env('MAIL_RECEIVER'))
           ->subject("Nowa wiadomość ze strony bielanypark")
-          ->from(env('MAIL_USERNAME'), "Bielanypark")
+          ->from($data['email'], "Strona bielanypark")
           ->sender(env('MAIL_USERNAME'), "Bielanypark");
         });
 
