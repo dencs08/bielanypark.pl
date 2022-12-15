@@ -123,7 +123,7 @@
                 <td style="padding:0;">
                   <h4 style="font-size:24px;">
                     Zapraszamy do biura sprzedaży, zlokalizowanego przy ul.
-                                        Plac Wolności 4AB/101
+                    Al.Rzeczypospolitej 23/23
                                     </h4>
                   <p>
                     Więcej na

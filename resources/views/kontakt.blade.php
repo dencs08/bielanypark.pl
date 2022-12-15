@@ -75,7 +75,7 @@
                     <div class="contact-info mb-4 font-family-secondary fw-light">
                         <div>biuro@komb.pl</div> 
                         <div>734 848 057</div>
-                        <div>Legnica, Plac Wolności 4AB/101</div> 
+                        <div>Legnica, Al.Rzeczypospolitej 23/23</div> 
                     </div>
 
                     <div class="social-media"></div>
