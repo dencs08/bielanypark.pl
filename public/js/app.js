@@ -6296,7 +6296,8 @@ function init() {
   if (document.querySelector('body')) {
     (0,_components_navbar__WEBPACK_IMPORTED_MODULE_10__.updateActiveLink)();
     (0,_components_cursor__WEBPACK_IMPORTED_MODULE_9__.cursorInit)();
-    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_8__.magneticInit)(); // locoReload()
+    (0,_components_magnetic__WEBPACK_IMPORTED_MODULE_8__.magneticInit)();
+    (0,_components_navbar__WEBPACK_IMPORTED_MODULE_10__.closeNavBar)(); // locoReload()
   }
 
   if (document.querySelector("#Contact")) {
@@ -6599,6 +6600,7 @@ function magneticInit() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "closeNavBar": () => (/* binding */ closeNavBar),
 /* harmony export */   "updateActiveLink": () => (/* binding */ updateActiveLink)
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
@@ -6609,7 +6611,7 @@ __webpack_require__.r(__webpack_exports__);
 var navItems = document.querySelectorAll('.web_link');
 var navWebItems = document.querySelectorAll('.web_link_active');
 var start_web_link = document.querySelector('.web_link');
-var navInput = document.getElementById("menu-input");
+var navInput = document.getElementById("navHamburger");
 var navWrapper = document.getElementById("nav-wrapper");
 var li = document.querySelectorAll(".nav-li");
 var navOpendIndex = 0;
@@ -6620,6 +6622,7 @@ navItems.forEach(function (element) {
 navInput.addEventListener("click", navBarAnimation);
 
 function closeNavBar() {
+  navInput.childNodes[1].classList.remove('active');
   if (animating) return;
   animating = true;
   navbarClose();
@@ -6654,8 +6657,10 @@ function navBarAnimation() {
   animating = true;
 
   if (navOpendIndex % 2 == 0) {
+    navInput.childNodes[1].classList.add('active');
     navbarOpen();
   } else {
+    navInput.childNodes[1].classList.remove('active');
     navbarClose();
   }
 }
@@ -6696,10 +6701,7 @@ function navbarClose() {
   var i = 0.1;
   li.forEach(function (item) {
     var delay = 0.1 + i * 0.05;
-    gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.fromTo(item, {
-      x: 0,
-      visibility: 'visible'
-    }, {
+    gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.to(item, {
       x: "300%",
       ease: "expo",
       duration: 1,
@@ -6707,9 +6709,7 @@ function navbarClose() {
     });
     i++;
   });
-  gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.fromTo(navWrapper, {
-    x: "0"
-  }, {
+  gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.to(navWrapper, {
     duration: 1.1,
     ease: "expo",
     x: "125%",
@@ -6742,17 +6742,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
 
 
-var app;
-var appFloors;
-var sidebar;
-var tl;
-var animating;
+var app, appFloors, sidebar;
+var tl, animating, viewList, btnList;
 
 function appInit() {
   if (document.querySelector('#Storefronts')) {
     app = document.querySelector('[data-3d-app]');
     appFloors = app.querySelectorAll("[data-floor]");
     sidebar = app.querySelector("#sidebar_app");
+    viewList = document.getElementById('Storefronts-List');
+    btnList = document.getElementById('view-list');
+    viewList.classList.add("active");
+    btnList.classList.add("active");
     tl = gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.timeline();
     animating = false;
   }

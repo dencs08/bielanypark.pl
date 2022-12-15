@@ -199,17 +199,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
 
 
-var app;
-var appFloors;
-var sidebar;
-var tl;
-var animating;
+var app, appFloors, sidebar;
+var tl, animating, viewList, btnList;
 
 function appInit() {
   if (document.querySelector('#Storefronts')) {
     app = document.querySelector('[data-3d-app]');
     appFloors = app.querySelectorAll("[data-floor]");
     sidebar = app.querySelector("#sidebar_app");
+    viewList = document.getElementById('Storefronts-List');
+    btnList = document.getElementById('view-list');
+    viewList.classList.add("active");
+    btnList.classList.add("active");
     tl = gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.timeline();
     animating = false;
   }

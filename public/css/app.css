@@ -6080,7 +6080,7 @@ html.has-scroll-dragging {
   opacity: 0.975;
 }
 
-nav {
+header {
   position: fixed;
   top: 0;
   display: grid;
@@ -6090,19 +6090,19 @@ nav {
   width: 100vw;
   z-index: 9999 !important;
 }
-nav input[type=checkbox] {
+header input[type=checkbox] {
   display: none;
 }
-nav .logo-top {
+header .logo-top {
   width: clamp(5em, 25vw, 15em);
   grid-column: 2/3;
   z-index: 99999 !important;
 }
-nav .logo-top img {
+header .logo-top img {
   width: clamp(5em, 25vw, 15em);
   z-index: 99999 !important;
 }
-nav #menuToggle {
+header #menuToggle {
   display: block;
   position: relative;
   -webkit-user-select: none;
@@ -6112,55 +6112,56 @@ nav #menuToggle {
   justify-self: end;
   z-index: 9999 !important;
 }
-nav #menuToggle input {
-  display: block;
-  width: 90px;
-  height: 90px;
-  position: absolute;
-  top: 65px;
-  right: 75px;
-  cursor: pointer !important;
-  opacity: 0;
-  /* hide this */
-  -webkit-touch-callout: none;
-  z-index: 10000 !important;
+header #menuToggle .hamburger {
+  display: flex;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0) !important;
+  pointer-events: auto;
 }
-nav #menuToggle span {
-  display: block;
-  width: 25px;
-  height: 1px;
-  margin-bottom: 4px;
+header #menuToggle .hamburger span {
   position: relative;
-  background: #36393b;
-  border-radius: 3px;
-  z-index: 1;
-  transform-origin: 4px 0px;
-  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
-  z-index: 9999 !important;
-  transform: translate(-50% -50%);
+  height: 2px;
+  width: 30px;
+  background-color: #111111;
+  margin-bottom: 0px !important;
+  transition: 0.35s translate, 0.35s opacity, rotate 0.25s;
 }
-nav #menuToggle span:first-child {
-  transform-origin: 0% 0%;
+header #menuToggle .hamburger span.active {
+  translate: 0 0px;
+  rotate: -45deg;
 }
-nav #menuToggle span:nth-last-child(2) {
-  transform-origin: 0% 100%;
-}
-nav #menuToggle input:checked ~ span {
-  opacity: 1;
-  transform: rotate(45deg) translate(0px, -4px);
-  background: #232323;
-}
-nav #menuToggle input:checked ~ span:nth-last-child(3) {
+header #menuToggle .hamburger span.active:before {
+  translate: 0 0;
   opacity: 0;
-  transform: rotate(0deg) scale(0.2, 0.2);
 }
-nav #menuToggle input:checked ~ span:nth-last-child(2) {
-  transform: rotate(-45deg) translate(2px, 4px);
+header #menuToggle .hamburger span.active:after {
+  translate: 0px -1px;
+  rotate: -90deg;
 }
-nav #menuToggle input:checked ~ ul {
-  transform: none;
+header #menuToggle .hamburger span:before {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 30px;
+  background-color: #111111;
+  translate: 0 -8px;
+  transition: 0.35s translate, 0.35s opacity, rotate 0.25s;
 }
-nav #menuToggle .menu-circle {
+header #menuToggle .hamburger span:after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 30px;
+  background-color: #111111;
+  translate: 0 7px;
+  transition: 0.35s translate, 0.35s opacity, rotate 0.25s;
+}
+header #menuToggle .menu-circle {
   position: absolute;
   top: 34%;
   left: 35.25%;
@@ -6170,9 +6171,10 @@ nav #menuToggle .menu-circle {
   width: 65px;
   height: 65px;
   border-radius: 100px;
+  z-index: -99;
 }
 
-.wrapper {
+nav {
   position: fixed;
   top: 0;
   left: 0;
@@ -6181,11 +6183,11 @@ nav #menuToggle .menu-circle {
   opacity: 0;
   background: #e8e8e8;
 }
-.wrapper ul {
+nav ul {
   list-style: none;
   margin-top: clamp(50px, 10vh, 150px);
 }
-.wrapper ul li a {
+nav ul li a {
   font-size: clamp(3rem, 10vw, 8rem);
   font-weight: 700;
   color: #36393b !important;
@@ -6194,44 +6196,44 @@ nav #menuToggle .menu-circle {
   line-height: clamp(3rem, 25vh, 16rem);
   transition: 0.5s;
 }
-.wrapper ul li a:hover {
+nav ul li a:hover {
   color: #84aba4 !important;
   transition: 0.5s;
 }
-.wrapper .nav-number {
+nav .nav-number {
   font-size: 1.5rem;
   margin-right: 15px;
   margin-left: -1.5rem;
 }
-.wrapper .nav-li {
+nav .nav-li {
   max-height: 15vh;
 }
-.wrapper .nav-info .p1 {
+nav .nav-info .p1 {
   font-size: clamp(0.75rem, 2vw, 1rem);
   color: #e8e8e8 !important;
 }
-.wrapper .nav-info .p2 {
+nav .nav-info .p2 {
   font-size: clamp(1rem, 2.5vw, 1.25rem);
 }
-.wrapper .nav-icons-container {
+nav .nav-icons-container {
   height: clamp(150px, 10vh, 200px);
   width: clamp(75%, 50vw, 100%);
 }
-.wrapper .nav-icon-div {
+nav .nav-icon-div {
   display: inline-block !important;
   width: clamp(2.25rem, 3.5vw, 2.5rem) !important;
   height: clamp(2.25rem, 3.5vw, 2.5rem) !important;
   cursor: pointer;
 }
-.wrapper .nav-icon-div .nav-icon {
+nav .nav-icon-div .nav-icon {
   fill: #bbbbbb !important;
   transition: 0.5s all;
 }
-.wrapper .nav-icon-div:hover .nav-icon {
+nav .nav-icon-div:hover .nav-icon {
   fill: #84aba4 !important;
   color: #84aba4 !important;
 }
-.wrapper .nav-item.active {
+nav .nav-item.active {
   color: #84aba4 !important;
 }
 
@@ -6526,6 +6528,10 @@ html.is-leaving .transition-fade {
   display: inline-block;
 }
 
+.d-flex {
+  display: flex;
+}
+
 .display-flex-center {
   display: flex;
   justify-content: center;
@@ -6565,6 +6571,10 @@ html.is-leaving .transition-fade {
 
 .mr-2 {
   margin-right: 10px;
+}
+
+.mr-3 {
+  margin-right: 20px;
 }
 
 .mr-5 {
