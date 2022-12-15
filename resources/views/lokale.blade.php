@@ -19,12 +19,12 @@
     <section id="page_top" data-scroll-section></section>
         <section class="" data-scroll-section>
             <div class="text-center font-family-secondary font-size-xl font-weight-bold">
-                <h2>Wybierz jeden z widoków dostępnych poniżej</h2>
-                <div class="row">
-                    <div class="col-md-6 mb-5">
-                        <a href="#" id="view-3d" class="view-3d underline_medium font-color-fourth"><span>Wybór 3D</span></a>
+                
+                <div class="d-flex container">
+                    <div class="mb-2">
+                        <a href="#" id="view-3d" class="view-3d underline_medium font-color-fourth mr-3"><span>Wybór 3D</span></a>
                     </div>
-                    <div class="col-md-6 mb-5">
+                    <div class="">
                         <a href="#" id="view-list" class="view-list underline_medium font-color-fourth"><span>Karty</span></a>
                     </div>
                 </div>

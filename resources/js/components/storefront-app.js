@@ -1,17 +1,21 @@
 import $ from 'jquery';
 import { gsap } from "gsap";
 
-var app
-var appFloors
-var sidebar
-let tl
-let animating
+var app, appFloors, sidebar
+let tl, animating, viewList, btnList
+
 
 function appInit() {
     if (document.querySelector('#Storefronts')) {
         app = document.querySelector('[data-3d-app]')
         appFloors = app.querySelectorAll("[data-floor]")
         sidebar = app.querySelector("#sidebar_app")
+        viewList = document.getElementById('Storefronts-List');
+        btnList = document.getElementById('view-list');
+
+        viewList.classList.add("active");
+        btnList.classList.add("active");
+
         tl = gsap.timeline()
         animating = false
     }

@@ -87,6 +87,10 @@
     display: inline-block;
 }
 
+.d-flex {
+    display: flex;
+}
+
 .display-flex-center {
     display: flex;
     justify-content: center;
@@ -130,6 +134,10 @@
 
 .mr-2 {
     margin-right: 10px;
+}
+
+.mr-3 {
+    margin-right: 20px;
 }
 
 .mr-5 {
