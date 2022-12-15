@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav id="navbar">
+<header id="navbar">
     <a href="/start" class="logo-top">
         <img
             src="{{ asset('images/logos/Logo_grey.svg') }}"
@@ -7,15 +7,14 @@
         />
     </a>
     <div id="menuToggle" class="magnetic-wrapper magnetic-menu">
-        <input id="menu-input" type="checkbox" />
-        <span></span>
-        <span></span>
-        <span></span>
-        <div class="menu-circle"></div>
+        <button id="navHamburger" class="hamburger" type="button" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+            <span></span>
+        </button>
+        <!-- <div class="menu-circle"></div> -->
     </div>
-</nav>
+</header>
 
-<div id="nav-wrapper" class="wrapper">
+<nav id="nav-wrapper" class="wrapper">
         <div class="vh-100 display-grid-center text-center">
             <div>
             <ul id="nav-ul" class="display-grid-center p-0 m-0">
@@ -87,4 +86,4 @@
             >
             </div>
     </div>
-</div>
+</nav>

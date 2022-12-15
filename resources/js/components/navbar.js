@@ -5,7 +5,7 @@ const navItems = document.querySelectorAll('.web_link');
 const navWebItems = document.querySelectorAll('.web_link_active');
 const start_web_link = document.querySelector('.web_link');
 
-const navInput = document.getElementById("menu-input")
+const navInput = document.getElementById("navHamburger")
 
 const navWrapper = document.getElementById("nav-wrapper")
 
@@ -20,6 +20,7 @@ navItems.forEach(element => {
 navInput.addEventListener("click", navBarAnimation);
 
 function closeNavBar() {
+    navInput.childNodes[1].classList.remove('active');
     if (animating) return
     animating = true
     navbarClose()
@@ -53,8 +54,10 @@ function navBarAnimation() {
     if (animating) return
     animating = true
     if (navOpendIndex % 2 == 0) {
+        navInput.childNodes[1].classList.add('active');
         navbarOpen()
     } else {
+        navInput.childNodes[1].classList.remove('active');
         navbarClose()
     }
 }
@@ -94,10 +97,7 @@ function navbarClose() {
     let i = 0.1;
     li.forEach((item) => {
         let delay = 0.1 + (i * 0.05)
-        gsap.fromTo(item, {
-            x: 0,
-            visibility: 'visible',
-        }, {
+        gsap.to(item, {
             x: "300%",
             ease: "expo",
             duration: 1,
@@ -105,9 +105,7 @@ function navbarClose() {
         });
         i++
     })
-    gsap.fromTo(navWrapper, {
-        x: "0"
-    }, {
+    gsap.to(navWrapper, {
         duration: 1.1,
         ease: "expo",
         x: "125%",
@@ -117,4 +115,4 @@ function navbarClose() {
     navOpendIndex++
 }
 
-export { updateActiveLink }
+export { updateActiveLink, closeNavBar }

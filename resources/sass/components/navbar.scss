@@ -1,4 +1,4 @@
-nav {
+header {
     position: fixed;
     top: 0;
     display: grid;
@@ -32,69 +32,76 @@ nav {
 
         justify-self: end;
         z-index: 9999 !important;
-        input {
-            display: block;
-            width: 90px;
-            height: 90px;
-            position: absolute;
-            top: 65px;
-            right: 75px;
 
-            cursor: pointer !important;
+        .hamburger {
+            display: flex;
 
-            opacity: 0; /* hide this */
+            align-items: center;
 
-            -webkit-touch-callout: none;
+            width: 30px;
+            height: 30px;
 
-            z-index: 10000 !important;
-        }
-        span {
-            display: block;
-            width: 25px;
-            height: 1px;
-            margin-bottom: 4px;
-            position: relative;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0) !important;
 
-            background: $font-color-primary;
-            border-radius: 3px;
+            pointer-events: auto;
+            span {
+                &.active {
+                    translate: 0 0px;
+                    rotate: -45deg;
 
-            z-index: 1;
+                    &:before {
+                        translate: 0 0;
+                        opacity: 0;
+                    }
+                    &:after {
+                        translate: 0px -1px;
+                        rotate: -90deg;
+                    }
+                }
+                position: relative;
 
-            transform-origin: 4px 0px;
+                height: 2px;
+                width: 30px;
 
-            transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
-                background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
-                opacity 0.55s ease;
-            z-index: 9999 !important;
+                background-color: #111111;
 
-            transform: translate(-50% -50%);
-        }
+                margin-bottom: 0px !important;
 
-        span:first-child {
-            transform-origin: 0% 0%;
-        }
+                transition: 0.35s translate, 0.35s opacity, rotate 0.25s;
 
-        span:nth-last-child(2) {
-            transform-origin: 0% 100%;
-        }
+                &:before {
+                    content: "";
 
-        input:checked ~ span {
-            opacity: 1;
-            transform: rotate(45deg) translate(0px, -4px);
-            background: #232323;
-        }
+                    display: block;
 
-        input:checked ~ span:nth-last-child(3) {
-            opacity: 0;
-            transform: rotate(0deg) scale(0.2, 0.2);
-        }
+                    height: 2px;
+                    width: 30px;
 
-        input:checked ~ span:nth-last-child(2) {
-            transform: rotate(-45deg) translate(2px, 4px);
-        }
+                    background-color: #111111;
 
-        input:checked ~ ul {
-            transform: none;
+                    translate: 0 -8px;
+
+                    transition: 0.35s translate, 0.35s opacity, rotate 0.25s;
+                }
+
+                &:after {
+                    content: "";
+
+                    display: block;
+
+                    height: 2px;
+                    width: 30px;
+
+                    background-color: #111111;
+
+                    translate: 0 7px;
+
+                    transition: 0.35s translate, 0.35s opacity, rotate 0.25s;
+                }
+            }
         }
 
         .menu-circle {
@@ -107,11 +114,13 @@ nav {
             width: 65px;
             height: 65px;
             border-radius: 100px;
+
+            z-index: -99;
         }
     }
 }
 
-.wrapper {
+nav {
     position: fixed;
     top: 0;
     left: 0;

@@ -11,7 +11,7 @@ import { startInit } from './start'
 import { storefrontsInit } from './lokale'
 import { magneticInit } from './components/magnetic'
 import { cursorInit } from './components/cursor'
-import { updateActiveLink } from './components/navbar'
+import { updateActiveLink, closeNavBar } from './components/navbar'
 
 import { locoInit, locoReload, refreshScrollTrigger, scrollToTop } from './locomotive-scroll';
 
@@ -30,6 +30,7 @@ function init() {
         updateActiveLink()
         cursorInit()
         magneticInit()
+        closeNavBar()
         // locoReload()
     }
     if (document.querySelector("#Contact")) {
